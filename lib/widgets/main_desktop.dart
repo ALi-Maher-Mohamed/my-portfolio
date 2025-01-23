@@ -5,9 +5,11 @@ class MainDesktop extends StatelessWidget {
     super.key,
     required this.screenSize,
     required this.screenWidth,
+    required this.screenHeight,
   });
 
   final Size screenSize;
+  final double screenHeight;
   final double screenWidth;
 
   @override
@@ -15,7 +17,7 @@ class MainDesktop extends StatelessWidget {
     return Expanded(
       child: Container(
         margin: const EdgeInsets.symmetric(horizontal: 22),
-        height: screenSize.height / 1.2,
+        height: screenHeight / 1.2,
         constraints: const BoxConstraints(maxWidth: 1200, minHeight: 350),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,

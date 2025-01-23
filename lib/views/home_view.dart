@@ -6,6 +6,7 @@ import 'package:my_portfolio/widgets/mobile_header.dart';
 import 'package:my_portfolio/widgets/web_header.dart';
 
 import '../widgets/main_desktop.dart';
+import '../widgets/main_mobile.dart';
 
 class HomeView extends StatefulWidget {
   const HomeView({super.key});
@@ -20,6 +21,7 @@ class _HomeViewState extends State<HomeView> {
   Widget build(BuildContext context) {
     final screenSize = MediaQuery.of(context).size;
     final screenWidth = screenSize.width;
+    final screenHeight = screenSize.height;
     return LayoutBuilder(builder: (context, constraints) {
       return Scaffold(
         key: scaffoldKey,
@@ -42,7 +44,8 @@ class _HomeViewState extends State<HomeView> {
                       scaffoldKey.currentState?.openEndDrawer();
                     },
                   ),
-                MainDesktop(screenSize: screenSize, screenWidth: screenWidth)
+                // MainDesktop(screenSize: screenSize, screenWidth: screenWidth, screenHeight: screenHeight,)
+                MainMobile(screenHeight: screenHeight, screenWidth: screenWidth)
               ],
             ),
           ),
