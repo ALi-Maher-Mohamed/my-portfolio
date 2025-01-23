@@ -5,6 +5,8 @@ import 'package:my_portfolio/widgets/mobile_drawer.dart';
 import 'package:my_portfolio/widgets/mobile_header.dart';
 import 'package:my_portfolio/widgets/web_header.dart';
 
+import '../widgets/main_desktop.dart';
+
 class HomeView extends StatefulWidget {
   const HomeView({super.key});
 
@@ -16,6 +18,8 @@ class _HomeViewState extends State<HomeView> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
   @override
   Widget build(BuildContext context) {
+    final screenSize = MediaQuery.of(context).size;
+    final screenWidth = screenSize.width;
     return LayoutBuilder(builder: (context, constraints) {
       return Scaffold(
         key: scaffoldKey,
@@ -37,7 +41,8 @@ class _HomeViewState extends State<HomeView> {
                     onMenuTap: () {
                       scaffoldKey.currentState?.openEndDrawer();
                     },
-                  )
+                  ),
+                MainDesktop(screenSize: screenSize, screenWidth: screenWidth)
               ],
             ),
           ),

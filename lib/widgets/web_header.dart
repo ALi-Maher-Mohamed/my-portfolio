@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:my_portfolio/widgets/custom_nav_text_button.dart';
 import 'package:my_portfolio/widgets/side_logo.dart';
 
-import '../constant/colors.dart';
 import '../constant/nav_titles_and_func.dart';
 import '../styles/style.dart';
 
