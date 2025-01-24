@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 
 import '../constant/colors.dart';
 
@@ -22,6 +23,7 @@ class MainMobile extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
+            SizedBox(height: 20),
             ShaderMask(
               shaderCallback: (rect) {
                 return LinearGradient(
@@ -32,17 +34,14 @@ class MainMobile extends StatelessWidget {
                 ).createShader(rect);
               },
               blendMode: BlendMode.srcATop,
-              child: Image.asset(
-                'assets/MyPhoto/Ali1.jpg',
-                width: screenWidth / 2,
-                height: screenHeight / 3.5,
-              ),
+              child: SvgPicture.asset('assets/MyPhoto/2.svg',
+                  height: 150, width: 100),
             ),
             SizedBox(
               height: 20,
             ),
             Text(
-              "Hi,\nI'm Ali Maher\nFlutter Developer",
+              "Hi,\nI'm Ali Maher\nMobile Developer",
               style: TextStyle(
                   fontSize: 24,
                   fontWeight: FontWeight.bold,

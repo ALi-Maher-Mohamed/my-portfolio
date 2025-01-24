@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 
 class MainDesktop extends StatelessWidget {
   const MainDesktop({
@@ -26,7 +27,7 @@ class MainDesktop extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  "Hi,\nI'm Ali Maher\nFlutter Developer",
+                  "Hi,\nI'm Ali Maher\nMobile Developer",
                   style: TextStyle(
                       fontSize: 30,
                       fontWeight: FontWeight.bold,
@@ -46,11 +47,8 @@ class MainDesktop extends StatelessWidget {
               ],
             ),
             FittedBox(
-              child: Image.asset(
-                "assets/MyPhoto/Ali1.jpg",
-                width: screenWidth * 0.4,
-              ),
-            )
+                child: SvgPicture.asset('assets/MyPhoto/2.svg',
+                    height: 300, width: 300)),
           ],
         ),
       ),
