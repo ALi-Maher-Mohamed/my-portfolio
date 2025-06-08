@@ -3,11 +3,13 @@ import 'package:flutter/material.dart';
 List<String> navTiltles = [
   'Home',
   'About',
-  'Projects',
+  'Skills',
+  'Services',
   'Contact',
 ];
 
 List<Function()> navOnPressed = [
+  () {},
   () {},
   () {},
   () {},
@@ -17,6 +19,7 @@ List<Function()> navOnPressed = [
 List<IconData> navIcons = [
   Icons.home,
   Icons.person,
+  Icons.code,
   Icons.work,
   Icons.mail,
 ];

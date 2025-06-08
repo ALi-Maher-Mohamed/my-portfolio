@@ -15,7 +15,7 @@ class CustomTextButton extends StatelessWidget {
       child: Text(
         title,
         style: TextStyle(
-            fontSize: MediaQuery.of(context).size.width / 75,
+            fontSize: MediaQuery.of(context).size.width / 90,
             color: Colors.white),
       ),
     );
