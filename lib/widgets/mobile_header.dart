@@ -15,7 +15,7 @@ class MobileHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: kHeaderDecoration,
+      // decoration: kHeaderDecoration,
       padding: const EdgeInsets.symmetric(horizontal: 16),
       child: Row(children: [
         SideLogo(

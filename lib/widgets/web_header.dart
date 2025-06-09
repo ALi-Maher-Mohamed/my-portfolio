@@ -15,7 +15,7 @@ class WebHeader extends StatelessWidget {
     return Container(
         padding: const EdgeInsets.symmetric(horizontal: 16),
         height: MediaQuery.of(context).size.height / 10,
-        decoration: kHeaderDecoration,
+        // decoration: kHeaderDecoration,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -23,7 +23,7 @@ class WebHeader extends StatelessWidget {
             SideLogo(
               onTap: () {},
             ),
-            Spacer(),
+            SizedBox(width: MediaQuery.of(context).size.width / 2),
             Row(
               children: [
                 for (int i = 0; i < navTiltles.length; i++)

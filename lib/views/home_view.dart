@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:my_portfolio/constant/colors.dart';
 import 'package:my_portfolio/constant/size.dart';
 import 'package:my_portfolio/widgets/mobile_drawer.dart';
@@ -33,29 +34,42 @@ class _HomeViewState extends State<HomeView> {
           Container(
             height: 500,
             width: double.infinity,
-            decoration: BoxDecoration(color: CustomColors.scaffold1),
-            child: Column(
-              children: [
-                if (constraints.maxWidth >= kMinDisktpWidth)
-                  WebHeader()
-                else
-                  MobileHeader(
-                    onLogoTap: () {},
-                    onMenuTap: () {
-                      scaffoldKey.currentState?.openEndDrawer();
-                    },
+            // decoration: BoxDecoration(color: CustomColors.scaffold1),
+            child: Stack(children: [
+              SizedBox(
+                height: screenHeight,
+                width: screenWidth,
+                child: Opacity(
+                  opacity: 0.2, // خفف الصورة (من 0.0 إلى 1.0)
+                  child: Image.asset(
+                    'assets/MyPhoto/image.png',
+                    fit: BoxFit.fill,
                   ),
-                if (constraints.maxWidth >= kMinDisktpWidth)
-                  MainDesktop(
-                    screenSize: screenSize,
-                    screenWidth: screenWidth,
-                    screenHeight: screenHeight,
-                  )
-                else
-                  MainMobile(
-                      screenHeight: screenHeight, screenWidth: screenWidth)
-              ],
-            ),
+                ),
+              ),
+              Column(
+                children: [
+                  if (constraints.maxWidth >= kMinDisktpWidth)
+                    WebHeader()
+                  else
+                    MobileHeader(
+                      onLogoTap: () {},
+                      onMenuTap: () {
+                        scaffoldKey.currentState?.openEndDrawer();
+                      },
+                    ),
+                  if (constraints.maxWidth >= kMinDisktpWidth)
+                    MainDesktop(
+                      screenSize: screenSize,
+                      screenWidth: screenWidth,
+                      screenHeight: screenHeight,
+                    )
+                  else
+                    MainMobile(
+                        screenHeight: screenHeight, screenWidth: screenWidth)
+                ],
+              ),
+            ]),
           ),
           Container(
             width: screenWidth,

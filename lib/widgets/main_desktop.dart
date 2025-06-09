@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:my_portfolio/widgets/hexagon_image.dart';
 
 class MainDesktop extends StatelessWidget {
   const MainDesktop({
@@ -47,8 +48,8 @@ class MainDesktop extends StatelessWidget {
               ],
             ),
             FittedBox(
-                child: SvgPicture.asset('assets/MyPhoto/2.svg',
-                    height: 300, width: 300)),
+              child: HexagonAnimatedImage(),
+            ),
           ],
         ),
       ),

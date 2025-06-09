@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:my_portfolio/widgets/hexagon_image.dart';
 
 import '../constant/colors.dart';
 
@@ -24,19 +25,7 @@ class MainMobile extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             SizedBox(height: 20),
-            ShaderMask(
-              shaderCallback: (rect) {
-                return LinearGradient(
-                  colors: [
-                    CustomColors.scaffold1.withOpacity(0.6),
-                    CustomColors.scaffold1.withOpacity(0.6),
-                  ],
-                ).createShader(rect);
-              },
-              blendMode: BlendMode.srcATop,
-              child: SvgPicture.asset('assets/MyPhoto/2.svg',
-                  height: 150, width: 100),
-            ),
+            HexagonAnimatedImage(),
             SizedBox(
               height: 20,
             ),
