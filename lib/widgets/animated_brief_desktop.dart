@@ -93,10 +93,8 @@ class _AnimatedPortfolioBriefState extends State<AnimatedPortfolioBrief>
   }
 
   void _startAnimations() async {
-    // Fade in the name
     _fadeController.forward();
 
-    // Wait a bit, then slide in the description
     await Future.delayed(Duration(milliseconds: 300));
     _slideController.forward();
 

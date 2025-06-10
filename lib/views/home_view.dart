@@ -3,6 +3,7 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:my_portfolio/constant/colors.dart';
 import 'package:my_portfolio/constant/size.dart';
+import 'package:my_portfolio/widgets/about_me_web.dart';
 import 'package:my_portfolio/widgets/mobile_drawer.dart';
 import 'package:my_portfolio/widgets/mobile_header.dart';
 import 'package:my_portfolio/widgets/web_header.dart';
@@ -74,19 +75,7 @@ class _HomeViewState extends State<HomeView> {
           Container(
             width: screenWidth,
             decoration: BoxDecoration(color: CustomColors.scaffold2),
-            child: Padding(
-              padding: const EdgeInsets.fromLTRB(20, 24, 20, 60),
-              child: Column(mainAxisSize: MainAxisSize.min, children: [
-                Text('What I Can Do',
-                    style: TextStyle(
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white,
-                    )),
-                SizedBox(height: 50),
-                SkillsDesktop(screenHeight: screenHeight)
-              ]),
-            ),
+            child: AboutMeSection(),
           ),
           //project
           SkillsSection(),
