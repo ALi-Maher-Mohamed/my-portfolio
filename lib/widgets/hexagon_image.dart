@@ -84,8 +84,8 @@ class _HexagonAnimatedImageState extends State<HexagonAnimatedImage>
                   ClipPath(
                     clipper: HexagonClipper(),
                     child: Container(
-                      height: 270,
-                      width: 220,
+                      height: 300,
+                      width: 300,
                       decoration: BoxDecoration(
                         gradient: LinearGradient(
                           colors: [Colors.cyan, Colors.blueAccent],
@@ -117,8 +117,8 @@ class _HexagonAnimatedImageState extends State<HexagonAnimatedImage>
                     clipper: HexagonClipper(),
                     child: SvgPicture.asset(
                       'assets/MyPhoto/2.svg',
-                      height: 270,
-                      width: 220,
+                      height: 350,
+                      width: 300,
                       fit: BoxFit.cover,
                     ),
                   ),

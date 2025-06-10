@@ -31,8 +31,8 @@ class _HomeViewState extends State<HomeView> {
             constraints.maxWidth >= kMinDisktpWidth ? null : MobileDrawer(),
         body: ListView(children: [
           //main
-          Container(
-            height: 500,
+          SizedBox(
+            height: screenHeight,
             width: double.infinity,
             // decoration: BoxDecoration(color: CustomColors.scaffold1),
             child: Stack(children: [

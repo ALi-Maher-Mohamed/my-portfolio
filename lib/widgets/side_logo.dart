@@ -15,9 +15,9 @@ class SideLogo extends StatelessWidget {
         'AM',
         style: TextStyle(
             decoration: TextDecoration.underline,
-            fontSize: 24,
+            fontSize: 30,
             fontWeight: FontWeight.bold,
-            color: Colors.amber),
+            color: Colors.cyanAccent),
       ),
     );
   }

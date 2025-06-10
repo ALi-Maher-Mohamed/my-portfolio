@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
+import 'package:my_portfolio/widgets/animated_brief_desktop.dart';
 import 'package:my_portfolio/widgets/hexagon_image.dart';
 
 class MainDesktop extends StatelessWidget {
@@ -27,14 +27,8 @@ class MainDesktop extends StatelessWidget {
             Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text(
-                  "Hi,\nI'm Ali Maher\nMobile Developer",
-                  style: TextStyle(
-                      fontSize: 30,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white,
-                      height: 1.5),
-                ),
+                AnimatedPortfolioBrief(),
+                SizedBox(height: 20),
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(
                     minimumSize: const Size(200, 50),
