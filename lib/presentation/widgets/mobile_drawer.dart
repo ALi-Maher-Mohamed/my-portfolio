@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:my_portfolio/constant/colors.dart';
+import 'package:my_portfolio/core/constant/colors.dart';
 
-import '../constant/nav_titles_and_func.dart';
+import '../../core/constant/nav_titles_and_func.dart';
 
 class MobileDrawer extends StatelessWidget {
   const MobileDrawer({

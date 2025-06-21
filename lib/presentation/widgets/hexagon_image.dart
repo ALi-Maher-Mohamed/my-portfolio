@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
-import 'package:my_portfolio/styles/hexagon_clipper.dart';
+import 'package:my_portfolio/core/styles/hexagon_clipper.dart';
 
 class HexagonAnimatedImage extends StatefulWidget {
   const HexagonAnimatedImage({super.key});

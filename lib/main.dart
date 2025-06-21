@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:my_portfolio/views/home_view.dart';
+import 'package:my_portfolio/presentation/views/home_view.dart';
 
 void main() {
   runApp(const MyApp());

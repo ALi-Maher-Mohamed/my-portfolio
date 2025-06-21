@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:my_portfolio/widgets/animated_brief_desktop.dart';
-import 'package:my_portfolio/widgets/hexagon_image.dart';
+import 'package:my_portfolio/presentation/widgets/animated_brief_desktop.dart';
+import 'package:my_portfolio/presentation/widgets/hexagon_image.dart';
 
 class MainDesktop extends StatelessWidget {
   const MainDesktop({

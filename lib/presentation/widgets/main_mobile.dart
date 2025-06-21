@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:my_portfolio/widgets/hexagon_image.dart';
+import 'package:my_portfolio/presentation/widgets/hexagon_image.dart';
 
-import '../constant/colors.dart';
+import '../../core/constant/colors.dart';
 
 class MainMobile extends StatelessWidget {
   const MainMobile({

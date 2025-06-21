@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:my_portfolio/constant/colors.dart';
-import 'package:my_portfolio/constant/size.dart';
-import 'package:my_portfolio/widgets/about_me_web.dart';
-import 'package:my_portfolio/widgets/mobile_drawer.dart';
-import 'package:my_portfolio/widgets/mobile_header.dart';
-import 'package:my_portfolio/widgets/my_skills_web.dart';
-import 'package:my_portfolio/widgets/web_header.dart';
+import 'package:my_portfolio/core/constant/colors.dart';
+import 'package:my_portfolio/core/constant/size.dart';
+import 'package:my_portfolio/presentation/widgets/about_me_web.dart';
+import 'package:my_portfolio/presentation/widgets/contact_me_web.dart';
+import 'package:my_portfolio/presentation/widgets/mobile_drawer.dart';
+import 'package:my_portfolio/presentation/widgets/mobile_header.dart';
+import 'package:my_portfolio/presentation/widgets/my_service_web.dart';
+import 'package:my_portfolio/presentation/widgets/my_skills_web.dart';
+import 'package:my_portfolio/presentation/widgets/web_header.dart';
 
 import '../widgets/main_desktop.dart';
 import '../widgets/main_mobile.dart';
@@ -83,6 +85,13 @@ class _HomeViewState extends State<HomeView> {
             height: 500,
             width: double.infinity,
             decoration: BoxDecoration(color: CustomColors.scaffold2),
+            child: MyServicesWeb(),
+          ),
+          Container(
+            height: 500,
+            width: double.infinity,
+            decoration: BoxDecoration(color: CustomColors.scaffold2),
+            child: ContactMePage(),
           ),
         ]),
       );
