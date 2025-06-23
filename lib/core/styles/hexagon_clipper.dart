@@ -10,7 +10,7 @@ class HexagonClipper extends CustomClipper<Path> {
     final double h = size.height;
     final double r = w / 2;
     final double centerX = w / 2;
-    final double centerY = h / 2.2; // كان h / 2 وده اللي بيخلي الصورة تطلع فوق
+    final double centerY = h / 2.5; // كان h / 2 وده اللي بيخلي الصورة تطلع فوق
 
     for (int i = 0; i < 6; i++) {
       final angle = pi / 3 * i - pi / 2;

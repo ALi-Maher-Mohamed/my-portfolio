@@ -115,10 +115,10 @@ class _HexagonAnimatedImageState extends State<HexagonAnimatedImage>
                   // Main image in hexagon
                   ClipPath(
                     clipper: HexagonClipper(),
-                    child: SvgPicture.asset(
-                      'assets/MyPhoto/2.svg',
-                      height: 350,
-                      width: 300,
+                    child: Image.asset(
+                      'assets/MyPhoto/my_photo1.png',
+                      height: 450,
+                      width: 400,
                       fit: BoxFit.cover,
                     ),
                   ),
