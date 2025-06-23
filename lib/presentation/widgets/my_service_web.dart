@@ -18,6 +18,9 @@ class _MyServicesWebState extends State<MyServicesWeb>
   late Animation<Offset> _slideAnimation;
   late Animation<double> _scaleAnimation;
 
+  // Track the selected card index
+  int? _selectedIndex;
+
   @override
   void initState() {
     super.initState();
@@ -143,7 +146,7 @@ class _MyServicesWebState extends State<MyServicesWeb>
                           child: _buildServiceCard(0),
                         ),
                         const SizedBox(width: 20),
-                        // Web Development Card (Highlighted)
+                        // Web Development Card
                         Expanded(
                           child: _buildServiceCard(1),
                         ),
@@ -170,23 +173,21 @@ class _MyServicesWebState extends State<MyServicesWeb>
         'title': 'Web Design',
         'description':
             'I am professional Web Developer. I have designed more than 50 web template for my client. You can hire me for design your personal, business or other website template. You can trust me. I complied your work with your full satisfaction',
-        'isHighlighted': false,
       },
       {
         'title': 'Web Development',
         'description':
             'I am professional Web Developer. I have designed more than 50 web template for my client. You can hire me for design your personal, business or other website template. You can trust me. I complied your work with your full satisfaction',
-        'isHighlighted': true,
       },
       {
         'title': 'Graphic Design',
         'description':
             'I am professional Web designer. I have designed more than 50 web template for my client. You can hire me for design your personal, business or other website template. You can trust me. I complied your work with your full satisfaction',
-        'isHighlighted': false,
       },
     ];
 
     final service = services[index];
+    final isHighlighted = _selectedIndex == index;
 
     return TweenAnimationBuilder<double>(
       duration: Duration(milliseconds: 600 + (index * 200)),
@@ -199,7 +200,7 @@ class _MyServicesWebState extends State<MyServicesWeb>
               color: CustomColors.scaffold1,
               borderRadius: BorderRadius.circular(15),
               border: Border.all(
-                color: service['isHighlighted'] as bool
+                color: isHighlighted
                     ? const Color(0xFF00D4FF)
                     : Colors.transparent,
                 width: 1,
@@ -210,9 +211,18 @@ class _MyServicesWebState extends State<MyServicesWeb>
               child: InkWell(
                 borderRadius: BorderRadius.circular(15),
                 onTap: () {
-                  // Handle tap
+                  setState(() {
+                    _selectedIndex = index;
+                  });
                 },
                 child: Container(
+                  height: 500,
+                  constraints: const BoxConstraints(
+                    minHeight: 260,
+                    maxHeight: 600,
+                    minWidth: 260,
+                    maxWidth: 350,
+                  ),
                   padding: const EdgeInsets.all(30),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -223,7 +233,7 @@ class _MyServicesWebState extends State<MyServicesWeb>
                         style: TextStyle(
                           fontSize: 22,
                           fontWeight: FontWeight.bold,
-                          color: service['isHighlighted'] as bool
+                          color: isHighlighted
                               ? const Color(0xFF00D4FF)
                               : Colors.white,
                         ),
@@ -253,10 +263,10 @@ class _MyServicesWebState extends State<MyServicesWeb>
                             // Handle hire me button
                           },
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: service['isHighlighted'] as bool
+                            backgroundColor: isHighlighted
                                 ? const Color(0xFF00D4FF)
                                 : Colors.white,
-                            foregroundColor: service['isHighlighted'] as bool
+                            foregroundColor: isHighlighted
                                 ? Colors.white
                                 : const Color(0xFF4A5568),
                             padding: const EdgeInsets.symmetric(
@@ -269,9 +279,7 @@ class _MyServicesWebState extends State<MyServicesWeb>
                             elevation: 0,
                           ),
                           child: Text(
-                            service['isHighlighted'] as bool
-                                ? 'HIRE ME'
-                                : 'Hire Me',
+                            isHighlighted ? 'HIRE ME' : 'Hire Me',
                             style: TextStyle(
                               fontWeight: FontWeight.w600,
                               fontSize: 16,
@@ -304,9 +312,3 @@ extension AnimatedServiceCard on Widget {
     );
   }
 }
-
-// يمكنك استخدام الصفحة في التطبيق الخاص بك كالتالي:
-// Navigator.push(
-//   context,
-//   MaterialPageRoute(builder: (context) => const MyServicesPage()),
-// );

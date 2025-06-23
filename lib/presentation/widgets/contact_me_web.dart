@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class ContactMePage extends StatefulWidget {
-  const ContactMePage({Key? key}) : super(key: key);
+  const ContactMePage({super.key});
 
   @override
   State<ContactMePage> createState() => _ContactMePageState();
@@ -17,7 +17,6 @@ class _ContactMePageState extends State<ContactMePage>
 
   late Animation<double> _fadeAnimation;
   late Animation<Offset> _slideAnimation;
-  late Animation<double> _formAnimation;
   late Animation<double> _socialAnimation;
 
   final _formKey = GlobalKey<FormState>();
@@ -66,14 +65,6 @@ class _ContactMePageState extends State<ContactMePage>
     ).animate(CurvedAnimation(
       parent: _slideController,
       curve: Curves.elasticOut,
-    ));
-
-    _formAnimation = Tween<double>(
-      begin: 0.0,
-      end: 1.0,
-    ).animate(CurvedAnimation(
-      parent: _formController,
-      curve: Curves.easeOutBack,
     ));
 
     _socialAnimation = Tween<double>(

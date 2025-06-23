@@ -51,24 +51,25 @@ class _HomeViewState extends State<HomeView> {
               ),
               Column(
                 children: [
-                  if (constraints.maxWidth >= kMinDisktpWidth)
-                    WebHeader()
-                  else
+                  if (constraints.maxWidth >= kMinDisktpWidth) ...[
+                    WebHeader(),
+                    MainDesktop(
+                      screenSize: screenSize,
+                      screenWidth: screenWidth,
+                      screenHeight: screenHeight,
+                    ),
+                  ] else ...[
                     MobileHeader(
                       onLogoTap: () {},
                       onMenuTap: () {
                         scaffoldKey.currentState?.openEndDrawer();
                       },
                     ),
-                  if (constraints.maxWidth >= kMinDisktpWidth)
-                    MainDesktop(
-                      screenSize: screenSize,
-                      screenWidth: screenWidth,
-                      screenHeight: screenHeight,
-                    )
-                  else
                     MainMobile(
-                        screenHeight: screenHeight, screenWidth: screenWidth)
+                      screenHeight: screenHeight,
+                      screenWidth: screenWidth,
+                    ),
+                  ],
                 ],
               ),
             ]),
@@ -82,13 +83,13 @@ class _HomeViewState extends State<HomeView> {
           SkillsSectionWeb(),
           //skills
           Container(
-            height: 500,
+            height: screenHeight,
             width: double.infinity,
             decoration: BoxDecoration(color: CustomColors.scaffold2),
             child: MyServicesWeb(),
           ),
           Container(
-            height: 500,
+            height: screenHeight,
             width: double.infinity,
             decoration: BoxDecoration(color: CustomColors.scaffold2),
             child: ContactMePage(),

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:my_portfolio/core/styles/style.dart';
 import 'package:my_portfolio/presentation/widgets/side_logo.dart';
 
 class MobileHeader extends StatelessWidget {
