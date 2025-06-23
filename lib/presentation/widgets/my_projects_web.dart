@@ -18,6 +18,7 @@ class _MyProjectsWebState extends State<MyProjectsWeb>
   late Animation<double> _scaleAnimation;
 
   int? _hoveredIndex;
+  int? _selectedIndex; // Tracks the selected card
 
   @override
   void initState() {
@@ -91,7 +92,7 @@ class _MyProjectsWebState extends State<MyProjectsWeb>
       color: const Color(0xFF1A1A2E),
       padding: const EdgeInsets.all(40.0),
       child: Column(
-        mainAxisSize: MainAxisSize.min, // مهم: عشان ياخد المساحة الي محتاجها بس
+        mainAxisSize: MainAxisSize.min,
         children: [
           // Title Animation
           FadeTransition(
@@ -118,7 +119,7 @@ class _MyProjectsWebState extends State<MyProjectsWeb>
                         ),
                       ),
                       TextSpan(
-                        text: 'Portfolio',
+                        text: 'Projects',
                         style: TextStyle(
                           fontSize: 36,
                           fontWeight: FontWeight.bold,
@@ -132,30 +133,22 @@ class _MyProjectsWebState extends State<MyProjectsWeb>
             ),
           ),
 
-          // Portfolio Grid - بدون Expanded
+          // Portfolio Grid
           SlideTransition(
             position: _slideAnimation,
             child: ScaleTransition(
               scale: _scaleAnimation,
               child: LayoutBuilder(
                 builder: (context, constraints) {
-                  // حساب العرض المتاح
                   double availableWidth = constraints.maxWidth;
-
-                  // حساب عرض كل كارد (3 كاردز + 2 مسافات)
-                  double cardWidth =
-                      (availableWidth - 40) / 3; // 40 = 2 × 20 spacing
-                  double cardHeight = cardWidth / 1.4; // aspect ratio 1.4
-
-                  // حساب الارتفاع الكلي (2 صفوف + مسافة بينهم)
-                  double totalHeight =
-                      (cardHeight * 2) + 20; // 20 = spacing between rows
+                  double cardWidth = (availableWidth - 40) / 3;
+                  double cardHeight = cardWidth / 1.4;
+                  double totalHeight = (cardHeight * 2) + 20;
 
                   return SizedBox(
                     height: totalHeight,
                     child: GridView.builder(
-                      physics:
-                          const NeverScrollableScrollPhysics(), // منع السكرول
+                      physics: const NeverScrollableScrollPhysics(),
                       gridDelegate:
                           const SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: 3,
@@ -181,46 +174,45 @@ class _MyProjectsWebState extends State<MyProjectsWeb>
   Widget _buildPortfolioCard(int index) {
     final portfolioItems = [
       {
-        'title': 'Web Design',
-        'image': 'assets/web_design.jpg',
-        'category': 'Design',
-        'isHighlighted': index == 0,
+        'title': 'Bookly App',
+        'image': 'assets/images/Rectangle0.png',
+        'category': 'Flutter / MVVM',
+        'isHighlighted': true,
       },
       {
-        'title': 'Mobile App',
-        'image': 'assets/mobile_app.jpg',
-        'category': 'Development',
+        'title': 'MediCare Platform',
+        'image': 'assets/images/Rectangle.png',
+        'category': 'Medical / Web & Mobile',
+        'isHighlighted': true,
+      },
+      {
+        'title': 'E-Commerce Store',
+        'image': 'assets/images/Rectangle5.png',
+        'category': 'Shopping / Flutter',
         'isHighlighted': false,
       },
       {
-        'title': 'Gaming Setup',
-        'image': 'assets/gaming_setup.jpg',
-        'category': 'Hardware',
+        'title': 'Responsive Dashboard',
+        'image': 'assets/images/Rectangle6.png',
+        'category': 'UI / Responsive Design',
         'isHighlighted': false,
       },
       {
-        'title': 'Workspace',
-        'image': 'assets/workspace.jpg',
-        'category': 'Environment',
+        'title': 'News Reader App',
+        'image': 'assets/images/Rectangle7.png',
+        'category': 'News / Flutter',
         'isHighlighted': false,
       },
       {
-        'title': 'Accessories',
-        'image': 'assets/accessories.jpg',
-        'category': 'Hardware',
-        'isHighlighted': false,
-      },
-      {
-        'title': 'Keyboard',
-        'image': 'assets/keyboard.jpg',
-        'category': 'Hardware',
+        'title': 'Weather Forecast App',
+        'image': 'assets/images/Rectangle9.png',
+        'category': 'Utility / API Integration',
         'isHighlighted': false,
       },
     ];
-
     final item = portfolioItems[index];
     final isHovered = _hoveredIndex == index;
-    final isHighlighted = item['isHighlighted'] as bool;
+    final isSelected = _selectedIndex == index;
 
     return TweenAnimationBuilder<double>(
       duration: Duration(milliseconds: 600 + (index * 100)),
@@ -244,7 +236,7 @@ class _MyProjectsWebState extends State<MyProjectsWeb>
               curve: Curves.easeInOut,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(15),
-                boxShadow: isHovered || isHighlighted
+                boxShadow: isHovered || isSelected
                     ? [
                         BoxShadow(
                           color: const Color(0xFF00D4FF).withOpacity(0.4),
@@ -268,38 +260,48 @@ class _MyProjectsWebState extends State<MyProjectsWeb>
                         ),
                       ],
                 border: Border.all(
-                  color: isHighlighted
-                      ? const Color(0xFF00D4FF)
-                      : Colors.transparent,
-                  width: isHighlighted ? 2 : 0,
+                  color:
+                      isSelected ? const Color(0xFF00D4FF) : Colors.transparent,
+                  width: isSelected ? 2 : 0,
                 ),
               ),
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(15),
                 child: Container(
                   decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                      begin: Alignment.topLeft,
-                      end: Alignment.bottomRight,
-                      colors: isHighlighted
-                          ? [
-                              const Color(0xFF00D4FF).withOpacity(0.8),
-                              const Color(0xFF0EA5E9).withOpacity(0.6),
-                              const Color(0xFF1E293B).withOpacity(0.9),
-                            ]
-                          : [
-                              const Color(0xFF374151).withOpacity(0.8),
-                              const Color(0xFF1F2937).withOpacity(0.9),
-                              const Color(0xFF111827),
-                            ],
-                    ),
+                    image: !(isHovered || isSelected)
+                        ? DecorationImage(
+                            image: AssetImage(item['image'] as String),
+                            fit: BoxFit.cover,
+                          )
+                        : null,
+                    gradient: isHovered || isSelected
+                        ? LinearGradient(
+                            begin: Alignment.topLeft,
+                            end: Alignment.bottomRight,
+                            colors: isSelected
+                                ? [
+                                    const Color(0xFF00D4FF).withOpacity(0.8),
+                                    const Color(0xFF0EA5E9).withOpacity(0.6),
+                                    const Color(0xFF1E293B).withOpacity(0.9),
+                                  ]
+                                : [
+                                    const Color(0xFF374151).withOpacity(0.8),
+                                    const Color(0xFF1F2937).withOpacity(0.9),
+                                    const Color(0xFF111827),
+                                  ],
+                          )
+                        : null,
                   ),
                   child: Material(
                     color: Colors.transparent,
                     child: InkWell(
                       borderRadius: BorderRadius.circular(15),
                       onTap: () {
-                        // Handle portfolio item tap
+                        setState(() {
+                          _selectedIndex =
+                              _selectedIndex == index ? null : index;
+                        });
                         print('Portfolio item ${index} tapped');
                       },
                       child: Stack(
@@ -332,7 +334,7 @@ class _MyProjectsWebState extends State<MyProjectsWeb>
                                     width: 60,
                                     height: 60,
                                     decoration: BoxDecoration(
-                                      color: isHighlighted
+                                      color: isSelected
                                           ? Colors.white.withOpacity(0.2)
                                           : const Color(0xFF00D4FF)
                                               .withOpacity(0.2),
@@ -341,7 +343,7 @@ class _MyProjectsWebState extends State<MyProjectsWeb>
                                     child: Icon(
                                       _getIconForIndex(index),
                                       size: 30,
-                                      color: isHighlighted
+                                      color: isSelected
                                           ? Colors.white
                                           : const Color(0xFF00D4FF),
                                     ),
@@ -355,7 +357,7 @@ class _MyProjectsWebState extends State<MyProjectsWeb>
                                     style: TextStyle(
                                       fontSize: 18,
                                       fontWeight: FontWeight.bold,
-                                      color: isHighlighted
+                                      color: isSelected
                                           ? Colors.white
                                           : const Color(0xFF00D4FF),
                                     ),
@@ -371,7 +373,7 @@ class _MyProjectsWebState extends State<MyProjectsWeb>
                                       vertical: 4,
                                     ),
                                     decoration: BoxDecoration(
-                                      color: isHighlighted
+                                      color: isSelected
                                           ? Colors.white.withOpacity(0.2)
                                           : const Color(0xFF00D4FF)
                                               .withOpacity(0.1),
@@ -381,7 +383,7 @@ class _MyProjectsWebState extends State<MyProjectsWeb>
                                       item['category'] as String,
                                       style: TextStyle(
                                         fontSize: 12,
-                                        color: isHighlighted
+                                        color: isSelected
                                             ? Colors.white.withOpacity(0.8)
                                             : const Color(0xFF00D4FF)
                                                 .withOpacity(0.8),

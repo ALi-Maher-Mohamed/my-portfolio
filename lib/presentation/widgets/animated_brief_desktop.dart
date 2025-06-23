@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:visibility_detector/visibility_detector.dart';
 
 class AnimatedPortfolioBrief extends StatefulWidget {
   const AnimatedPortfolioBrief({super.key});
@@ -9,7 +10,7 @@ class AnimatedPortfolioBrief extends StatefulWidget {
 }
 
 class _AnimatedPortfolioBriefState extends State<AnimatedPortfolioBrief>
-    with TickerProviderStateMixin {
+    with TickerProviderStateMixin, AutomaticKeepAliveClientMixin {
   late AnimationController _fadeController;
   late AnimationController _slideController;
   late AnimationController _typewriterController;
@@ -24,6 +25,10 @@ class _AnimatedPortfolioBriefState extends State<AnimatedPortfolioBrief>
   String _displayedText = '';
   final String _fullText = 'Flutter Developer';
   int _currentIndex = 0;
+  bool _hasStartedAnimations = false;
+
+  @override
+  bool get wantKeepAlive => true;
 
   @override
   void initState() {
@@ -31,27 +36,27 @@ class _AnimatedPortfolioBriefState extends State<AnimatedPortfolioBrief>
 
     // Initialize animation controllers
     _fadeController = AnimationController(
-      duration: Duration(milliseconds: 1000),
+      duration: const Duration(milliseconds: 1000),
       vsync: this,
     );
 
     _slideController = AnimationController(
-      duration: Duration(milliseconds: 1200),
+      duration: const Duration(milliseconds: 1200),
       vsync: this,
     );
 
     _typewriterController = AnimationController(
-      duration: Duration(milliseconds: 2000),
+      duration: const Duration(milliseconds: 2000),
       vsync: this,
     );
 
     _bounceController = AnimationController(
-      duration: Duration(milliseconds: 600),
+      duration: const Duration(milliseconds: 600),
       vsync: this,
     );
 
     _iconController = AnimationController(
-      duration: Duration(milliseconds: 1500),
+      duration: const Duration(milliseconds: 1500),
       vsync: this,
     );
 
@@ -65,7 +70,7 @@ class _AnimatedPortfolioBriefState extends State<AnimatedPortfolioBrief>
     ));
 
     _slideAnimation = Tween<Offset>(
-      begin: Offset(-1.0, 0.0),
+      begin: const Offset(-1.0, 0.0),
       end: Offset.zero,
     ).animate(CurvedAnimation(
       parent: _slideController,
@@ -87,48 +92,58 @@ class _AnimatedPortfolioBriefState extends State<AnimatedPortfolioBrief>
       parent: _iconController,
       curve: Curves.elasticOut,
     ));
-
-    // Start animations
-    _startAnimations();
   }
 
   void _startAnimations() async {
+    if (_hasStartedAnimations || !mounted) return;
+    _hasStartedAnimations = true;
+
     _fadeController.forward();
 
-    await Future.delayed(Duration(milliseconds: 300));
+    await Future.delayed(const Duration(milliseconds: 300));
+    if (!mounted) return;
     _slideController.forward();
 
-    // Start typewriter effect for Flutter Developer
-    await Future.delayed(Duration(milliseconds: 600));
+    await Future.delayed(const Duration(milliseconds: 600));
+    if (!mounted) return;
     _startTypewriter();
 
-    // Bounce buttons
-    await Future.delayed(Duration(milliseconds: 1500));
+    await Future.delayed(const Duration(milliseconds: 1500));
+    if (!mounted) return;
     _bounceController.forward();
 
-    // Animate icons
-    await Future.delayed(Duration(milliseconds: 300));
+    await Future.delayed(const Duration(milliseconds: 300));
+    if (!mounted) return;
     _iconController.forward();
   }
 
   void _startTypewriter() {
-    _typewriterController.addListener(() {
-      final progress = _typewriterController.value;
-      final targetIndex = (progress * _fullText.length).round();
+    if (!_typewriterController.isAnimating && mounted) {
+      _typewriterController.addListener(() {
+        if (!mounted) return;
+        final progress = _typewriterController.value;
+        final targetIndex = (progress * _fullText.length).round();
 
-      if (targetIndex != _currentIndex) {
-        setState(() {
-          _currentIndex = targetIndex;
-          _displayedText = _fullText.substring(0, _currentIndex);
-        });
-      }
-    });
+        if (targetIndex != _currentIndex) {
+          setState(() {
+            _currentIndex = targetIndex;
+            _displayedText = _fullText.substring(0, _currentIndex);
+          });
+        }
+      });
 
-    _typewriterController.forward();
+      _typewriterController.forward();
+    }
   }
 
   @override
   void dispose() {
+    _fadeController.stop();
+    _slideController.stop();
+    _typewriterController.stop();
+    _bounceController.stop();
+    _iconController.stop();
+
     _fadeController.dispose();
     _slideController.dispose();
     _typewriterController.dispose();
@@ -139,182 +154,191 @@ class _AnimatedPortfolioBriefState extends State<AnimatedPortfolioBrief>
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        // Animated Name
-        FadeTransition(
-          opacity: _fadeAnimation,
-          child: ShaderMask(
-            shaderCallback: (bounds) => LinearGradient(
-              colors: [Colors.cyanAccent, Colors.white, Colors.cyanAccent],
-              stops: [0.0, 0.5, 1.0],
-            ).createShader(bounds),
-            child: Text(
-              "ALI MAHER",
-              style: TextStyle(
-                fontSize: 36,
-                fontWeight: FontWeight.bold,
-                color: Colors.white,
-                letterSpacing: 3,
-                shadows: [
-                  Shadow(
-                    blurRadius: 10,
-                    color: Colors.cyanAccent.withOpacity(0.5),
-                    offset: Offset(0, 0),
+    super.build(context); // Required for AutomaticKeepAliveClientMixin
+    return VisibilityDetector(
+      key: const Key('portfolio-brief'),
+      onVisibilityChanged: (info) {
+        if (info.visibleFraction > 0.1 && !_hasStartedAnimations) {
+          _startAnimations();
+        }
+      },
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          // Animated Name
+          FadeTransition(
+            opacity: _fadeAnimation,
+            child: ShaderMask(
+              shaderCallback: (bounds) => LinearGradient(
+                colors: [Colors.cyanAccent, Colors.white, Colors.cyanAccent],
+                stops: [0.0, 0.5, 1.0],
+              ).createShader(bounds),
+              child: Text(
+                "ALI MAHER",
+                style: TextStyle(
+                  fontSize: 36,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white,
+                  letterSpacing: 3,
+                  shadows: [
+                    Shadow(
+                      blurRadius: 10,
+                      color: Colors.cyanAccent.withOpacity(0.5),
+                      offset: Offset(0, 0),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+
+          const SizedBox(height: 8),
+
+          // Animated Introduction with Typewriter Effect
+          SlideTransition(
+            position: _slideAnimation,
+            child: RichText(
+              text: TextSpan(
+                children: [
+                  TextSpan(
+                    text: "And I'm a ",
+                    style: TextStyle(
+                      fontSize: 22,
+                      color: Colors.white,
+                    ),
                   ),
+                  TextSpan(
+                    text: _displayedText,
+                    style: TextStyle(
+                      fontSize: 22,
+                      color: Colors.cyanAccent,
+                      fontWeight: FontWeight.bold,
+                      shadows: [
+                        Shadow(
+                          blurRadius: 5,
+                          color: Colors.cyanAccent.withOpacity(0.3),
+                          offset: Offset(0, 0),
+                        ),
+                      ],
+                    ),
+                  ),
+                  // Blinking cursor
+                  if (_currentIndex < _fullText.length)
+                    WidgetSpan(
+                      child: AnimatedBuilder(
+                        animation: _typewriterController,
+                        builder: (context, child) {
+                          return Opacity(
+                            opacity:
+                                (DateTime.now().millisecondsSinceEpoch % 1000 <
+                                        500)
+                                    ? 1.0
+                                    : 0.0,
+                            child: Text(
+                              "|",
+                              style: TextStyle(
+                                fontSize: 22,
+                                color: Colors.cyanAccent,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          );
+                        },
+                      ),
+                    ),
                 ],
               ),
             ),
           ),
-        ),
 
-        SizedBox(height: 8),
+          const SizedBox(height: 16),
 
-        // Animated Introduction with Typewriter Effect
-        SlideTransition(
-          position: _slideAnimation,
-          child: RichText(
-            text: TextSpan(
-              children: [
-                TextSpan(
-                  text: "And I'm a ",
-                  style: TextStyle(
-                    fontSize: 22,
-                    color: Colors.white,
-                  ),
+          // Animated Description
+          SlideTransition(
+            position: Tween<Offset>(
+              begin: const Offset(0.0, 1.0),
+              end: Offset.zero,
+            ).animate(CurvedAnimation(
+              parent: _slideController,
+              curve: const Interval(0.3, 1.0, curve: Curves.easeOut),
+            )),
+            child: FadeTransition(
+              opacity: Tween<double>(begin: 0.0, end: 1.0).animate(
+                CurvedAnimation(
+                  parent: _slideController,
+                  curve: const Interval(0.3, 1.0, curve: Curves.easeIn),
                 ),
-                TextSpan(
-                  text: _displayedText,
-                  style: TextStyle(
-                    fontSize: 22,
-                    color: Colors.cyanAccent,
-                    fontWeight: FontWeight.bold,
-                    shadows: [
-                      Shadow(
-                        blurRadius: 5,
-                        color: Colors.cyanAccent.withOpacity(0.3),
-                        offset: Offset(0, 0),
-                      ),
+              ),
+              child: Container(
+                padding: const EdgeInsets.all(16),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(12),
+                  gradient: LinearGradient(
+                    colors: [
+                      Colors.cyanAccent.withOpacity(0.1),
+                      Colors.transparent,
                     ],
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                  ),
+                  border: Border.all(
+                    color: Colors.cyanAccent.withOpacity(0.2),
+                    width: 1,
                   ),
                 ),
-                // Blinking cursor
-                if (_currentIndex < _fullText.length)
-                  WidgetSpan(
-                    child: AnimatedBuilder(
-                      animation: _typewriterController,
-                      builder: (context, child) {
-                        return Opacity(
-                          opacity:
-                              (DateTime.now().millisecondsSinceEpoch % 1000 <
-                                      500)
-                                  ? 1.0
-                                  : 0.0,
-                          child: Text(
-                            "|",
-                            style: TextStyle(
-                              fontSize: 22,
-                              color: Colors.cyanAccent,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        );
-                      },
-                    ),
+                child: Text(
+                  "I'm a mobile app developer with strong skills in Flutter, Dart,\n"
+                  "Firebase, API integration, UI/UX, and clean architecture.\n"
+                  "I have almost 2 years of experience and all my projects are\n"
+                  "delivered with high quality and client satisfaction.",
+                  style: TextStyle(
+                    fontSize: 16,
+                    color: Colors.white70,
+                    height: 1.6,
                   ),
+                ),
+              ),
+            ),
+          ),
+
+          const SizedBox(height: 24),
+
+          // Animated Social Icons
+          ScaleTransition(
+            scale: _iconAnimation,
+            child: Row(
+              children: [
+                _buildAnimatedIcon(Icons.facebook, 0),
+                _buildAnimatedIcon(Icons.link, 100),
+                _buildAnimatedIcon(Icons.mail, 200),
+                _buildAnimatedIcon(Icons.code, 300),
               ],
             ),
           ),
-        ),
 
-        SizedBox(height: 16),
+          const SizedBox(height: 20),
 
-        // Animated Description
-        SlideTransition(
-          position: Tween<Offset>(
-            begin: Offset(0.0, 1.0),
-            end: Offset.zero,
-          ).animate(CurvedAnimation(
-            parent: _slideController,
-            curve: Interval(0.3, 1.0, curve: Curves.easeOut),
-          )),
-          child: FadeTransition(
-            opacity: Tween<double>(begin: 0.0, end: 1.0).animate(
-              CurvedAnimation(
-                parent: _slideController,
-                curve: Interval(0.3, 1.0, curve: Curves.easeIn),
-              ),
-            ),
-            child: Container(
-              padding: EdgeInsets.all(16),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(12),
-                gradient: LinearGradient(
-                  colors: [
-                    Colors.cyanAccent.withOpacity(0.1),
-                    Colors.transparent,
-                  ],
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
+          // Animated Buttons
+          ScaleTransition(
+            scale: _bounceAnimation,
+            child: Row(
+              children: [
+                _buildAnimatedButton(
+                  "Download CV",
+                  true,
+                  () {},
                 ),
-                border: Border.all(
-                  color: Colors.cyanAccent.withOpacity(0.2),
-                  width: 1,
+                const SizedBox(width: 12),
+                _buildAnimatedButton(
+                  "Portfolio",
+                  false,
+                  () {},
                 ),
-              ),
-              child: Text(
-                "I'm a mobile app developer with strong skills in Flutter, Dart,\n"
-                "Firebase, API integration, UI/UX, and clean architecture.\n"
-                "I have almost 2 years of experience and all my projects are\n"
-                "delivered with high quality and client satisfaction.",
-                style: TextStyle(
-                  fontSize: 16,
-                  color: Colors.white70,
-                  height: 1.6,
-                ),
-              ),
+              ],
             ),
           ),
-        ),
-
-        SizedBox(height: 24),
-
-        // Animated Social Icons
-        ScaleTransition(
-          scale: _iconAnimation,
-          child: Row(
-            children: [
-              _buildAnimatedIcon(Icons.facebook, 0),
-              _buildAnimatedIcon(Icons.link, 100),
-              _buildAnimatedIcon(Icons.mail, 200),
-              _buildAnimatedIcon(Icons.code, 300),
-            ],
-          ),
-        ),
-
-        SizedBox(height: 20),
-
-        // Animated Buttons
-        ScaleTransition(
-          scale: _bounceAnimation,
-          child: Row(
-            children: [
-              _buildAnimatedButton(
-                "Download CV",
-                true,
-                () {},
-              ),
-              SizedBox(width: 12),
-              _buildAnimatedButton(
-                "Portfolio",
-                false,
-                () {},
-              ),
-            ],
-          ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 
@@ -337,13 +361,13 @@ class _AnimatedPortfolioBriefState extends State<AnimatedPortfolioBrief>
         return Transform.scale(
           scale: delayedAnimation.value,
           child: Container(
-            margin: EdgeInsets.only(right: 8),
+            margin: const EdgeInsets.only(right: 8),
             decoration: BoxDecoration(
               shape: BoxShape.circle,
               gradient: LinearGradient(
                 colors: [
                   Colors.cyanAccent.withOpacity(0.2),
-                  Colors.transparent
+                  Colors.transparent,
                 ],
               ),
             ),
@@ -352,7 +376,6 @@ class _AnimatedPortfolioBriefState extends State<AnimatedPortfolioBrief>
               color: Colors.cyanAccent,
               iconSize: 24,
               onPressed: () {
-                // Add haptic feedback
                 HapticFeedback.lightImpact();
               },
             ),
@@ -368,7 +391,7 @@ class _AnimatedPortfolioBriefState extends State<AnimatedPortfolioBrief>
       onEnter: (_) {},
       onExit: (_) {},
       child: AnimatedContainer(
-        duration: Duration(milliseconds: 200),
+        duration: const Duration(milliseconds: 200),
         child: ElevatedButton(
           onPressed: onPressed,
           style: ElevatedButton.styleFrom(
@@ -376,8 +399,8 @@ class _AnimatedPortfolioBriefState extends State<AnimatedPortfolioBrief>
             foregroundColor: isPrimary ? Colors.black : Colors.cyanAccent,
             side: isPrimary
                 ? null
-                : BorderSide(color: Colors.cyanAccent, width: 2),
-            padding: EdgeInsets.symmetric(horizontal: 32, vertical: 16),
+                : const BorderSide(color: Colors.cyanAccent, width: 2),
+            padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(30),
             ),
@@ -386,7 +409,7 @@ class _AnimatedPortfolioBriefState extends State<AnimatedPortfolioBrief>
           ),
           child: Text(
             text,
-            style: TextStyle(
+            style: const TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: 16,
             ),
