@@ -221,13 +221,16 @@ class AboutMeSection extends StatelessWidget {
                     BoxShadow(
                       color: Colors.black.withOpacity(0.25),
                       blurRadius: 25,
-                      offset: Offset(0, 10),
+                      offset: Offset(-5, 10),
                     ),
                   ],
                 ),
                 child: CircleAvatar(
                   radius: avatarRadius,
-                  backgroundImage: AssetImage("assets/MyPhoto/Ali.png"),
+                  backgroundImage: Image.asset(
+                    "assets/MyPhoto/profile.png",
+                    fit: BoxFit.cover, // Ensure the image covers the circle
+                  ).image,
                   backgroundColor: Colors.grey[200],
                 ),
               ),

@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:my_portfolio/core/constant/launch_url.dart';
+import 'package:url_launcher/url_launcher.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class ContactMePage extends StatefulWidget {
   const ContactMePage({super.key});
@@ -209,7 +212,7 @@ class _ContactMePageState extends State<ContactMePage>
                                           ),
                                           const SizedBox(width: 8),
                                           const Text(
-                                            'RIEAD',
+                                            'AM',
                                             style: TextStyle(
                                               color: Colors.white,
                                               fontWeight: FontWeight.bold,
@@ -227,7 +230,7 @@ class _ContactMePageState extends State<ContactMePage>
                                   FadeTransition(
                                     opacity: _fadeAnimation,
                                     child: const Text(
-                                      'I am professional Web designer. I have designed more than 50 web template for my client. You can hire me for design your personal, business or other website template. You can trust me. I complied your work with your full satisfaction',
+                                      'I am a passionate Flutter developer with hands-on experience in building high-quality mobile apps. I’ve developed more than 10 complete applications using clean architecture, state management, Firebase, and REST APIs. Whether it’s a business, medical, or e-commerce app, I deliver modern and responsive UI with top performance. Your satisfaction and app usability are always my priority.',
                                       style: TextStyle(
                                         color: Colors.white70,
                                         fontSize: 16,
@@ -270,11 +273,35 @@ class _ContactMePageState extends State<ContactMePage>
 
   Widget _buildSocialIcons() {
     final socialIcons = [
-      {'icon': Icons.phone, 'color': Color(0xFF00D4FF)},
-      {'icon': Icons.email, 'color': Color(0xFF00D4FF)},
-      {'icon': Icons.work, 'color': Color(0xFF00D4FF)},
-      {'icon': Icons.location_on, 'color': Color(0xFF00D4FF)},
-      {'icon': Icons.facebook, 'color': Color(0xFF00D4FF)},
+      {
+        'icon': Icons.phone,
+        'color': Color(0xFF00D4FF),
+        'onTap': () => launchDialer('+01278408531')
+      },
+      {
+        'icon': FontAwesomeIcons.whatsapp,
+        'color': Color(0xFF00D4FF),
+        'onTap': () =>
+            launchCustomUrl(context, url: 'https://wa.me/+01278408531')
+      },
+      {
+        'icon': Icons.email,
+        'color': Color(0xFF00D4FF),
+        'onTap': () => launchCustomUrl(context,
+            url: 'mailto:ali.maher0013@gmail.com?subject=Hello')
+      },
+      {
+        'icon': Icons.location_on,
+        'color': Color(0xFF00D4FF),
+        'onTap': () => launchCustomUrl(context,
+            url: 'https://maps.app.goo.gl/ume2cr9TWhpu8oxe6')
+      },
+      {
+        'icon': Icons.facebook,
+        'color': Color(0xFF00D4FF),
+        'onTap': () => launchCustomUrl(context,
+            url: 'https://www.facebook.com/ali.maher.403247')
+      },
     ];
 
     return ScaleTransition(
@@ -298,7 +325,7 @@ class _ContactMePageState extends State<ContactMePage>
                       borderRadius: BorderRadius.circular(25),
                       onTap: () {
                         HapticFeedback.lightImpact();
-                        // Handle social media tap
+                        social['onTap']();
                       },
                       child: Container(
                         width: 50,
