@@ -7,6 +7,7 @@ import 'package:my_portfolio/presentation/widgets/mobile_drawer.dart';
 import 'package:my_portfolio/presentation/widgets/mobile_header.dart';
 import 'package:my_portfolio/presentation/widgets/my_service_web.dart';
 import 'package:my_portfolio/presentation/widgets/my_skills_web.dart';
+import 'package:my_portfolio/presentation/widgets/my_projects_web.dart';
 import 'package:my_portfolio/presentation/widgets/web_header.dart';
 
 import '../widgets/main_desktop.dart';
@@ -36,7 +37,6 @@ class _HomeViewState extends State<HomeView> {
           SizedBox(
             height: screenHeight,
             width: double.infinity,
-            // decoration: BoxDecoration(color: CustomColors.scaffold1),
             child: Stack(children: [
               SizedBox(
                 height: screenHeight,
@@ -74,11 +74,8 @@ class _HomeViewState extends State<HomeView> {
               ),
             ]),
           ),
-          Container(
-            width: screenWidth,
-            decoration: BoxDecoration(color: CustomColors.scaffold2),
-            child: AboutMeSection(),
-          ),
+          AboutMeSection(),
+
           //project
           SkillsSectionWeb(),
           //skills
@@ -87,6 +84,12 @@ class _HomeViewState extends State<HomeView> {
             width: double.infinity,
             decoration: BoxDecoration(color: CustomColors.scaffold2),
             child: MyServicesWeb(),
+          ),
+
+          Container(
+            width: double.infinity,
+            decoration: BoxDecoration(color: CustomColors.scaffold2),
+            child: MyProjectsWeb(),
           ),
           Container(
             height: screenHeight,

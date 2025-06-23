@@ -18,7 +18,6 @@ class _MyServicesWebState extends State<MyServicesWeb>
   late Animation<Offset> _slideAnimation;
   late Animation<double> _scaleAnimation;
 
-  // Track the selected card index
   int? _selectedIndex;
 
   @override
@@ -88,81 +87,77 @@ class _MyServicesWebState extends State<MyServicesWeb>
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.all(40.0),
-          child: Column(
-            children: [
-              // Title Animation
-              FadeTransition(
-                opacity: _fadeAnimation,
-                child: SlideTransition(
-                  position: Tween<Offset>(
-                    begin: const Offset(0, -0.5),
-                    end: Offset.zero,
-                  ).animate(CurvedAnimation(
-                    parent: _slideController,
-                    curve: Curves.easeOutBack,
-                  )),
-                  child: Container(
-                    margin: const EdgeInsets.only(bottom: 60),
-                    child: RichText(
-                      text: TextSpan(
-                        children: [
-                          TextSpan(
-                            text: 'My ',
-                            style: TextStyle(
-                              fontSize: 36,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white,
-                            ),
-                          ),
-                          TextSpan(
-                            text: 'Services',
-                            style: TextStyle(
-                              fontSize: 36,
-                              fontWeight: FontWeight.bold,
-                              color: Color(0xFF00D4FF),
-                            ),
-                          ),
-                        ],
+    return Padding(
+      padding: const EdgeInsets.all(40.0),
+      child: Column(
+        children: [
+          // Title Animation
+          FadeTransition(
+            opacity: _fadeAnimation,
+            child: SlideTransition(
+              position: Tween<Offset>(
+                begin: const Offset(0, -0.5),
+                end: Offset.zero,
+              ).animate(CurvedAnimation(
+                parent: _slideController,
+                curve: Curves.easeOutBack,
+              )),
+              child: Container(
+                margin: const EdgeInsets.only(bottom: 60),
+                child: RichText(
+                  text: TextSpan(
+                    children: [
+                      TextSpan(
+                        text: 'My ',
+                        style: TextStyle(
+                          fontSize: 36,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                        ),
                       ),
-                    ),
+                      TextSpan(
+                        text: 'Services',
+                        style: TextStyle(
+                          fontSize: 36,
+                          fontWeight: FontWeight.bold,
+                          color: Color(0xFF00D4FF),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ),
-
-              // Services Row - Three cards side by side
-              Expanded(
-                child: SlideTransition(
-                  position: _slideAnimation,
-                  child: ScaleTransition(
-                    scale: _scaleAnimation,
-                    child: Row(
-                      children: [
-                        // Web Design Card
-                        Expanded(
-                          child: _buildServiceCard(0),
-                        ),
-                        const SizedBox(width: 20),
-                        // Web Development Card
-                        Expanded(
-                          child: _buildServiceCard(1),
-                        ),
-                        const SizedBox(width: 20),
-                        // Graphic Design Card
-                        Expanded(
-                          child: _buildServiceCard(2),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-            ],
+            ),
           ),
-        ),
+
+          // Services Row - Three cards side by side
+          Expanded(
+            child: SlideTransition(
+              position: _slideAnimation,
+              child: ScaleTransition(
+                scale: _scaleAnimation,
+                child: Row(
+                  children: [
+                    // Web Design Card
+                    Expanded(
+                      child: _buildServiceCard(0),
+                    ),
+                    const SizedBox(width: 20),
+                    // Web Development Card
+                    Expanded(
+                      child: _buildServiceCard(1),
+                    ),
+                    const SizedBox(width: 20),
+                    // Graphic Design Card
+                    Expanded(
+                      child: _buildServiceCard(2),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
