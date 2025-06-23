@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:my_portfolio/core/constant/launch_url.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:visibility_detector/visibility_detector.dart';
 
 class AnimatedPortfolioBrief extends StatefulWidget {
@@ -308,10 +310,14 @@ class _AnimatedPortfolioBriefState extends State<AnimatedPortfolioBrief>
             scale: _iconAnimation,
             child: Row(
               children: [
-                _buildAnimatedIcon(Icons.facebook, 0),
-                _buildAnimatedIcon(Icons.link, 100),
-                _buildAnimatedIcon(Icons.mail, 200),
-                _buildAnimatedIcon(Icons.code, 300),
+                _buildAnimatedIcon(Icons.facebook, 0,
+                    url: "https://www.facebook.com/ali.maher.403247"),
+                _buildAnimatedIcon(Icons.link, 100,
+                    url: "https://www.linkedin.com/in/ali-maher-maher"),
+                _buildAnimatedIcon(Icons.mail, 200,
+                    url: "https://workspace.google.com/intl/en-US/gmail/"),
+                _buildAnimatedIcon(Icons.code, 300,
+                    url: "https://github.com/ALi-Maher-Mohamed"),
               ],
             ),
           ),
@@ -342,7 +348,7 @@ class _AnimatedPortfolioBriefState extends State<AnimatedPortfolioBrief>
     );
   }
 
-  Widget _buildAnimatedIcon(IconData icon, int delay) {
+  Widget _buildAnimatedIcon(IconData icon, int delay, {required String url}) {
     return AnimatedBuilder(
       animation: _iconController,
       builder: (context, child) {
@@ -357,7 +363,6 @@ class _AnimatedPortfolioBriefState extends State<AnimatedPortfolioBrief>
             curve: Curves.elasticOut,
           ),
         ));
-
         return Transform.scale(
           scale: delayedAnimation.value,
           child: Container(
@@ -377,6 +382,7 @@ class _AnimatedPortfolioBriefState extends State<AnimatedPortfolioBrief>
               iconSize: 24,
               onPressed: () {
                 HapticFeedback.lightImpact();
+                launchCustomUrl(context, url: url);
               },
             ),
           ),
