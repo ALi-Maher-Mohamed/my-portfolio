@@ -5,15 +5,8 @@ List<String> navTiltles = [
   'About',
   'Skills',
   'Services',
+  'Projects',
   'Contact',
-];
-
-List<Function()> navOnPressed = [
-  () {},
-  () {},
-  () {},
-  () {},
-  () {},
 ];
 
 List<IconData> navIcons = [
@@ -21,5 +14,6 @@ List<IconData> navIcons = [
   Icons.person,
   Icons.code,
   Icons.work,
+  Icons.folder_open,
   Icons.mail,
 ];
