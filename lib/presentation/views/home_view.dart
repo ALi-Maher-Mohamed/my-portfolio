@@ -119,7 +119,6 @@ class _HomeViewState extends State<HomeView> {
               controller: _scrollController,
               index: 3,
               child: Container(
-                height: screenHeight,
                 width: double.infinity,
                 decoration: BoxDecoration(color: CustomColors.scaffold2),
                 child: MyServicesWeb(),

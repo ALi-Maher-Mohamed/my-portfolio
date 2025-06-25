@@ -1,428 +1,322 @@
+import 'package:Ali_Maher/core/constant/colors.dart';
+import 'package:Ali_Maher/core/constant/launch_url.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 
-class MyProjectsWeb extends StatefulWidget {
+class MyProjectsWeb extends StatelessWidget {
   const MyProjectsWeb({super.key});
 
   @override
-  State<MyProjectsWeb> createState() => _MyProjectsWebState();
-}
-
-class _MyProjectsWebState extends State<MyProjectsWeb>
-    with TickerProviderStateMixin {
-  late AnimationController _fadeController;
-  late AnimationController _slideController;
-  late AnimationController _scaleController;
-
-  late Animation<double> _fadeAnimation;
-  late Animation<Offset> _slideAnimation;
-  late Animation<double> _scaleAnimation;
-
-  int? _hoveredIndex;
-  int? _selectedIndex; // Tracks the selected card
-
-  @override
-  void initState() {
-    super.initState();
-
-    _fadeController = AnimationController(
-      duration: const Duration(milliseconds: 1000),
-      vsync: this,
-    );
-
-    _slideController = AnimationController(
-      duration: const Duration(milliseconds: 1200),
-      vsync: this,
-    );
-
-    _scaleController = AnimationController(
-      duration: const Duration(milliseconds: 800),
-      vsync: this,
-    );
-
-    _fadeAnimation = Tween<double>(
-      begin: 0.0,
-      end: 1.0,
-    ).animate(CurvedAnimation(
-      parent: _fadeController,
-      curve: Curves.easeInOut,
-    ));
-
-    _slideAnimation = Tween<Offset>(
-      begin: const Offset(0, 0.5),
-      end: Offset.zero,
-    ).animate(CurvedAnimation(
-      parent: _slideController,
-      curve: Curves.elasticOut,
-    ));
-
-    _scaleAnimation = Tween<double>(
-      begin: 0.8,
-      end: 1.0,
-    ).animate(CurvedAnimation(
-      parent: _scaleController,
-      curve: Curves.bounceOut,
-    ));
-
-    // Start animations
-    Future.delayed(const Duration(milliseconds: 300), () {
-      _fadeController.forward();
-    });
-
-    Future.delayed(const Duration(milliseconds: 500), () {
-      _slideController.forward();
-    });
-
-    Future.delayed(const Duration(milliseconds: 700), () {
-      _scaleController.forward();
-    });
-  }
-
-  @override
-  void dispose() {
-    _fadeController.dispose();
-    _slideController.dispose();
-    _scaleController.dispose();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
+    final isLargeScreen = screenWidth > 1200;
+    final isMediumScreen = screenWidth > 900 && screenWidth <= 1200;
+
     return Container(
+      color: CustomColors.scaffold2,
       width: double.infinity,
-      color: const Color(0xFF1A1A2E),
-      padding: const EdgeInsets.all(40.0),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          // Title Animation
-          FadeTransition(
-            opacity: _fadeAnimation,
-            child: SlideTransition(
-              position: Tween<Offset>(
-                begin: const Offset(0, -0.5),
-                end: Offset.zero,
-              ).animate(CurvedAnimation(
-                parent: _slideController,
-                curve: Curves.easeOutBack,
-              )),
-              child: Container(
-                margin: const EdgeInsets.only(bottom: 60),
-                child: RichText(
-                  text: const TextSpan(
+      padding: EdgeInsets.symmetric(
+        horizontal: _buildHorizontalPadding(screenWidth),
+        vertical: _getVerticalPadding(screenWidth),
+      ),
+      child: ConstrainedBox(
+        constraints: const BoxConstraints(maxWidth: 1400),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            _buildSectionHeader(screenWidth),
+            SizedBox(height: _getSectionSpacing(screenWidth)),
+            _buildPortfolioGrid(
+                context, screenWidth, isLargeScreen, isMediumScreen),
+            _buildSeeMoreButton(context, screenWidth),
+          ],
+        ),
+      ),
+    );
+  }
+
+  double _buildHorizontalPadding(double screenWidth) {
+    if (screenWidth > 1400) return 80;
+    if (screenWidth > 1200) return 60;
+    if (screenWidth > 900) return 40;
+    return 20;
+  }
+
+  double _getVerticalPadding(double screenWidth) {
+    if (screenWidth > 1200) return 80;
+    if (screenWidth > 900) return 60;
+    return 40;
+  }
+
+  double _getSectionSpacing(double screenWidth) {
+    if (screenWidth > 1200) return 40;
+    if (screenWidth > 900) return 30;
+    return 30;
+  }
+
+  Widget _buildSectionHeader(double screenWidth) {
+    final fontSize = _getTitleFontSize(screenWidth);
+
+    return Column(
+      children: [
+        RichText(
+          textAlign: TextAlign.center,
+          text: TextSpan(
+            children: [
+              TextSpan(
+                text: "My ",
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: fontSize,
+                  fontWeight: FontWeight.w800,
+                  letterSpacing: 1.2,
+                ),
+              ),
+              TextSpan(
+                text: "Projects",
+                style: TextStyle(
+                  color: Colors.cyanAccent,
+                  fontSize: fontSize,
+                  fontWeight: FontWeight.w800,
+                  letterSpacing: 1.2,
+                ),
+              ),
+            ],
+          ),
+        ),
+        const SizedBox(height: 16),
+        Container(
+          width: _getUnderlineWidth(screenWidth),
+          height: 4,
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              colors: [Colors.cyanAccent, Colors.cyanAccent.withOpacity(0.3)],
+            ),
+            borderRadius: BorderRadius.circular(2),
+          ),
+        ),
+      ],
+    ).animate().fadeIn(duration: const Duration(milliseconds: 400)).slideY(
+          begin: -0.3,
+          end: 0.0,
+          curve: Curves.easeOut,
+          duration: const Duration(milliseconds: 600),
+        );
+  }
+
+  double _getTitleFontSize(double screenWidth) {
+    if (screenWidth > 1400) return 56;
+    if (screenWidth > 1200) return 48;
+    if (screenWidth > 900) return 42;
+    return 36;
+  }
+
+  double _getUnderlineWidth(double screenWidth) {
+    if (screenWidth > 1200) return 100;
+    if (screenWidth > 900) return 80;
+    return 60;
+  }
+
+  Widget _buildPortfolioGrid(BuildContext context, double screenWidth,
+      bool isLargeScreen, bool isMediumScreen) {
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        double availableWidth = constraints.maxWidth;
+        double cardWidth = (availableWidth - (isLargeScreen ? 40 : 20)) /
+            (isLargeScreen
+                ? 3
+                : isMediumScreen
+                    ? 2
+                    : 1);
+        double cardHeight = cardWidth / 1.4;
+        double totalHeight = ((cardHeight + 20) *
+            (isLargeScreen
+                ? 2
+                : isMediumScreen
+                    ? 3
+                    : 6));
+
+        return SizedBox(
+          height: totalHeight,
+          child: GridView.builder(
+            physics: const NeverScrollableScrollPhysics(),
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: isLargeScreen
+                  ? 3
+                  : isMediumScreen
+                      ? 2
+                      : 1,
+              childAspectRatio: 1.4,
+              crossAxisSpacing: isLargeScreen ? 20 : 10,
+              mainAxisSpacing: 20,
+            ),
+            itemCount: 6,
+            itemBuilder: (context, index) {
+              return _buildPortfolioCard(context, index, screenWidth);
+            },
+          ),
+        );
+      },
+    ).animate().fadeIn(duration: const Duration(milliseconds: 600)).slideY(
+          begin: 0.3,
+          end: 0.0,
+          curve: Curves.easeOut,
+          duration: const Duration(milliseconds: 800),
+        );
+  }
+
+  Widget _buildPortfolioCard(
+      BuildContext context, int index, double screenWidth) {
+    final portfolioItems = [
+      {
+        'title': 'Reading App',
+        'image': 'assets/images/Rectangle0.png',
+        'category': 'Flutter / MVVM',
+        'route': '/project-details/0',
+      },
+      {
+        'title': 'MediCare Platform',
+        'image': 'assets/images/Rectangle.png',
+        'category': 'Medical / Web & Mobile',
+        'route': '/project-details/1',
+      },
+      {
+        'title': 'E-Commerce Store',
+        'image': 'assets/images/Rectangle5.png',
+        'category': 'Shopping / Flutter',
+        'route': '/project-details/2',
+      },
+      {
+        'title': 'Responsive Dashboard',
+        'image': 'assets/images/Rectangle6.png',
+        'category': 'UI / Responsive Design',
+        'route': '/project-details/3',
+      },
+      {
+        'title': 'News Reader App',
+        'image': 'assets/images/Rectangle7.png',
+        'category': 'News / Flutter',
+        'route': '/project-details/4',
+      },
+      {
+        'title': 'Weather Forecast App',
+        'image': 'assets/images/Rectangle9.png',
+        'category': 'Utility / API Integration',
+        'route': '/project-details/5',
+      },
+    ];
+    final item = portfolioItems[index];
+
+    return _HoverAnimatedPortfolioCard(
+      index: index,
+      child: GestureDetector(
+        onDoubleTap: () {
+          Navigator.pushNamed(context, item['route'] as String);
+          print('Double tapped on portfolio item $index');
+        },
+        child: Container(
+          decoration: BoxDecoration(
+            color: const Color(0xFF2C3E50).withOpacity(0.8),
+            borderRadius: BorderRadius.circular(16),
+            border: Border.all(
+              color: Colors.cyanAccent.withOpacity(0.2),
+              width: 1,
+            ),
+            image: DecorationImage(
+              image: AssetImage(item['image'] as String),
+              fit: BoxFit.cover,
+              colorFilter: ColorFilter.mode(
+                Colors.black.withOpacity(0.3),
+                BlendMode.darken,
+              ),
+            ),
+          ),
+          child: Stack(
+            children: [
+              Positioned.fill(
+                child: Container(
+                  decoration: BoxDecoration(
+                    gradient: RadialGradient(
+                      center: Alignment.center,
+                      radius: 1.0,
+                      colors: [
+                        Colors.white.withOpacity(0.1),
+                        Colors.transparent,
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+              Positioned.fill(
+                child: Padding(
+                  padding: const EdgeInsets.all(20),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      TextSpan(
-                        text: 'My ',
-                        style: TextStyle(
-                          fontSize: 36,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white,
+                      Container(
+                        width: _getImageSize(screenWidth),
+                        height: _getImageSize(screenWidth),
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          border: Border.all(color: Colors.white, width: 2),
+                        ),
+                        child: ClipOval(
+                          child: Icon(
+                            _getIconForIndex(index),
+                            size: _getImageSize(screenWidth) * 0.6,
+                            color: Colors.cyanAccent,
+                          ),
                         ),
                       ),
-                      TextSpan(
-                        text: 'Projects',
+                      const SizedBox(height: 15),
+                      Text(
+                        item['title'] as String,
                         style: TextStyle(
-                          fontSize: 36,
-                          fontWeight: FontWeight.bold,
-                          color: Color(0xFF00D4FF),
+                          fontSize: _getSkillFontSize(screenWidth) + 2,
+                          fontWeight: FontWeight.w700,
+                          color: Colors.white,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                      const SizedBox(height: 8),
+                      Container(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 12,
+                          vertical: 4,
+                        ),
+                        decoration: BoxDecoration(
+                          color: Colors.cyanAccent.withOpacity(0.1),
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        child: Text(
+                          item['category'] as String,
+                          style: TextStyle(
+                            fontSize: _getSkillFontSize(screenWidth) - 2,
+                            color: Colors.cyanAccent.withOpacity(0.8),
+                          ),
                         ),
                       ),
                     ],
                   ),
                 ),
               ),
-            ),
+            ],
           ),
-
-          // Portfolio Grid
-          SlideTransition(
-            position: _slideAnimation,
-            child: ScaleTransition(
-              scale: _scaleAnimation,
-              child: LayoutBuilder(
-                builder: (context, constraints) {
-                  double availableWidth = constraints.maxWidth;
-                  double cardWidth = (availableWidth - 40) / 3;
-                  double cardHeight = cardWidth / 1.4;
-                  double totalHeight = (cardHeight * 2) + 20;
-
-                  return SizedBox(
-                    height: totalHeight,
-                    child: GridView.builder(
-                      physics: const NeverScrollableScrollPhysics(),
-                      gridDelegate:
-                          const SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 3,
-                        childAspectRatio: 1.4,
-                        crossAxisSpacing: 20,
-                        mainAxisSpacing: 20,
-                      ),
-                      itemCount: 6,
-                      itemBuilder: (context, index) {
-                        return _buildPortfolioCard(index);
-                      },
-                    ),
-                  );
-                },
-              ),
-            ),
-          ),
-        ],
+        ),
       ),
     );
   }
 
-  Widget _buildPortfolioCard(int index) {
-    final portfolioItems = [
-      {
-        'title': 'Bookly App',
-        'image': 'assets/images/Rectangle0.png',
-        'category': 'Flutter / MVVM',
-        'isHighlighted': true,
-      },
-      {
-        'title': 'MediCare Platform',
-        'image': 'assets/images/Rectangle.png',
-        'category': 'Medical / Web & Mobile',
-        'isHighlighted': true,
-      },
-      {
-        'title': 'E-Commerce Store',
-        'image': 'assets/images/Rectangle5.png',
-        'category': 'Shopping / Flutter',
-        'isHighlighted': false,
-      },
-      {
-        'title': 'Responsive Dashboard',
-        'image': 'assets/images/Rectangle6.png',
-        'category': 'UI / Responsive Design',
-        'isHighlighted': false,
-      },
-      {
-        'title': 'News Reader App',
-        'image': 'assets/images/Rectangle7.png',
-        'category': 'News / Flutter',
-        'isHighlighted': false,
-      },
-      {
-        'title': 'Weather Forecast App',
-        'image': 'assets/images/Rectangle9.png',
-        'category': 'Utility / API Integration',
-        'isHighlighted': false,
-      },
-    ];
-    final item = portfolioItems[index];
-    final isHovered = _hoveredIndex == index;
-    final isSelected = _selectedIndex == index;
+  double _getImageSize(double screenWidth) {
+    if (screenWidth > 1200) return 60;
+    if (screenWidth > 900) return 50;
+    return 45;
+  }
 
-    return TweenAnimationBuilder<double>(
-      duration: Duration(milliseconds: 600 + (index * 100)),
-      tween: Tween(begin: 0.0, end: 1.0),
-      builder: (context, value, child) {
-        return Transform.scale(
-          scale: 0.8 + (0.2 * value),
-          child: MouseRegion(
-            onEnter: (_) {
-              setState(() {
-                _hoveredIndex = index;
-              });
-            },
-            onExit: (_) {
-              setState(() {
-                _hoveredIndex = null;
-              });
-            },
-            child: AnimatedContainer(
-              duration: const Duration(milliseconds: 300),
-              curve: Curves.easeInOut,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(15),
-                boxShadow: isHovered || isSelected
-                    ? [
-                        BoxShadow(
-                          color: const Color(0xFF00D4FF).withOpacity(0.4),
-                          blurRadius: 25,
-                          spreadRadius: 2,
-                          offset: const Offset(0, 8),
-                        ),
-                        BoxShadow(
-                          color: const Color(0xFF00D4FF).withOpacity(0.2),
-                          blurRadius: 40,
-                          spreadRadius: 5,
-                          offset: const Offset(0, 15),
-                        ),
-                      ]
-                    : [
-                        BoxShadow(
-                          color: Colors.black.withOpacity(0.3),
-                          blurRadius: 10,
-                          spreadRadius: 1,
-                          offset: const Offset(0, 4),
-                        ),
-                      ],
-                border: Border.all(
-                  color:
-                      isSelected ? const Color(0xFF00D4FF) : Colors.transparent,
-                  width: isSelected ? 2 : 0,
-                ),
-              ),
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(15),
-                child: Container(
-                  decoration: BoxDecoration(
-                    image: !(isHovered || isSelected)
-                        ? DecorationImage(
-                            image: AssetImage(item['image'] as String),
-                            fit: BoxFit.cover,
-                          )
-                        : null,
-                    gradient: isHovered || isSelected
-                        ? LinearGradient(
-                            begin: Alignment.topLeft,
-                            end: Alignment.bottomRight,
-                            colors: isSelected
-                                ? [
-                                    const Color(0xFF00D4FF).withOpacity(0.8),
-                                    const Color(0xFF0EA5E9).withOpacity(0.6),
-                                    const Color(0xFF1E293B).withOpacity(0.9),
-                                  ]
-                                : [
-                                    const Color(0xFF374151).withOpacity(0.8),
-                                    const Color(0xFF1F2937).withOpacity(0.9),
-                                    const Color(0xFF111827),
-                                  ],
-                          )
-                        : null,
-                  ),
-                  child: Material(
-                    color: Colors.transparent,
-                    child: InkWell(
-                      borderRadius: BorderRadius.circular(15),
-                      onTap: () {
-                        setState(() {
-                          _selectedIndex =
-                              _selectedIndex == index ? null : index;
-                        });
-                        print('Portfolio item ${index} tapped');
-                      },
-                      child: Stack(
-                        children: [
-                          // Background pattern or placeholder
-                          Positioned.fill(
-                            child: Container(
-                              decoration: BoxDecoration(
-                                gradient: RadialGradient(
-                                  center: Alignment.center,
-                                  radius: 1.0,
-                                  colors: [
-                                    Colors.white.withOpacity(0.1),
-                                    Colors.transparent,
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ),
-
-                          // Content
-                          Positioned.fill(
-                            child: Padding(
-                              padding: const EdgeInsets.all(20),
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  // Icon or placeholder for image
-                                  Container(
-                                    width: 60,
-                                    height: 60,
-                                    decoration: BoxDecoration(
-                                      color: isSelected
-                                          ? Colors.white.withOpacity(0.2)
-                                          : const Color(0xFF00D4FF)
-                                              .withOpacity(0.2),
-                                      borderRadius: BorderRadius.circular(12),
-                                    ),
-                                    child: Icon(
-                                      _getIconForIndex(index),
-                                      size: 30,
-                                      color: isSelected
-                                          ? Colors.white
-                                          : const Color(0xFF00D4FF),
-                                    ),
-                                  ),
-
-                                  const SizedBox(height: 15),
-
-                                  // Title
-                                  Text(
-                                    item['title'] as String,
-                                    style: TextStyle(
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.bold,
-                                      color: isSelected
-                                          ? Colors.white
-                                          : const Color(0xFF00D4FF),
-                                    ),
-                                    textAlign: TextAlign.center,
-                                  ),
-
-                                  const SizedBox(height: 8),
-
-                                  // Category
-                                  Container(
-                                    padding: const EdgeInsets.symmetric(
-                                      horizontal: 12,
-                                      vertical: 4,
-                                    ),
-                                    decoration: BoxDecoration(
-                                      color: isSelected
-                                          ? Colors.white.withOpacity(0.2)
-                                          : const Color(0xFF00D4FF)
-                                              .withOpacity(0.1),
-                                      borderRadius: BorderRadius.circular(12),
-                                    ),
-                                    child: Text(
-                                      item['category'] as String,
-                                      style: TextStyle(
-                                        fontSize: 12,
-                                        color: isSelected
-                                            ? Colors.white.withOpacity(0.8)
-                                            : const Color(0xFF00D4FF)
-                                                .withOpacity(0.8),
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-
-                          // Hover overlay
-                          if (isHovered)
-                            Positioned.fill(
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(15),
-                                  gradient: LinearGradient(
-                                    begin: Alignment.topLeft,
-                                    end: Alignment.bottomRight,
-                                    colors: [
-                                      const Color(0xFF00D4FF).withOpacity(0.1),
-                                      const Color(0xFF0EA5E9).withOpacity(0.2),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-            ),
-          ),
-        );
-      },
-    );
+  double _getSkillFontSize(double screenWidth) {
+    if (screenWidth > 1200) return 16;
+    if (screenWidth > 900) return 14;
+    return 12;
   }
 
   IconData _getIconForIndex(int index) {
@@ -442,5 +336,117 @@ class _MyProjectsWebState extends State<MyProjectsWeb>
       default:
         return Icons.code;
     }
+  }
+
+  Widget _buildSeeMoreButton(BuildContext context, double screenWidth) {
+    return Padding(
+      padding: EdgeInsets.only(top: _getSectionSpacing(screenWidth)),
+      child: _HoverAnimatedButton(
+        child: ElevatedButton(
+          onPressed: () {
+            launchCustomUrl(context,
+                url: 'https://github.com/ALi-Maher-Mohamed?tab=repositories');
+          },
+          style: ElevatedButton.styleFrom(
+            backgroundColor: Colors.cyanAccent,
+            foregroundColor: Colors.white,
+            padding: EdgeInsets.symmetric(
+              horizontal: _getSkillPadding(screenWidth) * 2,
+              vertical: _getSkillPadding(screenWidth),
+            ),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(12),
+            ),
+            textStyle: TextStyle(
+              fontSize: _getSkillFontSize(screenWidth),
+              fontWeight: FontWeight.w700,
+            ),
+          ),
+          child: const Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text('See More'),
+              SizedBox(width: 10),
+              Icon(Icons.arrow_forward, size: 18),
+            ],
+          ),
+        ),
+      ),
+    ).animate().fadeIn(duration: const Duration(milliseconds: 400)).slideY(
+          begin: 0.3,
+          end: 0.0,
+          curve: Curves.easeOut,
+          duration: const Duration(milliseconds: 600),
+        );
+  }
+
+  double _getSkillPadding(double screenWidth) {
+    if (screenWidth > 1200) return 16;
+    if (screenWidth > 900) return 12;
+    return 10;
+  }
+}
+
+class _HoverAnimatedPortfolioCard extends StatefulWidget {
+  final Widget child;
+  final int index;
+
+  const _HoverAnimatedPortfolioCard({
+    required this.child,
+    required this.index,
+    super.key,
+  });
+
+  @override
+  State<_HoverAnimatedPortfolioCard> createState() =>
+      _HoverAnimatedPortfolioCardState();
+}
+
+class _HoverAnimatedPortfolioCardState
+    extends State<_HoverAnimatedPortfolioCard> {
+  bool _hovering = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return MouseRegion(
+      onEnter: (_) => setState(() => _hovering = true),
+      onExit: (_) => setState(() => _hovering = false),
+      child: AnimatedScale(
+        scale: _hovering ? 1.05 : 1.0,
+        duration: const Duration(milliseconds: 300),
+        curve: Curves.easeInOut,
+        child: widget.child
+            .animate(delay: Duration(milliseconds: 100 * widget.index))
+            .fadeIn(duration: const Duration(milliseconds: 400))
+            .slideX(begin: 0.3, end: 0.0, curve: Curves.easeOut),
+      ),
+    );
+  }
+}
+
+class _HoverAnimatedButton extends StatefulWidget {
+  final Widget child;
+
+  const _HoverAnimatedButton({required this.child, super.key});
+
+  @override
+  State<_HoverAnimatedButton> createState() => _HoverAnimatedButtonState();
+}
+
+class _HoverAnimatedButtonState extends State<_HoverAnimatedButton> {
+  bool _hovering = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return MouseRegion(
+      onEnter: (_) => setState(() => _hovering = true),
+      onExit: (_) => setState(() => _hovering = false),
+      child: AnimatedScale(
+        scale: _hovering ? 1.05 : 1.0,
+        duration: const Duration(milliseconds: 300),
+        curve: Curves.easeInOut,
+        child: widget.child,
+      ),
+    );
   }
 }

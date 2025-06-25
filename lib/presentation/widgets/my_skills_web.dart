@@ -1,3 +1,5 @@
+// ignore_for_file: deprecated_member_use
+
 import 'package:Ali_Maher/core/constant/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
@@ -316,7 +318,6 @@ class _HoverAnimatedSkill extends StatefulWidget {
   const _HoverAnimatedSkill({
     required this.child,
     required this.index,
-    super.key,
   });
 
   @override
