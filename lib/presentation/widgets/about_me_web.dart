@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:my_portfolio/core/constant/colors.dart';
+import 'package:Ali_Maher/core/constant/colors.dart';
 
 class AboutMeSection extends StatelessWidget {
   const AboutMeSection({super.key});

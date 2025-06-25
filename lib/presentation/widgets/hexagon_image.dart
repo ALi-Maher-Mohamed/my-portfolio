@@ -1,7 +1,7 @@
 // ignore_for_file: deprecated_member_use
 
 import 'package:flutter/material.dart';
-import 'package:my_portfolio/core/styles/hexagon_clipper.dart';
+import 'package:Ali_Maher/core/styles/hexagon_clipper.dart';
 
 class HexagonAnimatedImage extends StatefulWidget {
   const HexagonAnimatedImage({super.key});

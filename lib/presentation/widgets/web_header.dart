@@ -1,6 +1,6 @@
+import 'package:Ali_Maher/presentation/widgets/custom_nav_text_button.dart';
+import 'package:Ali_Maher/presentation/widgets/side_logo.dart';
 import 'package:flutter/material.dart';
-import 'package:my_portfolio/presentation/widgets/custom_nav_text_button.dart';
-import 'package:my_portfolio/presentation/widgets/side_logo.dart';
 import '../../core/constant/nav_titles_and_func.dart';
 
 class WebHeader extends StatelessWidget {

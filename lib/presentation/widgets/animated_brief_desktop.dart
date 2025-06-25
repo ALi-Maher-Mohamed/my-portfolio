@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:my_portfolio/core/constant/launch_url.dart';
+import 'package:Ali_Maher/core/constant/launch_url.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:visibility_detector/visibility_detector.dart';
 
@@ -126,7 +126,6 @@ class _AnimatedPortfolioBriefState extends State<AnimatedPortfolioBrief>
         if (!mounted) return;
         final progress = _typewriterController.value;
         final targetIndex = (progress * _fullText.length).round();
-
         if (targetIndex != _currentIndex) {
           setState(() {
             _currentIndex = targetIndex;
@@ -146,7 +145,6 @@ class _AnimatedPortfolioBriefState extends State<AnimatedPortfolioBrief>
     _typewriterController.stop();
     _bounceController.stop();
     _iconController.stop();
-
     _fadeController.dispose();
     _slideController.dispose();
     _typewriterController.dispose();

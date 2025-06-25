@@ -84,13 +84,15 @@ class SkillsSectionWeb extends StatelessWidget {
   Widget build(BuildContext context) {
     final List<List<dynamic>> skillsData = [
       ['assets/icons/flutter.png', 'Flutter', 85.0],
-      ['assets/icons/dart.png', 'Dart', 80.0],
+      ['assets/icons/dart.png', 'Dart', 90.0],
       ['assets/icons/firebase.png', 'Firebase', 70.0],
-      ['assets/icons/icons8-git-48.png', 'Git', 75.0],
+      ['assets/icons/icons8-git-48.png', 'Git', 85.0],
       ['assets/icons/figma.png', 'Figma', 90.0],
-      ['assets/icons/photoshop.png', 'Adobe Photoshop', 65.0],
-      ['assets/icons/illustrator.png', 'Adobe Illustrator', 70.0],
-      ['assets/icons/icons8-html-48.png', 'HTML - 5', 90.0],
+      ['assets/icons/python.png', 'Python', 90.0],
+      ['assets/icons/c-.png', 'C++', 80.0],
+      ['assets/icons/php.png', 'PHP', 60.0],
+      ['assets/icons/data-structure.png', 'Data Structure', 80.0],
+      ['assets/icons/programming.png', 'OOP', 80.0],
     ];
 
     return Container(
