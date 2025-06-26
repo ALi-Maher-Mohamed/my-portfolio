@@ -8,10 +8,12 @@ class MainDesktop extends StatelessWidget {
     required this.screenSize,
     required this.screenWidth,
     required this.screenHeight,
+    required this.onScrollToIndex,
   });
 
   final Size screenSize;
   final double screenHeight;
+  final void Function(int) onScrollToIndex;
   final double screenWidth;
 
   @override
@@ -33,7 +35,9 @@ class MainDesktop extends StatelessWidget {
                   style: ElevatedButton.styleFrom(
                     minimumSize: const Size(200, 50),
                   ),
-                  onPressed: () {},
+                  onPressed: () {
+                    onScrollToIndex(5);
+                  },
                   child: Text(
                     'Get In Touch',
                     style: Theme.of(context).textTheme.bodyMedium,

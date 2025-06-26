@@ -596,9 +596,3 @@ class _ContactMePageState extends State<ContactMePage>
     _messageController.clear();
   }
 }
-
-// Usage in your app:
-// Navigator.push(
-//   context,
-//   MaterialPageRoute(builder: (context) => const ContactMePage()),
-// );

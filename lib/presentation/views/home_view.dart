@@ -81,6 +81,7 @@ class _HomeViewState extends State<HomeView> {
                       if (constraints.maxWidth >= kMinDisktpWidth) ...[
                         WebHeader(onNavItemTap: scrollToIndex),
                         MainDesktop(
+                          onScrollToIndex: scrollToIndex,
                           screenSize: screenSize,
                           screenWidth: screenWidth,
                           screenHeight: screenHeight,
