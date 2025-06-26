@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 
 class MyServicesWeb extends StatefulWidget {
-  const MyServicesWeb({super.key});
+  const MyServicesWeb({super.key, required this.onScrollToIndex});
+  final void Function(int) onScrollToIndex;
 
   @override
   State<MyServicesWeb> createState() => _MyServicesWebState();
@@ -329,7 +330,7 @@ class _MyServicesWebState extends State<MyServicesWeb> {
                     child: _HoverAnimatedButton(
                       child: ElevatedButton(
                         onPressed: () {
-                          // Handle hire me button
+                          widget.onScrollToIndex(5);
                         },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.cyanAccent,

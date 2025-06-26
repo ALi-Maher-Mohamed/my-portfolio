@@ -122,7 +122,9 @@ class _HomeViewState extends State<HomeView> {
               child: Container(
                 width: double.infinity,
                 decoration: BoxDecoration(color: CustomColors.scaffold2),
-                child: MyServicesWeb(),
+                child: MyServicesWeb(
+                  onScrollToIndex: scrollToIndex,
+                ),
               ),
             ),
             AutoScrollTag(
