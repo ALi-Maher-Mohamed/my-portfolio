@@ -1,3 +1,4 @@
+import 'package:Ali_Maher/core/constant/send_email.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:Ali_Maher/core/constant/launch_url.dart';
@@ -574,25 +575,51 @@ class _ContactMePageState extends State<ContactMePage>
     );
   }
 
-  void _handleSubmit() {
-    // Handle form submission
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: const Text('Message sent successfully!'),
-        backgroundColor: const Color(0xFF00D4FF),
-        behavior: SnackBarBehavior.floating,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10),
-        ),
-      ),
-    );
+  void _handleSubmit() async {
+    if (_formKey.currentState!.validate()) {
+      try {
+        await sendEmail(
+          firstName: _firstNameController.text.trim(),
+          lastName: _lastNameController.text.trim(),
+          phone: _phoneController.text.trim(),
+          subject: _subjectController.text.trim(),
+          email: _emailController.text.trim(),
+          message: _messageController.text.trim(),
+        );
 
-    // Clear form
-    _firstNameController.clear();
-    _lastNameController.clear();
-    _phoneController.clear();
-    _subjectController.clear();
-    _emailController.clear();
-    _messageController.clear();
+        // Show success snackbar
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: const Text('Message sent successfully!'),
+            backgroundColor: const Color(0xFF00D4FF),
+            behavior: SnackBarBehavior.floating,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10),
+            ),
+          ),
+        );
+
+        // Clear form fields
+        _firstNameController.clear();
+        _lastNameController.clear();
+        _phoneController.clear();
+        _subjectController.clear();
+        _emailController.clear();
+        _messageController.clear();
+      } catch (e) {
+        // Show error snackbar
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content:
+                const Text('Failed to send message. Please try again later.'),
+            backgroundColor: Colors.redAccent,
+            behavior: SnackBarBehavior.floating,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10),
+            ),
+          ),
+        );
+      }
+    }
   }
 }
