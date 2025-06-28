@@ -563,7 +563,7 @@ class _ContactMePageState extends State<ContactMePage>
       child: FadeTransition(
         opacity: _fadeAnimation,
         child: const Text(
-          'Copywrite 2024 All Rights Reserved By RIEAD.',
+          'Copywrite 2024 All Rights Reserved By Ali Maher.',
           style: TextStyle(
             color: Colors.white70,
             fontSize: 14,
