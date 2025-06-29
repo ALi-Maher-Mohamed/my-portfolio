@@ -11,9 +11,10 @@ class MyProjectsWeb extends StatelessWidget {
     final screenWidth = MediaQuery.of(context).size.width;
     final isLargeScreen = screenWidth > 1200;
     final isMediumScreen = screenWidth > 900 && screenWidth <= 1200;
+    final isLightMode = Theme.of(context).brightness == Brightness.light;
 
     return Container(
-      color: CustomColors.scaffold2,
+      color: isLightMode ? LightThemeColors.bgPrimary : CustomColors.scaffold2,
       width: double.infinity,
       padding: EdgeInsets.symmetric(
         horizontal: _buildHorizontalPadding(screenWidth),
@@ -24,11 +25,11 @@ class MyProjectsWeb extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            _buildSectionHeader(screenWidth),
+            _buildSectionHeader(screenWidth, isLightMode),
             SizedBox(height: _getSectionSpacing(screenWidth)),
             _buildPortfolioGrid(
                 context, screenWidth, isLargeScreen, isMediumScreen),
-            _buildSeeMoreButton(context, screenWidth),
+            _buildSeeMoreButton(context, screenWidth, isLightMode),
           ],
         ),
       ),
@@ -54,7 +55,7 @@ class MyProjectsWeb extends StatelessWidget {
     return 30;
   }
 
-  Widget _buildSectionHeader(double screenWidth) {
+  Widget _buildSectionHeader(double screenWidth, bool isLightMode) {
     final fontSize = _getTitleFontSize(screenWidth);
 
     return Column(
@@ -66,7 +67,8 @@ class MyProjectsWeb extends StatelessWidget {
               TextSpan(
                 text: "My ",
                 style: TextStyle(
-                  color: Colors.white,
+                  color:
+                      isLightMode ? LightThemeColors.textPrimary : Colors.white,
                   fontSize: fontSize,
                   fontWeight: FontWeight.w800,
                   letterSpacing: 1.2,
@@ -75,7 +77,9 @@ class MyProjectsWeb extends StatelessWidget {
               TextSpan(
                 text: "Projects",
                 style: TextStyle(
-                  color: Colors.cyanAccent,
+                  color: isLightMode
+                      ? LightThemeColors.primaryCyan
+                      : Colors.cyanAccent,
                   fontSize: fontSize,
                   fontWeight: FontWeight.w800,
                   letterSpacing: 1.2,
@@ -90,7 +94,15 @@ class MyProjectsWeb extends StatelessWidget {
           height: 4,
           decoration: BoxDecoration(
             gradient: LinearGradient(
-              colors: [Colors.cyanAccent, Colors.cyanAccent.withOpacity(0.3)],
+              colors: isLightMode
+                  ? [
+                      LightThemeColors.primaryCyan,
+                      LightThemeColors.primaryCyan.withOpacity(0.3),
+                    ]
+                  : [
+                      Colors.cyanAccent,
+                      Colors.cyanAccent.withOpacity(0.3),
+                    ],
             ),
             borderRadius: BorderRadius.circular(2),
           ),
@@ -206,6 +218,7 @@ class MyProjectsWeb extends StatelessWidget {
       },
     ];
     final item = portfolioItems[index];
+    final isLightMode = Theme.of(context).brightness == Brightness.light;
 
     return _HoverAnimatedPortfolioCard(
       index: index,
@@ -216,20 +229,35 @@ class MyProjectsWeb extends StatelessWidget {
         },
         child: Container(
           decoration: BoxDecoration(
-            color: const Color(0xFF2C3E50).withOpacity(0.8),
+            color: isLightMode
+                ? LightThemeColors.bgCard
+                : const Color(0xFF2C3E50).withOpacity(0.8),
             borderRadius: BorderRadius.circular(16),
             border: Border.all(
-              color: Colors.cyanAccent.withOpacity(0.2),
+              color: isLightMode
+                  ? LightThemeColors.borderLight
+                  : Colors.cyanAccent.withOpacity(0.2),
               width: 1,
             ),
             image: DecorationImage(
               image: AssetImage(item['image'] as String),
               fit: BoxFit.cover,
               colorFilter: ColorFilter.mode(
-                Colors.black.withOpacity(0.3),
+                isLightMode
+                    ? Colors.black.withOpacity(0.2)
+                    : Colors.black.withOpacity(0.3),
                 BlendMode.darken,
               ),
             ),
+            boxShadow: isLightMode
+                ? [
+                    BoxShadow(
+                      color: LightThemeColors.shadowLight,
+                      blurRadius: 8,
+                      offset: Offset(0, 2),
+                    ),
+                  ]
+                : null,
           ),
           child: Stack(
             children: [
@@ -239,10 +267,15 @@ class MyProjectsWeb extends StatelessWidget {
                     gradient: RadialGradient(
                       center: Alignment.center,
                       radius: 1.0,
-                      colors: [
-                        Colors.white.withOpacity(0.1),
-                        Colors.transparent,
-                      ],
+                      colors: isLightMode
+                          ? [
+                              LightThemeColors.bgSecondary.withOpacity(0.1),
+                              Colors.transparent,
+                            ]
+                          : [
+                              Colors.white.withOpacity(0.1),
+                              Colors.transparent,
+                            ],
                     ),
                   ),
                 ),
@@ -258,13 +291,20 @@ class MyProjectsWeb extends StatelessWidget {
                         height: _getImageSize(screenWidth),
                         decoration: BoxDecoration(
                           shape: BoxShape.circle,
-                          border: Border.all(color: Colors.white, width: 2),
+                          border: Border.all(
+                            color: isLightMode
+                                ? LightThemeColors.borderMedium
+                                : Colors.white,
+                            width: 2,
+                          ),
                         ),
                         child: ClipOval(
                           child: Icon(
                             _getIconForIndex(index),
                             size: _getImageSize(screenWidth) * 0.6,
-                            color: Colors.cyanAccent,
+                            color: isLightMode
+                                ? LightThemeColors.primaryCyan
+                                : Colors.cyanAccent,
                           ),
                         ),
                       ),
@@ -274,7 +314,9 @@ class MyProjectsWeb extends StatelessWidget {
                         style: TextStyle(
                           fontSize: _getSkillFontSize(screenWidth) + 2,
                           fontWeight: FontWeight.w700,
-                          color: Colors.white,
+                          color: isLightMode
+                              ? LightThemeColors.textPrimary
+                              : Colors.white,
                         ),
                         textAlign: TextAlign.center,
                       ),
@@ -285,14 +327,24 @@ class MyProjectsWeb extends StatelessWidget {
                           vertical: 4,
                         ),
                         decoration: BoxDecoration(
-                          color: Colors.cyanAccent.withOpacity(0.1),
+                          color: isLightMode
+                              ? LightThemeColors.bgSecondary
+                              : Colors.cyanAccent.withOpacity(0.1),
                           borderRadius: BorderRadius.circular(12),
+                          border: Border.all(
+                            color: isLightMode
+                                ? LightThemeColors.borderLight
+                                : Colors.cyanAccent.withOpacity(0.3),
+                            width: 1,
+                          ),
                         ),
                         child: Text(
                           item['category'] as String,
                           style: TextStyle(
                             fontSize: _getSkillFontSize(screenWidth) - 2,
-                            color: Colors.cyanAccent.withOpacity(0.8),
+                            color: isLightMode
+                                ? LightThemeColors.textSecondary
+                                : Colors.cyanAccent.withOpacity(0.8),
                           ),
                         ),
                       ),
@@ -338,7 +390,8 @@ class MyProjectsWeb extends StatelessWidget {
     }
   }
 
-  Widget _buildSeeMoreButton(BuildContext context, double screenWidth) {
+  Widget _buildSeeMoreButton(
+      BuildContext context, double screenWidth, bool isLightMode) {
     return Padding(
       padding: EdgeInsets.only(top: _getSectionSpacing(screenWidth)),
       child: _HoverAnimatedButton(
@@ -348,8 +401,10 @@ class MyProjectsWeb extends StatelessWidget {
                 url: 'https://github.com/ALi-Maher-Mohamed?tab=repositories');
           },
           style: ElevatedButton.styleFrom(
-            backgroundColor: Colors.cyanAccent,
-            foregroundColor: Colors.white,
+            backgroundColor:
+                isLightMode ? LightThemeColors.primaryCyan : Colors.cyanAccent,
+            foregroundColor:
+                isLightMode ? LightThemeColors.textOnPrimary : Colors.white,
             padding: EdgeInsets.symmetric(
               horizontal: _getSkillPadding(screenWidth) * 2,
               vertical: _getSkillPadding(screenWidth),

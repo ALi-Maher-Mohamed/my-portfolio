@@ -1,3 +1,4 @@
+import 'package:Ali_Maher/core/constant/colors.dart';
 import 'package:flutter/material.dart';
 
 class CustomTextButton extends StatelessWidget {
@@ -8,15 +9,20 @@ class CustomTextButton extends StatelessWidget {
   });
   final String title;
   final void Function() onPressed;
+
   @override
   Widget build(BuildContext context) {
+    final isLightMode = Theme.of(context).brightness == Brightness.light;
+
     return TextButton(
       onPressed: onPressed,
       child: Text(
         title,
         style: TextStyle(
-            fontSize: MediaQuery.of(context).size.width / 90,
-            color: Colors.white),
+          fontWeight: FontWeight.bold,
+          fontSize: MediaQuery.of(context).size.width / 90,
+          color: isLightMode ? LightThemeColors.accentCyan : Colors.white,
+        ),
       ),
     );
   }

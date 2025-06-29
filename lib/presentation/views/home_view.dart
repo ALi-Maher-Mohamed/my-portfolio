@@ -1,21 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:Ali_Maher/core/constant/colors.dart';
 import 'package:Ali_Maher/core/constant/size.dart';
-import 'package:Ali_Maher/presentation/widgets/about_me_web.dart';
-import 'package:Ali_Maher/presentation/widgets/contact_me_web.dart';
+import 'package:Ali_Maher/presentation/widgets/web/about_me_web.dart';
+import 'package:Ali_Maher/presentation/widgets/web/contact_me_web.dart';
 import 'package:Ali_Maher/presentation/widgets/mobile_drawer.dart';
 import 'package:Ali_Maher/presentation/widgets/mobile_header.dart';
-import 'package:Ali_Maher/presentation/widgets/my_service_web.dart';
-import 'package:Ali_Maher/presentation/widgets/my_skills_web.dart';
-import 'package:Ali_Maher/presentation/widgets/my_projects_web.dart';
+import 'package:Ali_Maher/presentation/widgets/web/my_service_web.dart';
+import 'package:Ali_Maher/presentation/widgets/web/my_skills_web.dart';
+import 'package:Ali_Maher/presentation/widgets/web/my_projects_web.dart';
 import 'package:Ali_Maher/presentation/widgets/web_header.dart';
 import 'package:scroll_to_index/scroll_to_index.dart';
 
-import '../widgets/main_desktop.dart';
+import '../widgets/web/main_desktop.dart';
 import '../widgets/main_mobile.dart';
 
 class HomeView extends StatefulWidget {
-  const HomeView({super.key});
+  const HomeView({
+    super.key,
+    required this.isDarkMode,
+    required this.onThemeChanged,
+  });
+  final bool isDarkMode;
+  final ValueChanged<bool> onThemeChanged;
 
   @override
   State<HomeView> createState() => _HomeViewState();
@@ -40,15 +46,18 @@ class _HomeViewState extends State<HomeView> {
     // بعدها نستخدم animateTo علشان نعمل Smooth Scroll manually
     await _scrollController.animateTo(
       _scrollController.position.pixels,
-      duration: Duration(seconds: 2), // زوّد الوقت لو حابب أبطأ
-      curve: Curves.easeInOutCubic, // منحنى الحركة (smooth جدا)
+      duration: Duration(seconds: 2),
+      curve: Curves.easeInOutCubic,
     );
   }
 
+  @override
   Widget build(BuildContext context) {
     final screenSize = MediaQuery.of(context).size;
     final screenWidth = screenSize.width;
     final screenHeight = screenSize.height;
+    final isLightMode = Theme.of(context).brightness == Brightness.light;
+
     return LayoutBuilder(builder: (context, constraints) {
       return Scaffold(
         key: scaffoldKey,
@@ -61,9 +70,12 @@ class _HomeViewState extends State<HomeView> {
               key: ValueKey(0),
               controller: _scrollController,
               index: 0,
-              child: SizedBox(
+              child: Container(
                 height: screenHeight,
                 width: double.infinity,
+                color: isLightMode
+                    ? LightThemeColors.bgPrimary
+                    : CustomColors.scaffold2,
                 child: Stack(children: [
                   SizedBox(
                     height: screenHeight,
@@ -79,7 +91,10 @@ class _HomeViewState extends State<HomeView> {
                   Column(
                     children: [
                       if (constraints.maxWidth >= kMinDisktpWidth) ...[
-                        WebHeader(onNavItemTap: scrollToIndex),
+                        WebHeader(
+                            isDarkMode: widget.isDarkMode,
+                            onThemeToggle: widget.onThemeChanged,
+                            onNavItemTap: scrollToIndex),
                         MainDesktop(
                           onScrollToIndex: scrollToIndex,
                           screenSize: screenSize,
@@ -121,7 +136,11 @@ class _HomeViewState extends State<HomeView> {
               index: 3,
               child: Container(
                 width: double.infinity,
-                decoration: BoxDecoration(color: CustomColors.scaffold2),
+                decoration: BoxDecoration(
+                  color: isLightMode
+                      ? LightThemeColors.bgPrimary
+                      : CustomColors.scaffold2,
+                ),
                 child: MyServicesWeb(
                   onScrollToIndex: scrollToIndex,
                 ),
@@ -133,7 +152,11 @@ class _HomeViewState extends State<HomeView> {
               index: 4,
               child: Container(
                 width: double.infinity,
-                decoration: BoxDecoration(color: CustomColors.scaffold2),
+                decoration: BoxDecoration(
+                  color: isLightMode
+                      ? LightThemeColors.bgPrimary
+                      : CustomColors.scaffold2,
+                ),
                 child: MyProjectsWeb(),
               ),
             ),
@@ -144,7 +167,11 @@ class _HomeViewState extends State<HomeView> {
               child: Container(
                 height: screenHeight,
                 width: double.infinity,
-                decoration: BoxDecoration(color: CustomColors.scaffold2),
+                decoration: BoxDecoration(
+                  color: isLightMode
+                      ? LightThemeColors.bgPrimary
+                      : CustomColors.scaffold2,
+                ),
                 child: ContactMePage(),
               ),
             ),

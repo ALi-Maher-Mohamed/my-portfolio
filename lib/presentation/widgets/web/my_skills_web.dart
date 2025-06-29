@@ -1,5 +1,3 @@
-// ignore_for_file: deprecated_member_use
-
 import 'package:Ali_Maher/core/constant/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
@@ -12,8 +10,10 @@ class SkillsSectionWeb extends StatelessWidget {
     final screenWidth = MediaQuery.of(context).size.width;
     final isLargeScreen = screenWidth > 1200;
     final isMediumScreen = screenWidth > 900 && screenWidth <= 1200;
+    final isLightMode = Theme.of(context).brightness == Brightness.light;
+
     return Container(
-      color: CustomColors.scaffold2,
+      color: isLightMode ? LightThemeColors.bgPrimary : CustomColors.scaffold2,
       width: double.infinity,
       padding: EdgeInsets.symmetric(
         horizontal: _buildHorizontalPadding(screenWidth),
@@ -23,9 +23,10 @@ class SkillsSectionWeb extends StatelessWidget {
         constraints: BoxConstraints(maxWidth: 1400),
         child: Column(
           children: [
-            _buildSectionHeader(screenWidth),
+            _buildSectionHeader(screenWidth, isLightMode),
             SizedBox(height: _getSectionSpacing(screenWidth)),
-            _buildMainContent(screenWidth, isLargeScreen, isMediumScreen),
+            _buildMainContent(
+                context, screenWidth, isLargeScreen, isMediumScreen),
           ],
         ),
       ),
@@ -51,7 +52,7 @@ class SkillsSectionWeb extends StatelessWidget {
     return 30;
   }
 
-  Widget _buildSectionHeader(double screenWidth) {
+  Widget _buildSectionHeader(double screenWidth, bool isLightMode) {
     final fontSize = _getTitleFontSize(screenWidth);
 
     return Column(
@@ -63,7 +64,8 @@ class SkillsSectionWeb extends StatelessWidget {
               TextSpan(
                 text: "My ",
                 style: TextStyle(
-                  color: Colors.white,
+                  color:
+                      isLightMode ? LightThemeColors.textPrimary : Colors.white,
                   fontSize: fontSize,
                   fontWeight: FontWeight.w800,
                   letterSpacing: 1.2,
@@ -72,7 +74,9 @@ class SkillsSectionWeb extends StatelessWidget {
               TextSpan(
                 text: "Skills",
                 style: TextStyle(
-                  color: Colors.cyanAccent,
+                  color: isLightMode
+                      ? LightThemeColors.primaryCyan
+                      : Colors.cyanAccent,
                   fontSize: fontSize,
                   fontWeight: FontWeight.w800,
                   letterSpacing: 1.2,
@@ -87,7 +91,15 @@ class SkillsSectionWeb extends StatelessWidget {
           height: 4,
           decoration: BoxDecoration(
             gradient: LinearGradient(
-              colors: [Colors.cyanAccent, Colors.cyanAccent.withOpacity(0.3)],
+              colors: isLightMode
+                  ? [
+                      LightThemeColors.primaryCyan,
+                      LightThemeColors.primaryCyan.withOpacity(0.3),
+                    ]
+                  : [
+                      Colors.cyanAccent,
+                      Colors.cyanAccent.withOpacity(0.3),
+                    ],
             ),
             borderRadius: BorderRadius.circular(2),
           ),
@@ -109,8 +121,8 @@ class SkillsSectionWeb extends StatelessWidget {
     return 60;
   }
 
-  Widget _buildMainContent(
-      double screenWidth, bool isLargeScreen, bool isMediumScreen) {
+  Widget _buildMainContent(BuildContext context, double screenWidth,
+      bool isLargeScreen, bool isMediumScreen) {
     final skillsData = [
       ['assets/icons/flutter.png', 'Flutter', 85.0],
       ['assets/icons/dart.png', 'Dart', 90.0],
@@ -135,6 +147,7 @@ class SkillsSectionWeb extends StatelessWidget {
                     children: List.generate(
                       (skillsData.length / 2).ceil(),
                       (index) => _buildSkill(
+                        context: context,
                         imagePath: skillsData[index][0] as String,
                         skillName: skillsData[index][1] as String,
                         level: skillsData[index][2] as double,
@@ -150,6 +163,7 @@ class SkillsSectionWeb extends StatelessWidget {
                     children: List.generate(
                       skillsData.length - (skillsData.length / 2).ceil(),
                       (index) => _buildSkill(
+                        context: context,
                         imagePath:
                             skillsData[index + (skillsData.length / 2).ceil()]
                                 [0] as String,
@@ -171,6 +185,7 @@ class SkillsSectionWeb extends StatelessWidget {
               children: List.generate(
                 skillsData.length,
                 (index) => _buildSkill(
+                  context: context,
                   imagePath: skillsData[index][0] as String,
                   skillName: skillsData[index][1] as String,
                   level: skillsData[index][2] as double,
@@ -193,12 +208,14 @@ class SkillsSectionWeb extends StatelessWidget {
     required String imagePath,
     required String skillName,
     required double level,
+    required BuildContext context,
     required int index,
     required double screenWidth,
   }) {
     final skillWidth = _getSkillWidth(screenWidth);
     final imageSize = _getImageSize(screenWidth);
     final fontSize = _getSkillFontSize(screenWidth);
+    final isLightMode = Theme.of(context).brightness == Brightness.light;
 
     return _HoverAnimatedSkill(
       index: index,
@@ -207,12 +224,25 @@ class SkillsSectionWeb extends StatelessWidget {
         padding: EdgeInsets.symmetric(vertical: _getSkillPadding(screenWidth)),
         margin: EdgeInsets.symmetric(vertical: 8),
         decoration: BoxDecoration(
-          color: Color(0xFF2C3E50).withOpacity(0.8),
+          color: isLightMode
+              ? LightThemeColors.bgCard
+              : Color(0xFF2C3E50).withOpacity(0.8),
           borderRadius: BorderRadius.circular(16),
           border: Border.all(
-            color: Colors.cyanAccent.withOpacity(0.2),
+            color: isLightMode
+                ? LightThemeColors.borderLight
+                : Colors.cyanAccent.withOpacity(0.2),
             width: 1,
           ),
+          boxShadow: isLightMode
+              ? [
+                  BoxShadow(
+                    color: LightThemeColors.shadowLight,
+                    blurRadius: 8,
+                    offset: Offset(0, 2),
+                  ),
+                ]
+              : null,
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.start,
@@ -223,7 +253,12 @@ class SkillsSectionWeb extends StatelessWidget {
               height: imageSize,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                border: Border.all(color: Colors.white, width: 2),
+                border: Border.all(
+                  color: isLightMode
+                      ? LightThemeColors.borderMedium
+                      : Colors.white,
+                  width: 2,
+                ),
               ),
               child: ClipOval(
                 child: Image.asset(
@@ -240,7 +275,9 @@ class SkillsSectionWeb extends StatelessWidget {
                   Text(
                     skillName,
                     style: TextStyle(
-                      color: Colors.white,
+                      color: isLightMode
+                          ? LightThemeColors.textPrimary
+                          : Colors.white,
                       fontWeight: FontWeight.w700,
                       fontSize: fontSize,
                     ),
@@ -251,7 +288,9 @@ class SkillsSectionWeb extends StatelessWidget {
                       Container(
                         height: 10,
                         decoration: BoxDecoration(
-                          color: Colors.grey[800],
+                          color: isLightMode
+                              ? LightThemeColors.borderLight
+                              : Colors.grey[800],
                           borderRadius: BorderRadius.circular(5),
                         ),
                       ),
@@ -260,7 +299,9 @@ class SkillsSectionWeb extends StatelessWidget {
                         child: Container(
                           height: 10,
                           decoration: BoxDecoration(
-                            color: Colors.cyanAccent,
+                            color: isLightMode
+                                ? LightThemeColors.primaryCyan
+                                : Colors.cyanAccent,
                             borderRadius: BorderRadius.circular(5),
                           ),
                         ),
@@ -274,7 +315,8 @@ class SkillsSectionWeb extends StatelessWidget {
             Text(
               '${level.toInt()}%',
               style: TextStyle(
-                color: Colors.white,
+                color:
+                    isLightMode ? LightThemeColors.textSecondary : Colors.white,
                 fontSize: fontSize,
               ),
             ),

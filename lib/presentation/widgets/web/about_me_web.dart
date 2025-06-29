@@ -7,14 +7,13 @@ class AboutMeSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
-
-    // تحديد نقاط الكسر للويب
     final isLargeScreen = screenWidth > 1200;
     final isMediumScreen = screenWidth > 900 && screenWidth <= 1200;
     final isSmallScreen = screenWidth <= 900;
+    final isLightMode = Theme.of(context).brightness == Brightness.light;
 
     return Container(
-      color: CustomColors.scaffold2,
+      color: isLightMode ? LightThemeColors.bgPrimary : CustomColors.scaffold2,
       width: double.infinity,
       padding: EdgeInsets.symmetric(
         horizontal: _getHorizontalPadding(screenWidth),
@@ -24,10 +23,10 @@ class AboutMeSection extends StatelessWidget {
         constraints: BoxConstraints(maxWidth: 1400),
         child: Column(
           children: [
-            _buildSectionHeader(screenWidth),
+            _buildSectionHeader(screenWidth, isLightMode),
             SizedBox(height: _getSectionSpacing(screenWidth)),
-            _buildMainContent(
-                screenWidth, isLargeScreen, isMediumScreen, isSmallScreen),
+            _buildMainContent(context, screenWidth, isLargeScreen,
+                isMediumScreen, isSmallScreen),
           ],
         ),
       ),
@@ -53,7 +52,7 @@ class AboutMeSection extends StatelessWidget {
     return 40;
   }
 
-  Widget _buildSectionHeader(double screenWidth) {
+  Widget _buildSectionHeader(double screenWidth, bool isLightMode) {
     final fontSize = _getTitleFontSize(screenWidth);
 
     return Column(
@@ -65,7 +64,8 @@ class AboutMeSection extends StatelessWidget {
               TextSpan(
                 text: "About ",
                 style: TextStyle(
-                  color: Colors.white,
+                  color:
+                      isLightMode ? LightThemeColors.textPrimary : Colors.white,
                   fontSize: fontSize,
                   fontWeight: FontWeight.w800,
                   letterSpacing: 1.2,
@@ -74,7 +74,9 @@ class AboutMeSection extends StatelessWidget {
               TextSpan(
                 text: "Me",
                 style: TextStyle(
-                  color: Colors.cyanAccent,
+                  color: isLightMode
+                      ? LightThemeColors.primaryCyan
+                      : Colors.cyanAccent,
                   fontSize: fontSize,
                   fontWeight: FontWeight.w800,
                   letterSpacing: 1.2,
@@ -89,7 +91,15 @@ class AboutMeSection extends StatelessWidget {
           height: 4,
           decoration: BoxDecoration(
             gradient: LinearGradient(
-              colors: [Colors.cyanAccent, Colors.cyanAccent.withOpacity(0.3)],
+              colors: isLightMode
+                  ? [
+                      LightThemeColors.primaryCyan,
+                      LightThemeColors.primaryCyan.withOpacity(0.3),
+                    ]
+                  : [
+                      Colors.cyanAccent,
+                      Colors.cyanAccent.withOpacity(0.3),
+                    ],
             ),
             borderRadius: BorderRadius.circular(2),
           ),
@@ -111,23 +121,23 @@ class AboutMeSection extends StatelessWidget {
     return 60;
   }
 
-  Widget _buildMainContent(double screenWidth, bool isLargeScreen,
-      bool isMediumScreen, bool isSmallScreen) {
+  Widget _buildMainContent(BuildContext context, double screenWidth,
+      bool isLargeScreen, bool isMediumScreen, bool isSmallScreen) {
     if (isSmallScreen) {
       return Column(
         children: [
-          _buildProfileCard(screenWidth),
+          _buildProfileCard(screenWidth, context),
           SizedBox(height: 60),
-          _buildInfoTabs(screenWidth),
+          _buildInfoTabs(screenWidth, context),
         ],
       );
     } else {
       return Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          _buildProfileCard(screenWidth),
+          _buildProfileCard(screenWidth, context),
           SizedBox(width: _getContentSpacing(screenWidth)),
-          Expanded(child: _buildInfoTabs(screenWidth)),
+          Expanded(child: _buildInfoTabs(screenWidth, context)),
         ],
       );
     }
@@ -140,10 +150,11 @@ class AboutMeSection extends StatelessWidget {
     return 60;
   }
 
-  Widget _buildProfileCard(double screenWidth) {
+  Widget _buildProfileCard(double screenWidth, context) {
     final cardWidth = _getProfileCardWidth(screenWidth);
     final avatarRadius = _getAvatarRadius(screenWidth);
     final cardPadding = _getCardPadding(screenWidth);
+    final isLightMode = Theme.of(context).brightness == Brightness.light;
 
     return SizedBox(
       width: cardWidth,
@@ -160,22 +171,31 @@ class AboutMeSection extends StatelessWidget {
             ),
             decoration: BoxDecoration(
               gradient: LinearGradient(
-                colors: [
-                  Colors.cyanAccent,
-                  Colors.cyanAccent.withOpacity(0.8),
-                ],
+                colors: isLightMode
+                    ? [
+                        LightThemeColors.primaryCyan,
+                        LightThemeColors.primaryCyanLight,
+                      ]
+                    : [
+                        Colors.cyanAccent,
+                        Colors.cyanAccent.withOpacity(0.8),
+                      ],
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
               ),
               borderRadius: BorderRadius.circular(24),
               boxShadow: [
                 BoxShadow(
-                  color: Colors.cyanAccent.withOpacity(0.3),
+                  color: isLightMode
+                      ? LightThemeColors.shadowLight
+                      : Colors.cyanAccent.withOpacity(0.3),
                   blurRadius: 30,
                   offset: Offset(0, 15),
                 ),
                 BoxShadow(
-                  color: Colors.black.withOpacity(0.1),
+                  color: isLightMode
+                      ? LightThemeColors.shadowMedium
+                      : Colors.black.withOpacity(0.1),
                   blurRadius: 10,
                   offset: Offset(0, 5),
                 ),
@@ -186,7 +206,9 @@ class AboutMeSection extends StatelessWidget {
                 Text(
                   "ALI MAHER",
                   style: TextStyle(
-                    color: Colors.white,
+                    color: isLightMode
+                        ? LightThemeColors.textOnPrimary
+                        : Colors.white,
                     fontWeight: FontWeight.w800,
                     fontSize: _getNameFontSize(screenWidth),
                     letterSpacing: 1.5,
@@ -197,14 +219,28 @@ class AboutMeSection extends StatelessWidget {
                 Container(
                   width: 60,
                   height: 2,
-                  color: Colors.white.withOpacity(0.5),
+                  color: isLightMode
+                      ? LightThemeColors.textOnPrimary.withOpacity(0.5)
+                      : Colors.white.withOpacity(0.5),
                 ),
                 SizedBox(height: 24),
-                _buildRoleChip("Flutter Developer", screenWidth),
+                _buildRoleChip(
+                  "Flutter Developer",
+                  screenWidth,
+                  context,
+                ),
                 SizedBox(height: 12),
-                _buildRoleChip("Firebase Expert", screenWidth),
+                _buildRoleChip(
+                  "Firebase Expert",
+                  screenWidth,
+                  context,
+                ),
                 SizedBox(height: 12),
-                _buildRoleChip("UI/UX Designer", screenWidth),
+                _buildRoleChip(
+                  "UI/UX Designer",
+                  screenWidth,
+                  context,
+                ),
               ],
             ),
           ),
@@ -216,10 +252,17 @@ class AboutMeSection extends StatelessWidget {
               child: Container(
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  border: Border.all(color: Colors.white, width: 6),
+                  border: Border.all(
+                    color: isLightMode
+                        ? LightThemeColors.borderMedium
+                        : Colors.white,
+                    width: 6,
+                  ),
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.black.withOpacity(0.25),
+                      color: isLightMode
+                          ? LightThemeColors.shadowLight
+                          : Colors.black.withOpacity(0.25),
                       blurRadius: 25,
                       offset: Offset(-5, 10),
                     ),
@@ -229,7 +272,7 @@ class AboutMeSection extends StatelessWidget {
                   radius: avatarRadius,
                   backgroundImage: Image.asset(
                     "assets/MyPhoto/profile.png",
-                    fit: BoxFit.cover, // Ensure the image covers the circle
+                    fit: BoxFit.cover,
                   ).image,
                   backgroundColor: Colors.grey[200],
                 ),
@@ -266,21 +309,29 @@ class AboutMeSection extends StatelessWidget {
     return 22;
   }
 
-  Widget _buildRoleChip(String role, double screenWidth) {
+  Widget _buildRoleChip(String role, double screenWidth, context) {
     final fontSize = _getChipFontSize(screenWidth);
     final padding = _getChipPadding(screenWidth);
+    final isLightMode = Theme.of(context).brightness == Brightness.light;
 
     return Container(
       padding: EdgeInsets.symmetric(horizontal: padding, vertical: 8),
       decoration: BoxDecoration(
-        color: Colors.white.withOpacity(0.15),
+        color: isLightMode
+            ? LightThemeColors.bgSecondary
+            : Colors.white.withOpacity(0.15),
         borderRadius: BorderRadius.circular(20),
-        border: Border.all(color: Colors.white.withOpacity(0.3), width: 1),
+        border: Border.all(
+          color: isLightMode
+              ? LightThemeColors.borderLight
+              : Colors.white.withOpacity(0.3),
+          width: 1,
+        ),
       ),
       child: Text(
         role,
         style: TextStyle(
-          color: Colors.white,
+          color: isLightMode ? LightThemeColors.textPrimary : Colors.white,
           fontSize: fontSize,
           fontWeight: FontWeight.w600,
         ),
@@ -301,9 +352,10 @@ class AboutMeSection extends StatelessWidget {
     return 12;
   }
 
-  Widget _buildInfoTabs(double screenWidth) {
+  Widget _buildInfoTabs(double screenWidth, context) {
     final tabHeight = _getTabHeight(screenWidth);
     final tabFontSize = _getTabFontSize(screenWidth);
+    final isLightMode = Theme.of(context).brightness == Brightness.light;
 
     return DefaultTabController(
       length: 4,
@@ -311,11 +363,15 @@ class AboutMeSection extends StatelessWidget {
         children: [
           Container(
             decoration: BoxDecoration(
-              color: Colors.white.withOpacity(0.05),
+              color: isLightMode
+                  ? LightThemeColors.bgSecondary
+                  : Colors.white.withOpacity(0.05),
               borderRadius: BorderRadius.circular(30),
               border: Border.all(
                 style: BorderStyle.solid,
-                color: Colors.cyanAccent.withOpacity(0.4),
+                color: isLightMode
+                    ? LightThemeColors.borderLight
+                    : Colors.cyanAccent.withOpacity(0.4),
                 width: 3,
               ),
             ),
@@ -327,14 +383,20 @@ class AboutMeSection extends StatelessWidget {
               indicator: BoxDecoration(
                 border: Border.all(
                   style: BorderStyle.solid,
-                  color: Colors.cyanAccent.withOpacity(0.4),
+                  color: isLightMode
+                      ? LightThemeColors.borderLight
+                      : Colors.cyanAccent.withOpacity(0.4),
                   width: 1,
                 ),
-                color: Colors.cyanAccent.withOpacity(0.2),
+                color: isLightMode
+                    ? LightThemeColors.primaryCyan.withOpacity(0.2)
+                    : Colors.cyanAccent.withOpacity(0.2),
                 borderRadius: BorderRadius.circular(40),
               ),
-              labelColor: Colors.white,
-              unselectedLabelColor: Colors.white60,
+              labelColor:
+                  isLightMode ? LightThemeColors.textPrimary : Colors.white,
+              unselectedLabelColor:
+                  isLightMode ? LightThemeColors.textMuted : Colors.white60,
               labelStyle: TextStyle(
                 fontWeight: FontWeight.w600,
                 fontSize: tabFontSize,
@@ -358,10 +420,19 @@ class AboutMeSection extends StatelessWidget {
             height: tabHeight,
             child: TabBarView(
               children: [
-                _buildEducationTab(screenWidth),
-                _buildCoursesTab(screenWidth),
-                _buildExperienceTab(screenWidth),
-                _buildSkillsTab(screenWidth),
+                _buildEducationTab(
+                  screenWidth,
+                  context,
+                ),
+                _buildCoursesTab(
+                  screenWidth,
+                  context,
+                ),
+                _buildExperienceTab(screenWidth, context),
+                _buildSkillsTab(
+                  screenWidth,
+                  context,
+                ),
               ],
             ),
           ),
@@ -389,11 +460,15 @@ class AboutMeSection extends StatelessWidget {
     return 22;
   }
 
-  Widget _buildEducationTab(double screenWidth) {
+  Widget _buildEducationTab(
+    double screenWidth,
+    BuildContext context,
+  ) {
     return SingleChildScrollView(
       child: Column(
         children: [
           _buildInfoCard(
+            context,
             title: "BSc in Computers & Artificial Intelligence",
             subtitle: "Sohag University",
             period: "2021 - 2025",
@@ -403,6 +478,7 @@ class AboutMeSection extends StatelessWidget {
           ),
           SizedBox(height: _getCardSpacing(screenWidth)),
           _buildInfoCard(
+            context,
             title: "Technical Diploma in Computer Technology",
             subtitle: "Sohag Technical Industrial Institute",
             period: "2019 - 2021",
@@ -412,6 +488,7 @@ class AboutMeSection extends StatelessWidget {
           ),
           SizedBox(height: _getCardSpacing(screenWidth)),
           _buildInfoCard(
+            context,
             title: "Member – Google Developer Student Clubs (GDSC)",
             subtitle: "Sohag University Chapter",
             period: "2022 – 2023",
@@ -424,11 +501,15 @@ class AboutMeSection extends StatelessWidget {
     );
   }
 
-  Widget _buildCoursesTab(double screenWidth) {
+  Widget _buildCoursesTab(
+    double screenWidth,
+    BuildContext context,
+  ) {
     return SingleChildScrollView(
       child: Column(
         children: [
           _buildInfoCard(
+            context,
             title: "Flutter & Dart Development Bootcamp",
             subtitle: "Udemy – Tharwat Samy",
             period: "2023",
@@ -438,6 +519,7 @@ class AboutMeSection extends StatelessWidget {
           ),
           SizedBox(height: _getCardSpacing(screenWidth)),
           _buildInfoCard(
+            context,
             title: "Firebase Masterclass for Flutter",
             subtitle: "Advanced Backend & Authentication",
             period: "2023",
@@ -447,6 +529,7 @@ class AboutMeSection extends StatelessWidget {
           ),
           SizedBox(height: _getCardSpacing(screenWidth)),
           _buildInfoCard(
+            context,
             title: "RESTful API Integration in Flutter",
             subtitle: "Built Real Apps with Multiple APIs",
             period: "2023",
@@ -459,11 +542,12 @@ class AboutMeSection extends StatelessWidget {
     );
   }
 
-  Widget _buildExperienceTab(double screenWidth) {
+  Widget _buildExperienceTab(double screenWidth, context) {
     return SingleChildScrollView(
       child: Column(
         children: [
           _buildInfoCard(
+            context,
             title: "Flutter Developer",
             subtitle: "Freelance Projects",
             period: "2023 – Present",
@@ -473,6 +557,7 @@ class AboutMeSection extends StatelessWidget {
           ),
           SizedBox(height: _getCardSpacing(screenWidth)),
           _buildInfoCard(
+            context,
             title: "Instructor & Mentor",
             subtitle: "iSchool & Digital Egypt Initiatives",
             period: "May 2024 – Present",
@@ -482,13 +567,13 @@ class AboutMeSection extends StatelessWidget {
           ),
           SizedBox(height: _getCardSpacing(screenWidth)),
           _buildInfoCard(
-            title: "Volunteer Developer & Participant",
-            subtitle: "Ministry of Communications – Youth Initiatives",
-            period: "2023 – 2024",
-            status: "Contributed to coding clubs & digital skills programs",
-            icon: Icons.volunteer_activism,
-            screenWidth: screenWidth,
-          ),
+              title: "Volunteer Developer & Participant",
+              subtitle: "Ministry of Communications – Youth Initiatives",
+              period: "2023 – 2024",
+              status: "Contributed to coding clubs & digital skills programs",
+              icon: Icons.volunteer_activism,
+              screenWidth: screenWidth,
+              context),
           SizedBox(height: _getCardSpacing(screenWidth)),
           _buildInfoCard(
             title: "ICPC Competitive Programmer",
@@ -496,6 +581,7 @@ class AboutMeSection extends StatelessWidget {
             period: "2022 – 2024",
             status: "Regional Participant in Programming Contests",
             icon: Icons.code,
+            context,
             screenWidth: screenWidth,
           ),
         ],
@@ -503,19 +589,19 @@ class AboutMeSection extends StatelessWidget {
     );
   }
 
-  Widget _buildSkillsTab(double screenWidth) {
+  Widget _buildSkillsTab(double screenWidth, context) {
     final isLargeScreen = screenWidth > 1200;
 
     return SingleChildScrollView(
       child: isLargeScreen
-          ? // Grid layout للشاشات الكبيرة
-          Column(
+          ? Column(
               children: [
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Expanded(
                       child: _buildSkillCategory(
+                        context,
                         "Development",
                         [
                           "Flutter & Dart (Advanced)",
@@ -532,6 +618,7 @@ class AboutMeSection extends StatelessWidget {
                     SizedBox(width: 24),
                     Expanded(
                       child: _buildSkillCategory(
+                        context,
                         "Design",
                         [
                           "UI/UX Design Principles",
@@ -548,6 +635,7 @@ class AboutMeSection extends StatelessWidget {
                 ),
                 SizedBox(height: 24),
                 _buildSkillCategory(
+                  context,
                   "Programming & Academic Skills",
                   [
                     "C++ Programming",
@@ -562,6 +650,7 @@ class AboutMeSection extends StatelessWidget {
                 ),
                 SizedBox(height: 24),
                 _buildSkillCategory(
+                  context,
                   "Languages",
                   [
                     "Arabic (Native)",
@@ -571,11 +660,10 @@ class AboutMeSection extends StatelessWidget {
                 ),
               ],
             )
-          :
-// Column layout للشاشات الأصغر
-          Column(
+          : Column(
               children: [
                 _buildSkillCategory(
+                  context,
                   "Development",
                   [
                     "Flutter & Dart (Advanced)",
@@ -590,6 +678,7 @@ class AboutMeSection extends StatelessWidget {
                 ),
                 SizedBox(height: 24),
                 _buildSkillCategory(
+                  context,
                   "Design",
                   [
                     "UI/UX Design Principles",
@@ -603,6 +692,7 @@ class AboutMeSection extends StatelessWidget {
                 ),
                 SizedBox(height: 24),
                 _buildSkillCategory(
+                  context,
                   "Programming & Academic Skills",
                   [
                     "C++ Programming",
@@ -617,6 +707,7 @@ class AboutMeSection extends StatelessWidget {
                 ),
                 SizedBox(height: 24),
                 _buildSkillCategory(
+                  context,
                   "Languages",
                   [
                     "Arabic (Native)",
@@ -635,7 +726,8 @@ class AboutMeSection extends StatelessWidget {
     return 16;
   }
 
-  Widget _buildInfoCard({
+  Widget _buildInfoCard(
+    BuildContext context, {
     required String title,
     required String subtitle,
     required String period,
@@ -647,27 +739,35 @@ class AboutMeSection extends StatelessWidget {
     final titleFontSize = _getInfoCardTitleSize(screenWidth);
     final subtitleFontSize = _getInfoCardSubtitleSize(screenWidth);
     final iconSize = _getInfoCardIconSize(screenWidth);
+    final isLightMode = Theme.of(context).brightness == Brightness.light;
 
     return Container(
       width: double.infinity,
       padding: EdgeInsets.all(cardPadding),
       decoration: BoxDecoration(
-        gradient: LinearGradient(
-          colors: [
-            Color(0xFF2C3E50).withOpacity(0.9),
-            Color(0xFF34495E).withOpacity(0.7),
-          ],
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-        ),
+        color: isLightMode ? LightThemeColors.bgCard : null,
+        gradient: isLightMode
+            ? null
+            : LinearGradient(
+                colors: [
+                  Color(0xFF2C3E50).withOpacity(0.9),
+                  Color(0xFF34495E).withOpacity(0.7),
+                ],
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+              ),
         borderRadius: BorderRadius.circular(16),
         border: Border.all(
-          color: Colors.cyanAccent.withOpacity(0.2),
+          color: isLightMode
+              ? LightThemeColors.borderLight
+              : Colors.cyanAccent.withOpacity(0.2),
           width: 1.5,
         ),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.1),
+            color: isLightMode
+                ? LightThemeColors.shadowLight
+                : Colors.black.withOpacity(0.1),
             blurRadius: 10,
             offset: Offset(0, 4),
           ),
@@ -679,16 +779,22 @@ class AboutMeSection extends StatelessWidget {
             width: iconSize,
             height: iconSize,
             decoration: BoxDecoration(
-              color: Colors.cyanAccent.withOpacity(0.15),
+              color: isLightMode
+                  ? LightThemeColors.bgSecondary
+                  : Colors.cyanAccent.withOpacity(0.15),
               borderRadius: BorderRadius.circular(12),
               border: Border.all(
-                color: Colors.cyanAccent.withOpacity(0.3),
+                color: isLightMode
+                    ? LightThemeColors.borderLight
+                    : Colors.cyanAccent.withOpacity(0.3),
                 width: 1,
               ),
             ),
             child: Icon(
               icon,
-              color: Colors.cyanAccent,
+              color: isLightMode
+                  ? LightThemeColors.primaryCyan
+                  : Colors.cyanAccent,
               size: iconSize * 0.5,
             ),
           ),
@@ -700,7 +806,9 @@ class AboutMeSection extends StatelessWidget {
                 Text(
                   title,
                   style: TextStyle(
-                    color: Colors.cyanAccent,
+                    color: isLightMode
+                        ? LightThemeColors.primaryCyan
+                        : Colors.cyanAccent,
                     fontWeight: FontWeight.w700,
                     fontSize: titleFontSize,
                   ),
@@ -709,7 +817,9 @@ class AboutMeSection extends StatelessWidget {
                 Text(
                   subtitle,
                   style: TextStyle(
-                    color: Colors.white.withOpacity(0.9),
+                    color: isLightMode
+                        ? LightThemeColors.textPrimary
+                        : Colors.white.withOpacity(0.9),
                     fontSize: subtitleFontSize,
                     fontWeight: FontWeight.w500,
                   ),
@@ -724,14 +834,18 @@ class AboutMeSection extends StatelessWidget {
                       children: [
                         Icon(
                           Icons.schedule,
-                          color: Colors.white60,
+                          color: isLightMode
+                              ? LightThemeColors.textMuted
+                              : Colors.white60,
                           size: 16,
                         ),
                         SizedBox(width: 6),
                         Text(
                           period,
                           style: TextStyle(
-                            color: Colors.white60,
+                            color: isLightMode
+                                ? LightThemeColors.textMuted
+                                : Colors.white60,
                             fontSize: 13,
                           ),
                         ),
@@ -742,14 +856,18 @@ class AboutMeSection extends StatelessWidget {
                       children: [
                         Icon(
                           Icons.check_circle,
-                          color: Colors.green,
+                          color: isLightMode
+                              ? LightThemeColors.success
+                              : Colors.green,
                           size: 16,
                         ),
                         SizedBox(width: 6),
                         Text(
                           status,
                           style: TextStyle(
-                            color: Colors.white70,
+                            color: isLightMode
+                                ? LightThemeColors.textSecondary
+                                : Colors.white70,
                             fontSize: 13,
                             fontWeight: FontWeight.w500,
                           ),
@@ -790,22 +908,36 @@ class AboutMeSection extends StatelessWidget {
     return 45;
   }
 
-  Widget _buildSkillCategory(
-      String title, List<String> skills, double screenWidth) {
+  Widget _buildSkillCategory(BuildContext context, String title,
+      List<String> skills, double screenWidth) {
     final cardPadding = _getSkillCardPadding(screenWidth);
     final titleSize = _getSkillTitleSize(screenWidth);
     final skillFontSize = _getSkillFontSize(screenWidth);
+    final isLightMode = Theme.of(context).brightness == Brightness.light;
 
     return Container(
       width: double.infinity,
       padding: EdgeInsets.all(cardPadding),
       decoration: BoxDecoration(
-        color: Color(0xFF2C3E50).withOpacity(0.8),
+        color: isLightMode
+            ? LightThemeColors.bgCard
+            : Color(0xFF2C3E50).withOpacity(0.8),
         borderRadius: BorderRadius.circular(16),
         border: Border.all(
-          color: Colors.cyanAccent.withOpacity(0.2),
+          color: isLightMode
+              ? LightThemeColors.borderLight
+              : Colors.cyanAccent.withOpacity(0.2),
           width: 1,
         ),
+        boxShadow: isLightMode
+            ? [
+                BoxShadow(
+                  color: LightThemeColors.shadowLight,
+                  blurRadius: 8,
+                  offset: Offset(0, 2),
+                ),
+              ]
+            : null,
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -813,7 +945,9 @@ class AboutMeSection extends StatelessWidget {
           Text(
             title,
             style: TextStyle(
-              color: Colors.cyanAccent,
+              color: isLightMode
+                  ? LightThemeColors.primaryCyan
+                  : Colors.cyanAccent,
               fontWeight: FontWeight.w700,
               fontSize: titleSize,
             ),
@@ -828,17 +962,23 @@ class AboutMeSection extends StatelessWidget {
                           horizontal: _getSkillChipPadding(screenWidth),
                           vertical: 8),
                       decoration: BoxDecoration(
-                        color: Colors.cyanAccent.withOpacity(0.1),
+                        color: isLightMode
+                            ? LightThemeColors.bgSecondary
+                            : Colors.cyanAccent.withOpacity(0.1),
                         borderRadius: BorderRadius.circular(20),
                         border: Border.all(
-                          color: Colors.cyanAccent.withOpacity(0.3),
+                          color: isLightMode
+                              ? LightThemeColors.borderLight
+                              : Colors.cyanAccent.withOpacity(0.3),
                           width: 1,
                         ),
                       ),
                       child: Text(
                         skill,
                         style: TextStyle(
-                          color: Colors.white.withOpacity(0.9),
+                          color: isLightMode
+                              ? LightThemeColors.textPrimary
+                              : Colors.white.withOpacity(0.9),
                           fontSize: skillFontSize,
                           fontWeight: FontWeight.w500,
                         ),

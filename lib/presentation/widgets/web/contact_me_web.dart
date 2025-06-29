@@ -1,3 +1,4 @@
+import 'package:Ali_Maher/core/constant/colors.dart';
 import 'package:Ali_Maher/core/constant/send_email.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -113,18 +114,27 @@ class _ContactMePageState extends State<ContactMePage>
 
   @override
   Widget build(BuildContext context) {
+    final isLightMode = Theme.of(context).brightness == Brightness.light;
+
     return Scaffold(
-      backgroundColor: const Color(0xFF2D3748),
+      backgroundColor:
+          isLightMode ? LightThemeColors.bgPrimary : const Color(0xFF2D3748),
       body: Container(
-        decoration: const BoxDecoration(
+        decoration: BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
-            colors: [
-              Color(0xFF2D3748),
-              Color(0xFF1A1F2E),
-              Color(0xFF0F1419),
-            ],
+            colors: isLightMode
+                ? [
+                    LightThemeColors.bgPrimary,
+                    LightThemeColors.bgSecondary,
+                    LightThemeColors.bgSecondary.withOpacity(0.8),
+                  ]
+                : [
+                    const Color(0xFF2D3748),
+                    const Color(0xFF1A1F2E),
+                    const Color(0xFF0F1419),
+                  ],
           ),
         ),
         child: Column(
@@ -149,7 +159,9 @@ class _ContactMePageState extends State<ContactMePage>
                                   style: TextStyle(
                                     fontSize: 32,
                                     fontWeight: FontWeight.bold,
-                                    color: Colors.white,
+                                    color: isLightMode
+                                        ? LightThemeColors.textPrimary
+                                        : Colors.white,
                                   ),
                                 ),
                                 TextSpan(
@@ -158,11 +170,17 @@ class _ContactMePageState extends State<ContactMePage>
                                     fontSize: 32,
                                     fontWeight: FontWeight.bold,
                                     foreground: Paint()
-                                      ..shader = const LinearGradient(
-                                        colors: [
-                                          Color(0xFF00D4FF),
-                                          Color(0xFF00A8CC),
-                                        ],
+                                      ..shader = LinearGradient(
+                                        colors: isLightMode
+                                            ? [
+                                                LightThemeColors.primaryCyan,
+                                                LightThemeColors.primaryCyan
+                                              ]
+                                            : [
+                                                Colors.cyanAccent,
+                                                Colors.cyanAccent
+                                                    .withOpacity(0.7),
+                                              ],
                                       ).createShader(
                                           const Rect.fromLTWH(0, 0, 100, 40)),
                                   ),
@@ -191,11 +209,16 @@ class _ContactMePageState extends State<ContactMePage>
                                     child: Container(
                                       padding: const EdgeInsets.all(15),
                                       decoration: BoxDecoration(
-                                        color: const Color(0xFF00D4FF),
+                                        color: isLightMode
+                                            ? LightThemeColors.primaryCyan
+                                            : const Color(0xFF00D4FF),
                                         borderRadius: BorderRadius.circular(10),
                                         boxShadow: [
                                           BoxShadow(
-                                            color: const Color(0xFF00D4FF)
+                                            color: (isLightMode
+                                                    ? LightThemeColors
+                                                        .primaryCyan
+                                                    : const Color(0xFF00D4FF))
                                                 .withOpacity(0.3),
                                             blurRadius: 15,
                                             offset: const Offset(0, 5),
@@ -207,14 +230,19 @@ class _ContactMePageState extends State<ContactMePage>
                                         children: [
                                           Icon(
                                             Icons.code,
-                                            color: Colors.white,
+                                            color: isLightMode
+                                                ? LightThemeColors.textOnPrimary
+                                                : Colors.white,
                                             size: 24,
                                           ),
                                           const SizedBox(width: 8),
-                                          const Text(
+                                          Text(
                                             'AM',
                                             style: TextStyle(
-                                              color: Colors.white,
+                                              color: isLightMode
+                                                  ? LightThemeColors
+                                                      .textOnPrimary
+                                                  : Colors.white,
                                               fontWeight: FontWeight.bold,
                                               fontSize: 18,
                                             ),
@@ -229,10 +257,12 @@ class _ContactMePageState extends State<ContactMePage>
                                   // Description
                                   FadeTransition(
                                     opacity: _fadeAnimation,
-                                    child: const Text(
+                                    child: Text(
                                       'I am a passionate Flutter developer with hands-on experience in building high-quality mobile apps. I’ve developed more than 10 complete applications using clean architecture, state management, Firebase, and REST APIs. Whether it’s a business, medical, or e-commerce app, I deliver modern and responsive UI with top performance. Your satisfaction and app usability are always my priority.',
                                       style: TextStyle(
-                                        color: Colors.white70,
+                                        color: isLightMode
+                                            ? LightThemeColors.textSecondary
+                                            : Colors.white70,
                                         fontSize: 16,
                                         height: 1.6,
                                       ),
@@ -242,7 +272,7 @@ class _ContactMePageState extends State<ContactMePage>
                                   const SizedBox(height: 40),
 
                                   // Social Icons
-                                  _buildSocialIcons(),
+                                  _buildSocialIcons(isLightMode),
                                 ],
                               ),
                             ),
@@ -253,7 +283,7 @@ class _ContactMePageState extends State<ContactMePage>
                           // Right Side - Contact Form
                           Expanded(
                             flex: 1,
-                            child: _buildContactForm(),
+                            child: _buildContactForm(isLightMode),
                           ),
                         ],
                       ),
@@ -264,41 +294,51 @@ class _ContactMePageState extends State<ContactMePage>
             ),
 
             // Footer
-            _buildFooter(),
+            _buildFooter(isLightMode),
           ],
         ),
       ),
     );
   }
 
-  Widget _buildSocialIcons() {
+  Widget _buildSocialIcons(bool isLightMode) {
     final socialIcons = [
       {
         'icon': Icons.phone,
-        'color': Color(0xFF00D4FF),
+        'color': isLightMode
+            ? LightThemeColors.primaryCyan
+            : const Color(0xFF00D4FF),
         'onTap': () => launchDialer('+01278408531')
       },
       {
         'icon': FontAwesomeIcons.whatsapp,
-        'color': Color(0xFF00D4FF),
+        'color': isLightMode
+            ? LightThemeColors.primaryCyan
+            : const Color(0xFF00D4FF),
         'onTap': () =>
             launchCustomUrl(context, url: 'https://wa.me/+01278408531')
       },
       {
         'icon': Icons.email,
-        'color': Color(0xFF00D4FF),
+        'color': isLightMode
+            ? LightThemeColors.primaryCyan
+            : const Color(0xFF00D4FF),
         'onTap': () => launchCustomUrl(context,
             url: 'mailto:ali.maher0013@gmail.com?subject=Hello')
       },
       {
         'icon': Icons.location_on,
-        'color': Color(0xFF00D4FF),
+        'color': isLightMode
+            ? LightThemeColors.primaryCyan
+            : const Color(0xFF00D4FF),
         'onTap': () => launchCustomUrl(context,
             url: 'https://maps.app.goo.gl/ume2cr9TWhpu8oxe6')
       },
       {
         'icon': Icons.facebook,
-        'color': Color(0xFF00D4FF),
+        'color': isLightMode
+            ? LightThemeColors.primaryCyan
+            : const Color(0xFF00D4FF),
         'onTap': () => launchCustomUrl(context,
             url: 'https://www.facebook.com/ali.maher.403247')
       },
@@ -331,10 +371,14 @@ class _ContactMePageState extends State<ContactMePage>
                         width: 50,
                         height: 50,
                         decoration: BoxDecoration(
-                          color: const Color(0xFF4A5568),
+                          color: isLightMode
+                              ? LightThemeColors.bgCard
+                              : const Color(0xFF4A5568),
                           borderRadius: BorderRadius.circular(25),
                           border: Border.all(
-                            color: Colors.white24,
+                            color: isLightMode
+                                ? LightThemeColors.borderLight
+                                : Colors.white24,
                             width: 1,
                           ),
                         ),
@@ -355,7 +399,7 @@ class _ContactMePageState extends State<ContactMePage>
     );
   }
 
-  Widget _buildContactForm() {
+  Widget _buildContactForm(bool isLightMode) {
     return SlideTransition(
       position: Tween<Offset>(
         begin: const Offset(0.5, 0),
@@ -376,6 +420,7 @@ class _ContactMePageState extends State<ContactMePage>
                     controller: _firstNameController,
                     label: 'First Name',
                     delay: 0,
+                    isLightMode: isLightMode,
                   ),
                 ),
                 const SizedBox(width: 15),
@@ -384,6 +429,7 @@ class _ContactMePageState extends State<ContactMePage>
                     controller: _lastNameController,
                     label: 'Last Name',
                     delay: 100,
+                    isLightMode: isLightMode,
                   ),
                 ),
               ],
@@ -400,6 +446,7 @@ class _ContactMePageState extends State<ContactMePage>
                     label: 'Phone',
                     delay: 200,
                     keyboardType: TextInputType.phone,
+                    isLightMode: isLightMode,
                   ),
                 ),
                 const SizedBox(width: 15),
@@ -408,6 +455,7 @@ class _ContactMePageState extends State<ContactMePage>
                     controller: _subjectController,
                     label: 'Subject',
                     delay: 300,
+                    isLightMode: isLightMode,
                   ),
                 ),
               ],
@@ -421,6 +469,7 @@ class _ContactMePageState extends State<ContactMePage>
               label: 'Email',
               delay: 400,
               keyboardType: TextInputType.emailAddress,
+              isLightMode: isLightMode,
             ),
 
             const SizedBox(height: 20),
@@ -431,12 +480,13 @@ class _ContactMePageState extends State<ContactMePage>
               label: 'Message',
               delay: 500,
               maxLines: 4,
+              isLightMode: isLightMode,
             ),
 
             const SizedBox(height: 30),
 
             // Submit Button
-            _buildSubmitButton(),
+            _buildSubmitButton(isLightMode),
           ],
         ),
       ),
@@ -449,6 +499,7 @@ class _ContactMePageState extends State<ContactMePage>
     required int delay,
     TextInputType? keyboardType,
     int maxLines = 1,
+    required bool isLightMode,
   }) {
     return TweenAnimationBuilder<double>(
       duration: Duration(milliseconds: 800 + delay),
@@ -462,20 +513,30 @@ class _ContactMePageState extends State<ContactMePage>
               controller: controller,
               keyboardType: keyboardType,
               maxLines: maxLines,
-              style: const TextStyle(color: Colors.white),
+              style: TextStyle(
+                color:
+                    isLightMode ? LightThemeColors.textPrimary : Colors.white,
+              ),
               decoration: InputDecoration(
                 labelText: label,
-                labelStyle: const TextStyle(color: Colors.white70),
+                labelStyle: TextStyle(
+                  color:
+                      isLightMode ? LightThemeColors.textMuted : Colors.white70,
+                ),
                 filled: true,
-                fillColor: const Color(0xFF4A5568),
+                fillColor: isLightMode
+                    ? LightThemeColors.bgCard
+                    : const Color(0xFF4A5568),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(10),
                   borderSide: BorderSide.none,
                 ),
                 focusedBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(10),
-                  borderSide: const BorderSide(
-                    color: Color(0xFF00D4FF),
+                  borderSide: BorderSide(
+                    color: isLightMode
+                        ? LightThemeColors.primaryCyan
+                        : const Color(0xFF00D4FF),
                     width: 2,
                   ),
                 ),
@@ -500,7 +561,7 @@ class _ContactMePageState extends State<ContactMePage>
     );
   }
 
-  Widget _buildSubmitButton() {
+  Widget _buildSubmitButton(bool isLightMode) {
     return TweenAnimationBuilder<double>(
       duration: const Duration(milliseconds: 1000),
       tween: Tween(begin: 0.0, end: 1.0),
@@ -511,13 +572,24 @@ class _ContactMePageState extends State<ContactMePage>
             width: double.infinity,
             height: 50,
             decoration: BoxDecoration(
-              gradient: const LinearGradient(
-                colors: [Color(0xFF00D4FF), Color(0xFF00A8CC)],
+              gradient: LinearGradient(
+                colors: isLightMode
+                    ? [
+                        LightThemeColors.primaryCyan,
+                        LightThemeColors.primaryCyan.withOpacity(0.7),
+                      ]
+                    : [
+                        const Color(0xFF00D4FF),
+                        const Color(0xFF00A8CC),
+                      ],
               ),
               borderRadius: BorderRadius.circular(25),
               boxShadow: [
                 BoxShadow(
-                  color: const Color(0xFF00D4FF).withOpacity(0.3),
+                  color: (isLightMode
+                          ? LightThemeColors.primaryCyan
+                          : const Color(0xFF00D4FF))
+                      .withOpacity(0.3),
                   blurRadius: 15,
                   offset: const Offset(0, 5),
                 ),
@@ -533,11 +605,13 @@ class _ContactMePageState extends State<ContactMePage>
                     _handleSubmit();
                   }
                 },
-                child: const Center(
+                child: Center(
                   child: Text(
                     'Submit',
                     style: TextStyle(
-                      color: Colors.white,
+                      color: isLightMode
+                          ? LightThemeColors.textOnPrimary
+                          : Colors.white,
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
                     ),
@@ -551,22 +625,27 @@ class _ContactMePageState extends State<ContactMePage>
     );
   }
 
-  Widget _buildFooter() {
+  Widget _buildFooter(bool isLightMode) {
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.all(20),
-      decoration: const BoxDecoration(
-        color: Color(0xFF1A1F2E),
+      decoration: BoxDecoration(
+        color: isLightMode
+            ? LightThemeColors.bgSecondary
+            : const Color(0xFF1A1F2E),
         border: Border(
-          top: BorderSide(color: Colors.white12, width: 1),
+          top: BorderSide(
+            color: isLightMode ? LightThemeColors.borderLight : Colors.white12,
+            width: 1,
+          ),
         ),
       ),
       child: FadeTransition(
         opacity: _fadeAnimation,
-        child: const Text(
+        child: Text(
           'Copywrite 2024 All Rights Reserved By Ali Maher.',
           style: TextStyle(
-            color: Colors.white70,
+            color: isLightMode ? LightThemeColors.textMuted : Colors.white70,
             fontSize: 14,
           ),
           textAlign: TextAlign.center,
@@ -576,6 +655,7 @@ class _ContactMePageState extends State<ContactMePage>
   }
 
   void _handleSubmit() async {
+    final isLightMode = Theme.of(context).brightness == Brightness.light;
     if (_formKey.currentState!.validate()) {
       try {
         await sendEmail(
@@ -591,7 +671,9 @@ class _ContactMePageState extends State<ContactMePage>
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: const Text('Message sent successfully!'),
-            backgroundColor: const Color(0xFF00D4FF),
+            backgroundColor: isLightMode
+                ? LightThemeColors.primaryCyan
+                : const Color(0xFF00D4FF),
             behavior: SnackBarBehavior.floating,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(10),
@@ -612,7 +694,8 @@ class _ContactMePageState extends State<ContactMePage>
           SnackBar(
             content:
                 const Text('Failed to send message. Please try again later.'),
-            backgroundColor: Colors.redAccent,
+            backgroundColor:
+                isLightMode ? LightThemeColors.error : Colors.redAccent,
             behavior: SnackBarBehavior.floating,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(10),

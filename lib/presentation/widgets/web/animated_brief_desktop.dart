@@ -1,3 +1,4 @@
+import 'package:Ali_Maher/core/constant/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -152,9 +153,40 @@ class _AnimatedPortfolioBriefState extends State<AnimatedPortfolioBrief>
     super.dispose();
   }
 
+  // دالة للحصول على الألوان حسب الثيم
+  Color _getTextColor(bool isPrimary) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    return isDark
+        ? (isPrimary ? Colors.white : Colors.white70)
+        : (isPrimary
+            ? LightThemeColors.textPrimary
+            : LightThemeColors.textSecondary);
+  }
+
+  Color _getAccentColor() {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    return isDark ? Colors.cyanAccent : LightThemeColors.primaryCyan;
+  }
+
+  Color _getCardColor() {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    return isDark
+        ? Colors.cyanAccent.withOpacity(0.1)
+        : LightThemeColors.accentCyan.withOpacity(0.1);
+  }
+
+  Color _getBorderColor() {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    return isDark
+        ? Colors.cyanAccent.withOpacity(0.2)
+        : LightThemeColors.borderLight;
+  }
+
   @override
   Widget build(BuildContext context) {
     super.build(context); // Required for AutomaticKeepAliveClientMixin
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return VisibilityDetector(
       key: const Key('portfolio-brief'),
       onVisibilityChanged: (info) {
@@ -170,21 +202,27 @@ class _AnimatedPortfolioBriefState extends State<AnimatedPortfolioBrief>
             opacity: _fadeAnimation,
             child: ShaderMask(
               shaderCallback: (bounds) => LinearGradient(
-                colors: [Colors.cyanAccent, Colors.white, Colors.cyanAccent],
-                stops: [0.0, 0.5, 1.0],
+                colors: isDark
+                    ? [Colors.cyanAccent, Colors.white, Colors.cyanAccent]
+                    : [
+                        LightThemeColors.primaryCyan,
+                        LightThemeColors.textPrimary,
+                        LightThemeColors.primaryCyan
+                      ],
+                stops: const [0.0, 0.5, 1.0],
               ).createShader(bounds),
               child: Text(
                 "ALI MAHER",
                 style: TextStyle(
                   fontSize: 36,
                   fontWeight: FontWeight.bold,
-                  color: Colors.white,
+                  color: _getTextColor(true),
                   letterSpacing: 3,
                   shadows: [
                     Shadow(
                       blurRadius: 10,
-                      color: Colors.cyanAccent.withOpacity(0.5),
-                      offset: Offset(0, 0),
+                      color: _getAccentColor().withOpacity(0.5),
+                      offset: const Offset(0, 0),
                     ),
                   ],
                 ),
@@ -204,20 +242,20 @@ class _AnimatedPortfolioBriefState extends State<AnimatedPortfolioBrief>
                     text: "And I'm a ",
                     style: TextStyle(
                       fontSize: 22,
-                      color: Colors.white,
+                      color: _getTextColor(true),
                     ),
                   ),
                   TextSpan(
                     text: _displayedText,
                     style: TextStyle(
                       fontSize: 22,
-                      color: Colors.cyanAccent,
+                      color: _getAccentColor(),
                       fontWeight: FontWeight.bold,
                       shadows: [
                         Shadow(
                           blurRadius: 5,
-                          color: Colors.cyanAccent.withOpacity(0.3),
-                          offset: Offset(0, 0),
+                          color: _getAccentColor().withOpacity(0.3),
+                          offset: const Offset(0, 0),
                         ),
                       ],
                     ),
@@ -238,7 +276,7 @@ class _AnimatedPortfolioBriefState extends State<AnimatedPortfolioBrief>
                               "|",
                               style: TextStyle(
                                 fontSize: 22,
-                                color: Colors.cyanAccent,
+                                color: _getAccentColor(),
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
@@ -275,16 +313,25 @@ class _AnimatedPortfolioBriefState extends State<AnimatedPortfolioBrief>
                   borderRadius: BorderRadius.circular(12),
                   gradient: LinearGradient(
                     colors: [
-                      Colors.cyanAccent.withOpacity(0.1),
+                      _getCardColor(),
                       Colors.transparent,
                     ],
                     begin: Alignment.topLeft,
                     end: Alignment.bottomRight,
                   ),
                   border: Border.all(
-                    color: Colors.cyanAccent.withOpacity(0.2),
+                    color: _getBorderColor(),
                     width: 1,
                   ),
+                  boxShadow: isDark
+                      ? null
+                      : [
+                          BoxShadow(
+                            color: LightThemeColors.shadowLight,
+                            blurRadius: 8,
+                            offset: const Offset(0, 2),
+                          ),
+                        ],
                 ),
                 child: Text(
                   "I'm a mobile app developer with strong skills in Flutter, Dart,\n"
@@ -293,7 +340,7 @@ class _AnimatedPortfolioBriefState extends State<AnimatedPortfolioBrief>
                   "delivered with high quality and client satisfaction.",
                   style: TextStyle(
                     fontSize: 16,
-                    color: Colors.white70,
+                    color: _getTextColor(false),
                     height: 1.6,
                   ),
                 ),
@@ -342,7 +389,9 @@ class _AnimatedPortfolioBriefState extends State<AnimatedPortfolioBrief>
                 _buildAnimatedButton(
                   "Portfolio",
                   false,
-                  () {},
+                  () {
+                    Navigator.pushNamed(context, '/projects');
+                  },
                 ),
               ],
             ),
@@ -353,6 +402,8 @@ class _AnimatedPortfolioBriefState extends State<AnimatedPortfolioBrief>
   }
 
   Widget _buildAnimatedIcon(IconData icon, int delay, {required String url}) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return AnimatedBuilder(
       animation: _iconController,
       builder: (context, child) {
@@ -375,14 +426,25 @@ class _AnimatedPortfolioBriefState extends State<AnimatedPortfolioBrief>
               shape: BoxShape.circle,
               gradient: LinearGradient(
                 colors: [
-                  Colors.cyanAccent.withOpacity(0.2),
+                  isDark
+                      ? Colors.cyanAccent.withOpacity(0.2)
+                      : LightThemeColors.primaryCyan.withOpacity(0.2),
                   Colors.transparent,
                 ],
               ),
+              boxShadow: isDark
+                  ? null
+                  : [
+                      BoxShadow(
+                        color: LightThemeColors.shadowLight,
+                        blurRadius: 4,
+                        offset: const Offset(0, 1),
+                      ),
+                    ],
             ),
             child: IconButton(
               icon: Icon(icon),
-              color: Colors.cyanAccent,
+              color: _getAccentColor(),
               iconSize: 24,
               onPressed: () {
                 HapticFeedback.lightImpact();
@@ -397,35 +459,58 @@ class _AnimatedPortfolioBriefState extends State<AnimatedPortfolioBrief>
 
   Widget _buildAnimatedButton(
       String text, bool isPrimary, VoidCallback onPressed) {
-    return MouseRegion(
-      onEnter: (_) {},
-      onExit: (_) {},
-      child: AnimatedContainer(
-        duration: const Duration(milliseconds: 200),
-        child: ElevatedButton(
-          onPressed: onPressed,
-          style: ElevatedButton.styleFrom(
-            backgroundColor: isPrimary ? Colors.cyanAccent : Colors.transparent,
-            foregroundColor: isPrimary ? Colors.black : Colors.cyanAccent,
-            side: isPrimary
-                ? null
-                : const BorderSide(color: Colors.cyanAccent, width: 2),
-            padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(30),
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    bool _isHovered = false;
+
+    return StatefulBuilder(
+      builder: (context, setState) {
+        return MouseRegion(
+          onEnter: (_) => setState(() => _isHovered = true),
+          onExit: (_) => setState(() => _isHovered = false),
+          child: AnimatedContainer(
+            duration: const Duration(milliseconds: 200),
+            child: ElevatedButton(
+              onPressed: onPressed,
+              style: ElevatedButton.styleFrom(
+                backgroundColor: isPrimary
+                    ? (isDark
+                        ? (_isHovered
+                            ? Colors.cyanAccent.withOpacity(0.8)
+                            : Colors.cyanAccent)
+                        : (_isHovered
+                            ? LightThemeColors.buttonHover
+                            : LightThemeColors.buttonPrimary))
+                    : Colors.transparent,
+                foregroundColor: isPrimary
+                    ? (isDark ? Colors.black : LightThemeColors.textOnPrimary)
+                    : _getAccentColor(),
+                side: isPrimary
+                    ? null
+                    : BorderSide(
+                        color: _isHovered
+                            ? _getAccentColor().withOpacity(0.8)
+                            : _getAccentColor(),
+                        width: 2,
+                      ),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(30),
+                ),
+                elevation: isPrimary ? (_isHovered ? 12 : 8) : 0,
+                shadowColor: _getAccentColor().withOpacity(0.5),
+              ),
+              child: Text(
+                text,
+                style: const TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 16,
+                ),
+              ),
             ),
-            elevation: isPrimary ? 8 : 0,
-            shadowColor: Colors.cyanAccent.withOpacity(0.5),
           ),
-          child: Text(
-            text,
-            style: const TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: 16,
-            ),
-          ),
-        ),
-      ),
+        );
+      },
     );
   }
 }

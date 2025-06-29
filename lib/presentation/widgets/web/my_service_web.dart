@@ -58,9 +58,10 @@ class _MyServicesWebState extends State<MyServicesWeb> {
     final screenWidth = MediaQuery.of(context).size.width;
     final isLargeScreen = screenWidth > 1200;
     final isMediumScreen = screenWidth > 900 && screenWidth <= 1200;
+    final isLightMode = Theme.of(context).brightness == Brightness.light;
 
     return Container(
-      color: CustomColors.scaffold2,
+      color: isLightMode ? LightThemeColors.bgPrimary : CustomColors.scaffold2,
       width: double.infinity,
       padding: EdgeInsets.symmetric(
         horizontal: _buildHorizontalPadding(screenWidth),
@@ -71,7 +72,7 @@ class _MyServicesWebState extends State<MyServicesWeb> {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            _buildSectionHeader(screenWidth),
+            _buildSectionHeader(screenWidth, isLightMode),
             SizedBox(height: _getSectionSpacing(screenWidth)),
             _buildServicesSection(
                 context, screenWidth, isLargeScreen, isMediumScreen),
@@ -81,7 +82,7 @@ class _MyServicesWebState extends State<MyServicesWeb> {
                     : isMediumScreen
                         ? 2
                         : 1))
-              _buildPageIndicators(screenWidth),
+              _buildPageIndicators(screenWidth, isLightMode),
           ],
         ),
       ),
@@ -107,7 +108,7 @@ class _MyServicesWebState extends State<MyServicesWeb> {
     return 30;
   }
 
-  Widget _buildSectionHeader(double screenWidth) {
+  Widget _buildSectionHeader(double screenWidth, bool isLightMode) {
     final fontSize = _getTitleFontSize(screenWidth);
 
     return Column(
@@ -119,7 +120,8 @@ class _MyServicesWebState extends State<MyServicesWeb> {
               TextSpan(
                 text: "My ",
                 style: TextStyle(
-                  color: Colors.white,
+                  color:
+                      isLightMode ? LightThemeColors.textPrimary : Colors.white,
                   fontSize: fontSize,
                   fontWeight: FontWeight.w800,
                   letterSpacing: 1.2,
@@ -128,7 +130,9 @@ class _MyServicesWebState extends State<MyServicesWeb> {
               TextSpan(
                 text: "Services",
                 style: TextStyle(
-                  color: Colors.cyanAccent,
+                  color: isLightMode
+                      ? LightThemeColors.primaryCyan
+                      : Colors.cyanAccent,
                   fontSize: fontSize,
                   fontWeight: FontWeight.w800,
                   letterSpacing: 1.2,
@@ -143,7 +147,15 @@ class _MyServicesWebState extends State<MyServicesWeb> {
           height: 4,
           decoration: BoxDecoration(
             gradient: LinearGradient(
-              colors: [Colors.cyanAccent, Colors.cyanAccent.withOpacity(0.3)],
+              colors: isLightMode
+                  ? [
+                      LightThemeColors.primaryCyan,
+                      LightThemeColors.primaryCyan.withOpacity(0.3),
+                    ]
+                  : [
+                      Colors.cyanAccent,
+                      Colors.cyanAccent.withOpacity(0.3),
+                    ],
             ),
             borderRadius: BorderRadius.circular(2),
           ),
@@ -177,6 +189,7 @@ class _MyServicesWebState extends State<MyServicesWeb> {
         : isMediumScreen
             ? 2
             : 1;
+    final isLightMode = Theme.of(context).brightness == Brightness.light;
 
     return SizedBox(
       height: _getCardHeight(screenWidth),
@@ -233,10 +246,12 @@ class _MyServicesWebState extends State<MyServicesWeb> {
                 bottom: 0,
                 child: _HoverAnimatedButton(
                   child: IconButton(
-                    icon: const Icon(
+                    icon: Icon(
                       Icons.arrow_left,
                       size: 40,
-                      color: Colors.cyanAccent,
+                      color: isLightMode
+                          ? LightThemeColors.primaryCyan
+                          : Colors.cyanAccent,
                     ),
                     onPressed: () {
                       _pageController.previousPage(
@@ -254,10 +269,12 @@ class _MyServicesWebState extends State<MyServicesWeb> {
                 bottom: 0,
                 child: _HoverAnimatedButton(
                   child: IconButton(
-                    icon: const Icon(
+                    icon: Icon(
                       Icons.arrow_right,
                       size: 40,
-                      color: Colors.cyanAccent,
+                      color: isLightMode
+                          ? LightThemeColors.primaryCyan
+                          : Colors.cyanAccent,
                     ),
                     onPressed: () {
                       _pageController.nextPage(
@@ -277,6 +294,7 @@ class _MyServicesWebState extends State<MyServicesWeb> {
   Widget _buildServiceCard(
       BuildContext context, int index, double screenWidth) {
     final service = services[index];
+    final isLightMode = Theme.of(context).brightness == Brightness.light;
 
     return _HoverAnimatedServiceCard(
       index: index,
@@ -288,12 +306,25 @@ class _MyServicesWebState extends State<MyServicesWeb> {
           maxWidth: 350,
         ),
         decoration: BoxDecoration(
-          color: const Color(0xFF2C3E50).withOpacity(0.8),
+          color: isLightMode
+              ? LightThemeColors.bgCard
+              : const Color(0xFF2C3E50).withOpacity(0.8),
           borderRadius: BorderRadius.circular(16),
           border: Border.all(
-            color: Colors.cyanAccent.withOpacity(0.2),
+            color: isLightMode
+                ? LightThemeColors.borderLight
+                : Colors.cyanAccent.withOpacity(0.2),
             width: 1,
           ),
+          boxShadow: isLightMode
+              ? [
+                  BoxShadow(
+                    color: LightThemeColors.shadowLight,
+                    blurRadius: 8,
+                    offset: Offset(0, 2),
+                  ),
+                ]
+              : null,
         ),
         child: Material(
           color: Colors.transparent,
@@ -310,7 +341,9 @@ class _MyServicesWebState extends State<MyServicesWeb> {
                     style: TextStyle(
                       fontSize: _getSkillFontSize(screenWidth) + 4,
                       fontWeight: FontWeight.w700,
-                      color: Colors.white,
+                      color: isLightMode
+                          ? LightThemeColors.textPrimary
+                          : Colors.white,
                     ),
                     textAlign: TextAlign.center,
                   ),
@@ -319,7 +352,9 @@ class _MyServicesWebState extends State<MyServicesWeb> {
                     service['description'] as String,
                     style: TextStyle(
                       fontSize: _getSkillFontSize(screenWidth) - 2,
-                      color: Colors.white.withOpacity(0.8),
+                      color: isLightMode
+                          ? LightThemeColors.textSecondary
+                          : Colors.white.withOpacity(0.8),
                       height: 1.4,
                     ),
                     textAlign: TextAlign.center,
@@ -333,8 +368,12 @@ class _MyServicesWebState extends State<MyServicesWeb> {
                           widget.onScrollToIndex(5);
                         },
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.cyanAccent,
-                          foregroundColor: Colors.white,
+                          backgroundColor: isLightMode
+                              ? LightThemeColors.primaryCyan
+                              : Colors.cyanAccent,
+                          foregroundColor: isLightMode
+                              ? LightThemeColors.textOnPrimary
+                              : Colors.white,
                           padding: EdgeInsets.symmetric(
                             horizontal: _getSkillPadding(screenWidth) * 2,
                             vertical: _getSkillPadding(screenWidth),
@@ -360,7 +399,7 @@ class _MyServicesWebState extends State<MyServicesWeb> {
     );
   }
 
-  Widget _buildPageIndicators(double screenWidth) {
+  Widget _buildPageIndicators(double screenWidth, bool isLightMode) {
     final crossAxisCount = screenWidth > 1200
         ? 3
         : screenWidth > 900
@@ -379,7 +418,11 @@ class _MyServicesWebState extends State<MyServicesWeb> {
             height: _currentPage == index ? 12 : 8,
             decoration: BoxDecoration(
               shape: BoxShape.circle,
-              color: _currentPage == index ? Colors.cyanAccent : Colors.grey,
+              color: _currentPage == index
+                  ? (isLightMode
+                      ? LightThemeColors.primaryCyan
+                      : Colors.cyanAccent)
+                  : (isLightMode ? LightThemeColors.textMuted : Colors.grey),
             ),
           ),
         ),

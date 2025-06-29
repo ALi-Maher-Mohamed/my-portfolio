@@ -1,5 +1,6 @@
 // ignore_for_file: deprecated_member_use
 
+import 'package:Ali_Maher/core/constant/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:Ali_Maher/core/styles/hexagon_clipper.dart';
 
@@ -47,6 +48,8 @@ class _HexagonAnimatedImageState extends State<HexagonAnimatedImage>
 
   @override
   Widget build(BuildContext context) {
+    final isLightMode = Theme.of(context).brightness == Brightness.light;
+
     return AnimatedBuilder(
       animation: _controller,
       builder: (context, _) {
@@ -66,11 +69,15 @@ class _HexagonAnimatedImageState extends State<HexagonAnimatedImage>
                       height: 270,
                       width: 220,
                       decoration: BoxDecoration(
-                        color: Colors.black.withOpacity(0.05),
+                        color: isLightMode
+                            ? LightThemeColors.bgSecondary.withOpacity(0.05)
+                            : Colors.black.withOpacity(0.05),
                         borderRadius: BorderRadius.circular(100),
                         boxShadow: [
                           BoxShadow(
-                            color: Colors.black.withOpacity(0.3),
+                            color: isLightMode
+                                ? LightThemeColors.shadowLight
+                                : Colors.black.withOpacity(0.3),
                             blurRadius: 20,
                             spreadRadius: 1,
                             offset: const Offset(0, 10),
@@ -88,7 +95,12 @@ class _HexagonAnimatedImageState extends State<HexagonAnimatedImage>
                       width: 300,
                       decoration: BoxDecoration(
                         gradient: LinearGradient(
-                          colors: [Colors.cyan, Colors.blueAccent],
+                          colors: isLightMode
+                              ? [
+                                  LightThemeColors.primaryCyan,
+                                  LightThemeColors.bgSecondary,
+                                ]
+                              : [Colors.cyanAccent, Colors.blueAccent],
                           begin: Alignment.topLeft,
                           end: Alignment.bottomRight,
                         ),
@@ -104,7 +116,9 @@ class _HexagonAnimatedImageState extends State<HexagonAnimatedImage>
                       shape: BoxShape.circle,
                       boxShadow: [
                         BoxShadow(
-                          color: Colors.cyanAccent.withOpacity(0.3),
+                          color: isLightMode
+                              ? LightThemeColors.primaryCyan.withOpacity(0.3)
+                              : Colors.cyanAccent.withOpacity(0.3),
                           blurRadius: 50,
                           spreadRadius: 20,
                         ),

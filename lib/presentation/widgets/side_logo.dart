@@ -1,3 +1,4 @@
+import 'package:Ali_Maher/core/constant/colors.dart';
 import 'package:flutter/material.dart';
 
 class SideLogo extends StatelessWidget {
@@ -9,15 +10,18 @@ class SideLogo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isLightMode = Theme.of(context).brightness == Brightness.light;
+
     return GestureDetector(
       onTap: onTap,
       child: Text(
         'AM',
         style: TextStyle(
-            decoration: TextDecoration.underline,
-            fontSize: 30,
-            fontWeight: FontWeight.bold,
-            color: Colors.cyanAccent),
+          decoration: TextDecoration.underline,
+          fontSize: 30,
+          fontWeight: FontWeight.bold,
+          color: isLightMode ? LightThemeColors.primaryCyan : Colors.cyanAccent,
+        ),
       ),
     );
   }

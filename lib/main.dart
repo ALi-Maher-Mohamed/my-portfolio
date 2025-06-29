@@ -5,16 +5,29 @@ void main() {
   runApp(const MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({super.key});
 
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  bool isDarkMode = false;
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Ali Maher',
-      theme: ThemeData.dark(),
-      home: const HomeView(),
+      theme: isDarkMode ? ThemeData.dark() : ThemeData.light(),
+      home: HomeView(
+        onThemeChanged: (value) {
+          setState(() {
+            isDarkMode = value;
+          });
+        },
+        isDarkMode: isDarkMode,
+      ),
     );
   }
 }
