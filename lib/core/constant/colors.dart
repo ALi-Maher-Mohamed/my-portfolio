@@ -7,8 +7,6 @@ class CustomColors {
   static const Color secondaryTextColor = Colors.cyanAccent;
 }
 
-/// Light Theme Colors for Ali Maher Portfolio
-/// مجموعة ألوان الوضع الفاتح لبورتفوليو علي ماهر
 class AppLightTheme {
   static ThemeData get theme {
     return ThemeData(
@@ -125,58 +123,56 @@ class AppLightTheme {
 
 class LightThemeColors {
   // === Primary Colors ===
-  // الألوان الأساسية
-  static const Color primaryCyan = Color(0xFF6366F1);
-  static const Color primaryCyanLight = Color(0xFF818CF8);
-  static const Color primaryCyanDark = Color(0xFF4F46E5);
-  static const Color accentCyan = Color(0xFF8B5CF6);
-  static const Color primaryIndigo =
-      Color(0xFF6366F1); // Added to fix primaryIndigo error
+  // الألوان الأساسية - تم تغييرها للون الأزرق الهادئ
+  static const Color primaryCyan = Color(0xFF2563EB); // Blue 600
+  static const Color primaryCyanLight = Color(0xFF3B82F6); // Blue 500
+  static const Color primaryCyanDark = Color(0xFF1D4ED8); // Blue 700
+  static const Color accentCyan = Color(0xFF06B6D4); // Cyan 500
+  static const Color primaryIndigo = Color(0xFF2563EB); // Blue 600
 
   // === Background Colors ===
-  // ألوان الخلفيات
-  static const Color bgPrimary = Color(0xFFFAFAFC);
-  static const Color bgSecondary = Color(0xFFF1F5F9);
-  static const Color bgCard = Color(0xFFFFFFFF);
-  static const Color bgGradientStart = Color(0xFFF8FAFC);
-  static const Color bgGradientEnd = Color(0xFFE2E8F0);
+  // ألوان الخلفيات - خلفيات هادئة ونظيفة
+  static const Color bgPrimary = Color(0xFFFDFDFD); // Almost white
+  static const Color bgSecondary = Color(0xFFF8FAFC); // Slate 50
+  static const Color bgCard = Color(0xFFFFFFFF); // Pure white
+  static const Color bgGradientStart = Color(0xFFFDFDFD);
+  static const Color bgGradientEnd = Color(0xFFF1F5F9); // Slate 100
 
   // === Text Colors ===
-  // ألوان النصوص
-  static const Color textPrimary = Color(0xFF0F172A);
-  static const Color textSecondary = Color(0xFF475569);
-  static const Color textMuted = Color(0xFF94A3B8);
-  static const Color textOnPrimary = Color(0xFFFFFFFF);
+  // ألوان النصوص - نصوص واضحة ومقروءة
+  static const Color textPrimary = Color(0xFF1E293B); // Slate 800
+  static const Color textSecondary = Color(0xFF475569); // Slate 600
+  static const Color textMuted = Color(0xFF94A3B8); // Slate 400
+  static const Color textOnPrimary = Color(0xFFFFFFFF); // White
 
   // === UI Element Colors ===
-  // ألوان عناصر الواجهة
-  static const Color borderLight = Color(0xFFE2E8F0);
-  static const Color borderMedium = Color(0xFFCBD5E1);
-  static const Color shadowLight = Color(0x1A64748B);
+  // ألوان عناصر الواجهة - حدود ناعمة وظلال خفيفة
+  static const Color borderLight = Color(0xFFE2E8F0); // Slate 200
+  static const Color borderMedium = Color(0xFFCBD5E1); // Slate 300
+  static const Color shadowLight = Color(0x1A64748B); // Soft shadow
   static const Color shadowMedium = Color(0x2664748B);
-  static const Color shadowSoft =
-      Color(0x1A64748B); // Added to fix shadowSoft error
+  static const Color shadowSoft = Color(0x1A64748B);
 
   // === Social Media Colors ===
-  // ألوان وسائل التواصل الاجتماعي
-  static const Color facebook = Color(0xFF1877F2);
-  static const Color linkedin = Color(0xFF0A66C2);
-  static const Color github = Color(0xFF24292E);
-  static const Color email = Color(0xFF4285F4);
+  // ألوان وسائل التواصل الاجتماعي - ألوان أكثر نعومة
+  static const Color facebook = Color(0xFF4267B2); // Facebook blue
+  static const Color linkedin = Color(0xFF0E76A8); // LinkedIn blue
+  static const Color github = Color(0xFF333333); // Dark gray
+  static const Color email = Color(0xFF34A853); // Gmail green
 
   // === Status Colors ===
-  // ألوان الحالة
-  static const Color success = Color(0xFF10B981);
-  static const Color warning = Color(0xFFF59E0B);
-  static const Color error = Color(0xFFF43F5E);
-  static const Color info = Color(0xFF3B82F6);
+  // ألوان الحالة - ألوان واضحة ومريحة للعين
+  static const Color success = Color(0xFF059669); // Emerald 600
+  static const Color warning = Color(0xFFD97706); // Amber 600
+  static const Color error = Color(0xFFDC2626); // Red 600
+  static const Color info = Color(0xFF0284C7); // Sky 600
 
   // === Button Colors ===
   // ألوان الأزرار
   static const Color buttonPrimary = primaryCyan;
-  static const Color buttonSecondary = Color(0xFFF1F5F9);
-  static const Color buttonHover = Color(0xFF4F46E5);
-  static const Color buttonPressed = Color(0xFF3730A3);
+  static const Color buttonSecondary = Color(0xFFF1F5F9); // Slate 100
+  static const Color buttonHover = Color(0xFF1D4ED8); // Blue 700
+  static const Color buttonPressed = Color(0xFF1E40AF); // Blue 800
 
   // === Hexagon Shape Colors ===
   // ألوان الشكل السداسي
@@ -186,19 +182,17 @@ class LightThemeColors {
 
   // === Icon Colors ===
   // ألوان الأيقونات
-  static const Color iconPrimary = Color(0xFF475569);
-  static const Color iconSecondary = Color(0xFF94A3B8);
+  static const Color iconPrimary = Color(0xFF475569); // Slate 600
+  static const Color iconSecondary = Color(0xFF94A3B8); // Slate 400
   static const Color iconAccent = primaryCyan;
 }
 
-/// Enhanced Gradients for Light Theme
-/// التدرجات المحسنة للثيم الفاتح
 class LightThemeGradients {
-  // === Primary Gradient - تدرج أساسي أنيق ===
+  // === Primary Gradient - تدرج أساسي بالأزرق الهادئ ===
   static const LinearGradient primaryGradient = LinearGradient(
     colors: [
-      Color(0xFF6366F1), // Indigo 500
-      Color(0xFF8B5CF6), // Purple 500
+      Color(0xFF2563EB), // Blue 600
+      Color(0xFF06B6D4), // Cyan 500
     ],
     begin: Alignment.topLeft,
     end: Alignment.bottomRight,
@@ -207,8 +201,8 @@ class LightThemeGradients {
   // === Background Gradient - تدرج الخلفية ===
   static const LinearGradient backgroundGradient = LinearGradient(
     colors: [
-      Color(0xFFFAFAFC), // Off-white
-      Color(0xFFF1F5F9), // Slate 100
+      Color(0xFFFDFDFD), // Almost white
+      Color(0xFFF8FAFC), // Slate 50
     ],
     begin: Alignment.topCenter,
     end: Alignment.bottomCenter,
@@ -217,8 +211,8 @@ class LightThemeGradients {
   // === Button Gradient - تدرج الأزرار ===
   static const LinearGradient buttonGradient = LinearGradient(
     colors: [
-      Color(0xFF6366F1), // Indigo 500
-      Color(0xFF4F46E5), // Indigo 600
+      Color(0xFF2563EB), // Blue 600
+      Color(0xFF1D4ED8), // Blue 700
     ],
     begin: Alignment.topLeft,
     end: Alignment.bottomRight,
@@ -228,17 +222,17 @@ class LightThemeGradients {
   static const LinearGradient cardGradient = LinearGradient(
     colors: [
       Color(0xFFFFFFFF), // White
-      Color(0xFFF8FAFC), // Slate 50
+      Color(0xFFFDFDFD), // Almost white
     ],
     begin: Alignment.topLeft,
     end: Alignment.bottomRight,
   );
 
-  // === Accent Gradient - تدرج مميز ===
+  // === Accent Gradient - تدرج مميز بالأزرق والسماوي ===
   static const LinearGradient accentGradient = LinearGradient(
     colors: [
-      Color(0xFF8B5CF6), // Purple 500
-      Color(0xFFF43F5E), // Rose 500
+      Color(0xFF06B6D4), // Cyan 500
+      Color(0xFF0EA5E9), // Sky 500
     ],
     begin: Alignment.topLeft,
     end: Alignment.bottomRight,
@@ -247,8 +241,8 @@ class LightThemeGradients {
   // === Success Gradient - تدرج النجاح ===
   static const LinearGradient successGradient = LinearGradient(
     colors: [
-      Color(0xFF10B981), // Emerald 500
       Color(0xFF059669), // Emerald 600
+      Color(0xFF047857), // Emerald 700
     ],
     begin: Alignment.topLeft,
     end: Alignment.bottomRight,

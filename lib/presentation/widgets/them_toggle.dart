@@ -8,12 +8,12 @@ class ThemeToggleSwitch extends StatefulWidget {
   final double height;
 
   const ThemeToggleSwitch({
-    Key? key,
+    super.key,
     required this.isDarkMode,
     required this.onToggle,
     this.width = 80,
     this.height = 40,
-  }) : super(key: key);
+  });
 
   @override
   State<ThemeToggleSwitch> createState() => _ThemeToggleSwitchState();

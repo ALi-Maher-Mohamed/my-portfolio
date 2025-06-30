@@ -449,7 +449,6 @@ class _HoverAnimatedPortfolioCard extends StatefulWidget {
   const _HoverAnimatedPortfolioCard({
     required this.child,
     required this.index,
-    super.key,
   });
 
   @override
@@ -482,7 +481,7 @@ class _HoverAnimatedPortfolioCardState
 class _HoverAnimatedButton extends StatefulWidget {
   final Widget child;
 
-  const _HoverAnimatedButton({required this.child, super.key});
+  const _HoverAnimatedButton({required this.child});
 
   @override
   State<_HoverAnimatedButton> createState() => _HoverAnimatedButtonState();

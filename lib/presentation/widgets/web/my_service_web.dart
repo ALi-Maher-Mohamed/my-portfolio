@@ -467,7 +467,6 @@ class _HoverAnimatedServiceCard extends StatefulWidget {
   const _HoverAnimatedServiceCard({
     required this.child,
     required this.index,
-    super.key,
   });
 
   @override
@@ -499,7 +498,7 @@ class _HoverAnimatedServiceCardState extends State<_HoverAnimatedServiceCard> {
 class _HoverAnimatedButton extends StatefulWidget {
   final Widget child;
 
-  const _HoverAnimatedButton({required this.child, super.key});
+  const _HoverAnimatedButton({required this.child});
 
   @override
   State<_HoverAnimatedButton> createState() => _HoverAnimatedButtonState();

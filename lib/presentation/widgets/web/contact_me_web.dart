@@ -179,7 +179,6 @@ class _ContactMePageState extends State<ContactMePage>
                                             : [
                                                 Colors.cyanAccent,
                                                 Colors.cyanAccent
-                                                    .withOpacity(0.7),
                                               ],
                                       ).createShader(
                                           const Rect.fromLTWH(0, 0, 100, 40)),

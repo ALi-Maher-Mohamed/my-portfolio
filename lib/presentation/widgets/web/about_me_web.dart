@@ -225,19 +225,19 @@ class AboutMeSection extends StatelessWidget {
                 ),
                 SizedBox(height: 24),
                 _buildRoleChip(
-                  "Flutter Developer",
+                  "Software Engineer",
                   screenWidth,
                   context,
                 ),
                 SizedBox(height: 12),
                 _buildRoleChip(
-                  "Firebase Expert",
+                  'Mobile Developer',
                   screenWidth,
                   context,
                 ),
                 SizedBox(height: 12),
                 _buildRoleChip(
-                  "UI/UX Designer",
+                  "Coding Instructor",
                   screenWidth,
                   context,
                 ),
