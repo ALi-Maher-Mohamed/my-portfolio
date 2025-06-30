@@ -131,7 +131,7 @@ class _HexagonAnimatedImageState extends State<HexagonAnimatedImage>
                     clipper: HexagonClipper(),
                     child: Image.asset(
                       'assets/MyPhoto/my_photo1.png',
-                      height: 450,
+                      height: 500,
                       width: 400,
                       fit: BoxFit.cover,
                     ),

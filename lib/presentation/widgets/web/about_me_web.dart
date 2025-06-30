@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:Ali_Maher/core/constant/theme.dart';
 
-class AboutMeSection extends StatelessWidget {
-  const AboutMeSection({super.key});
+class AboutMeSectionWeb extends StatelessWidget {
+  const AboutMeSectionWeb({super.key});
 
   @override
   Widget build(BuildContext context) {

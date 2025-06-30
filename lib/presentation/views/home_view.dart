@@ -1,4 +1,5 @@
-import 'package:Ali_Maher/presentation/widgets/main_mobile.dart';
+import 'package:Ali_Maher/presentation/widgets/mobile/about_me_mobile.dart';
+import 'package:Ali_Maher/presentation/widgets/mobile/main_mobile.dart';
 import 'package:flutter/material.dart';
 import 'package:Ali_Maher/core/constant/theme.dart';
 import 'package:Ali_Maher/core/constant/size.dart';
@@ -9,7 +10,7 @@ import 'package:Ali_Maher/presentation/widgets/mobile/mobile_header.dart';
 import 'package:Ali_Maher/presentation/widgets/web/my_service_web.dart';
 import 'package:Ali_Maher/presentation/widgets/web/my_skills_web.dart';
 import 'package:Ali_Maher/presentation/widgets/web/my_projects_web.dart';
-import 'package:Ali_Maher/presentation/widgets/web_header.dart';
+import 'package:Ali_Maher/presentation/widgets/web/web_header.dart';
 import 'package:scroll_to_index/scroll_to_index.dart';
 import '../widgets/web/main_web.dart';
 
@@ -123,11 +124,12 @@ class _HomeViewState extends State<HomeView> {
               ),
             ),
             AutoScrollTag(
-              key: ValueKey(1),
-              controller: _scrollController,
-              index: 1,
-              child: AboutMeSection(),
-            ),
+                key: ValueKey(1),
+                controller: _scrollController,
+                index: 1,
+                child: constraints.maxWidth >= kMinDisktpWidth
+                    ? AboutMeSectionWeb()
+                    : AboutMeMobile()),
             AutoScrollTag(
               key: ValueKey(2),
               controller: _scrollController,
