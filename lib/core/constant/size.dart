@@ -1,1 +1,1 @@
-const double kMinDisktpWidth = 600.0;
+const double kMinDisktpWidth = 900.0;

@@ -1,6 +1,6 @@
 import 'package:Ali_Maher/presentation/widgets/main_mobile.dart';
 import 'package:flutter/material.dart';
-import 'package:Ali_Maher/core/constant/colors.dart';
+import 'package:Ali_Maher/core/constant/theme.dart';
 import 'package:Ali_Maher/core/constant/size.dart';
 import 'package:Ali_Maher/presentation/widgets/web/about_me_web.dart';
 import 'package:Ali_Maher/presentation/widgets/web/contact_me_web.dart';

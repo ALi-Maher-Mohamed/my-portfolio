@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:Ali_Maher/presentation/widgets/side_logo.dart';
-import 'package:Ali_Maher/core/constant/colors.dart';
+import 'package:Ali_Maher/core/constant/theme.dart';
 
 class MobileHeader extends StatelessWidget {
   const MobileHeader({

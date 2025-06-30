@@ -1,4 +1,4 @@
-import 'package:Ali_Maher/core/constant/colors.dart';
+import 'package:Ali_Maher/core/constant/theme.dart';
 import 'package:flutter/material.dart';
 
 class SideLogo extends StatelessWidget {

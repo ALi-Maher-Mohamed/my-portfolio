@@ -1,4 +1,4 @@
-import 'package:Ali_Maher/core/constant/colors.dart';
+import 'package:Ali_Maher/core/constant/theme.dart';
 import 'package:flutter/material.dart';
 
 class CustomTextButton extends StatelessWidget {
@@ -32,8 +32,8 @@ class CustomTextButton extends StatelessWidget {
       child: Text(
         title,
         style: TextStyle(
-          fontWeight: FontWeight.w600, // وزن أفضل للنص
-          fontSize: MediaQuery.of(context).size.width / 85, // حجم أفضل
+          fontWeight: FontWeight.bold, // وزن أفضل للنص
+          fontSize: MediaQuery.of(context).size.width / 80, // حجم أفضل
           color: isLightMode
               ? LightThemeColors.primaryCyan // الأزرق الجديد بدلاً من السماوي
               : Colors.cyanAccent,

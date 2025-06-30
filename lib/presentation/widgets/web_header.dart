@@ -41,7 +41,7 @@ class WebHeader extends StatelessWidget {
           ),
 
           // Spacer to push navigation to the right
-          SizedBox(width: MediaQuery.of(context).size.width / 2 - 100),
+          SizedBox(width: MediaQuery.of(context).size.width / 2 - 200),
 
           // Navigation buttons
           Row(

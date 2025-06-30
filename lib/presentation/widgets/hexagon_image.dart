@@ -1,6 +1,6 @@
 // ignore_for_file: deprecated_member_use
 
-import 'package:Ali_Maher/core/constant/colors.dart';
+import 'package:Ali_Maher/core/constant/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:Ali_Maher/core/styles/hexagon_clipper.dart';
 
