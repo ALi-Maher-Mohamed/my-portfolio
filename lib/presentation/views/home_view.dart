@@ -61,8 +61,13 @@ class _HomeViewState extends State<HomeView> {
     return LayoutBuilder(builder: (context, constraints) {
       return Scaffold(
         key: scaffoldKey,
-        endDrawer:
-            constraints.maxWidth >= kMinDisktpWidth ? null : MobileDrawer(),
+        endDrawer: constraints.maxWidth >= kMinDisktpWidth
+            ? null
+            : MobileDrawer(
+                onScrollToIndex: scrollToIndex,
+                isDarkMode: widget.isDarkMode,
+                onThemeToggle: widget.onThemeChanged,
+              ),
         body: ListView(
           controller: _scrollController,
           children: [
