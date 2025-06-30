@@ -11,7 +11,7 @@ import 'package:Ali_Maher/presentation/widgets/web/my_skills_web.dart';
 import 'package:Ali_Maher/presentation/widgets/web/my_projects_web.dart';
 import 'package:Ali_Maher/presentation/widgets/web_header.dart';
 import 'package:scroll_to_index/scroll_to_index.dart';
-import '../widgets/web/main_desktop.dart';
+import '../widgets/web/main_web.dart';
 
 class HomeView extends StatefulWidget {
   const HomeView({
@@ -99,10 +99,10 @@ class _HomeViewState extends State<HomeView> {
                             isDarkMode: widget.isDarkMode,
                             onThemeToggle: widget.onThemeChanged,
                             onNavItemTap: scrollToIndex),
-                        MainDesktop(
+                        MainWeb(
                           onScrollToIndex: scrollToIndex,
                           screenSize: screenSize,
-                          screenWidth: screenWidth,
+                          // screenWidth: screenWidth,
                           screenHeight: screenHeight,
                         ),
                       ] else ...[
