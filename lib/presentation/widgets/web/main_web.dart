@@ -1,3 +1,4 @@
+import 'package:Ali_Maher/core/constant/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:Ali_Maher/presentation/widgets/web/animated_brief_desktop.dart';
 import 'package:Ali_Maher/presentation/widgets/hexagon_image.dart';
@@ -38,7 +39,11 @@ class MainWeb extends StatelessWidget {
                   },
                   child: Text(
                     'Get In Touch',
-                    style: Theme.of(context).textTheme.bodySmall,
+                    style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                        fontWeight: FontWeight.bold,
+                        color: Theme.of(context).brightness == Brightness.light
+                            ? LightThemeColors.primaryCyan
+                            : Colors.white),
                   ),
                 )
               ],

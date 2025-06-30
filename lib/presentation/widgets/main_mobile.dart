@@ -22,12 +22,11 @@ class MainMobile extends StatelessWidget {
         height: screenHeight,
         constraints: const BoxConstraints(minHeight: 560),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             const SizedBox(height: 20),
             const HexagonAnimatedImage(), // Assumes it handles its own theming
-            const SizedBox(height: 20),
             Text(
               "Hi,\nI'm Ali Maher\nMobile Developer",
               style: TextStyle(
@@ -58,6 +57,7 @@ class MainMobile extends StatelessWidget {
                         : Colors.white), // Dark mode text style
               ),
             ),
+            const SizedBox(height: 40),
           ],
         ),
       ),
