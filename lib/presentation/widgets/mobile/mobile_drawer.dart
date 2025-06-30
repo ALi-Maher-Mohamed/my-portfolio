@@ -1,7 +1,7 @@
 import 'package:Ali_Maher/presentation/widgets/them_toggle.dart';
 import 'package:flutter/material.dart';
 import 'package:Ali_Maher/core/constant/colors.dart';
-import '../../core/constant/nav_titles_and_func.dart';
+import '../../../core/constant/nav_titles_and_func.dart';
 
 class MobileDrawer extends StatelessWidget {
   const MobileDrawer({

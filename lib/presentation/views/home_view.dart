@@ -1,18 +1,17 @@
+import 'package:Ali_Maher/presentation/widgets/main_mobile.dart';
 import 'package:flutter/material.dart';
 import 'package:Ali_Maher/core/constant/colors.dart';
 import 'package:Ali_Maher/core/constant/size.dart';
 import 'package:Ali_Maher/presentation/widgets/web/about_me_web.dart';
 import 'package:Ali_Maher/presentation/widgets/web/contact_me_web.dart';
-import 'package:Ali_Maher/presentation/widgets/mobile_drawer.dart';
-import 'package:Ali_Maher/presentation/widgets/mobile_header.dart';
+import 'package:Ali_Maher/presentation/widgets/mobile/mobile_drawer.dart';
+import 'package:Ali_Maher/presentation/widgets/mobile/mobile_header.dart';
 import 'package:Ali_Maher/presentation/widgets/web/my_service_web.dart';
 import 'package:Ali_Maher/presentation/widgets/web/my_skills_web.dart';
 import 'package:Ali_Maher/presentation/widgets/web/my_projects_web.dart';
 import 'package:Ali_Maher/presentation/widgets/web_header.dart';
 import 'package:scroll_to_index/scroll_to_index.dart';
-
 import '../widgets/web/main_desktop.dart';
-import '../widgets/main_mobile.dart';
 
 class HomeView extends StatefulWidget {
   const HomeView({
