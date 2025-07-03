@@ -390,7 +390,9 @@ class _AnimatedPortfolioBriefState extends State<AnimatedPortfolioBrief>
                   "Portfolio",
                   false,
                   () {
-                    Navigator.pushNamed(context, '/projects');
+                    launchCustomUrl(context,
+                        url:
+                            "https://www.behance.net/gallery/229336621/Portfolio");
                   },
                 ),
               ],
