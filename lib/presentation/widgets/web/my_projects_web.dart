@@ -1,5 +1,6 @@
 import 'package:Ali_Maher/core/constant/theme.dart';
 import 'package:Ali_Maher/core/constant/launch_url.dart';
+import 'package:Ali_Maher/presentation/widgets/my_projects_shared.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 
@@ -13,45 +14,6 @@ class MyProjectsWeb extends StatefulWidget {
 class _MyProjectsWebState extends State<MyProjectsWeb> {
   int _currentPage = 0;
   final PageController _pageController = PageController(viewportFraction: 1.0);
-
-  final List<Map<String, String>> portfolioItems = [
-    {
-      'title': 'Reading App',
-      'image': 'assets/images/Rectangle0.png',
-      'category': 'Flutter / MVVM',
-      'route': '/project-details/0',
-    },
-    {
-      'title': 'MediCare Platform',
-      'image': 'assets/images/Rectangle.png',
-      'category': 'Medical / Web & Mobile',
-      'route': '/project-details/1',
-    },
-    {
-      'title': 'E-Commerce Store',
-      'image': 'assets/images/Rectangle5.png',
-      'category': 'Shopping / Flutter',
-      'route': '/project-details/2',
-    },
-    {
-      'title': 'Responsive Dashboard',
-      'image': 'assets/images/Rectangle6.png',
-      'category': 'UI / Responsive Design',
-      'route': '/project-details/3',
-    },
-    {
-      'title': 'News Reader App',
-      'image': 'assets/images/Rectangle7.png',
-      'category': 'News / Flutter',
-      'route': '/project-details/4',
-    },
-    {
-      'title': 'Weather Forecast App',
-      'image': 'assets/images/Rectangle9.png',
-      'category': 'Utility / API Integration',
-      'route': '/project-details/5',
-    },
-  ];
 
   @override
   void dispose() {
@@ -70,16 +32,19 @@ class _MyProjectsWebState extends State<MyProjectsWeb> {
       color: isLightMode ? LightThemeColors.bgPrimary : CustomColors.scaffold2,
       width: double.infinity,
       padding: EdgeInsets.symmetric(
-        horizontal: _buildHorizontalPadding(screenWidth),
-        vertical: _getVerticalPadding(screenWidth),
+        horizontal: ResponsiveHelper.getHorizontalPadding(screenWidth),
+        vertical: ResponsiveHelper.getVerticalPadding(screenWidth),
       ),
       child: ConstrainedBox(
         constraints: const BoxConstraints(maxWidth: 1400),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            _buildSectionHeader(screenWidth, isLightMode),
-            SizedBox(height: _getSectionSpacing(screenWidth)),
+            SectionHeader(
+              screenWidth: screenWidth,
+              isLightMode: isLightMode,
+            ),
+            SizedBox(height: ResponsiveHelper.getSectionSpacing(screenWidth)),
             _buildProjectsSection(
                 context, screenWidth, isLargeScreen, isMediumScreen),
             if (portfolioItems.length >
@@ -88,105 +53,21 @@ class _MyProjectsWebState extends State<MyProjectsWeb> {
                     : isMediumScreen
                         ? 2
                         : 1))
-              _buildPageIndicators(screenWidth, isLightMode),
+              PageIndicators(
+                screenWidth: screenWidth,
+                isLightMode: isLightMode,
+                currentPage: _currentPage,
+                crossAxisCount: isLargeScreen
+                    ? 3
+                    : isMediumScreen
+                        ? 2
+                        : 1,
+              ),
             _buildSeeMoreButton(context, screenWidth, isLightMode),
           ],
         ),
       ),
     );
-  }
-
-  double _buildHorizontalPadding(double screenWidth) {
-    if (screenWidth > 1400) return 80;
-    if (screenWidth > 1200) return 60;
-    if (screenWidth > 900) return 40;
-    return 20;
-  }
-
-  double _getVerticalPadding(double screenWidth) {
-    if (screenWidth > 1200) return 80;
-    if (screenWidth > 900) return 60;
-    return 40;
-  }
-
-  double _getSectionSpacing(double screenWidth) {
-    if (screenWidth > 1200) return 40;
-    if (screenWidth > 900) return 30;
-    return 30;
-  }
-
-  Widget _buildSectionHeader(double screenWidth, bool isLightMode) {
-    final fontSize = _getTitleFontSize(screenWidth);
-
-    return Column(
-      children: [
-        RichText(
-          textAlign: TextAlign.center,
-          text: TextSpan(
-            children: [
-              TextSpan(
-                text: "My ",
-                style: TextStyle(
-                  color:
-                      isLightMode ? LightThemeColors.textPrimary : Colors.white,
-                  fontSize: fontSize,
-                  fontWeight: FontWeight.w800,
-                  letterSpacing: 1.2,
-                ),
-              ),
-              TextSpan(
-                text: "Projects",
-                style: TextStyle(
-                  color: isLightMode
-                      ? LightThemeColors.primaryCyan
-                      : Colors.cyanAccent,
-                  fontSize: fontSize,
-                  fontWeight: FontWeight.w800,
-                  letterSpacing: 1.2,
-                ),
-              ),
-            ],
-          ),
-        ),
-        const SizedBox(height: 16),
-        Container(
-          width: _getUnderlineWidth(screenWidth),
-          height: 4,
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              colors: isLightMode
-                  ? [
-                      LightThemeColors.primaryCyan,
-                      LightThemeColors.primaryCyan.withOpacity(0.3),
-                    ]
-                  : [
-                      Colors.cyanAccent,
-                      Colors.cyanAccent.withOpacity(0.3),
-                    ],
-            ),
-            borderRadius: BorderRadius.circular(2),
-          ),
-        ),
-      ],
-    ).animate().fadeIn(duration: const Duration(milliseconds: 400)).slideY(
-          begin: -0.3,
-          end: 0.0,
-          curve: Curves.easeOut,
-          duration: const Duration(milliseconds: 600),
-        );
-  }
-
-  double _getTitleFontSize(double screenWidth) {
-    if (screenWidth > 1400) return 56;
-    if (screenWidth > 1200) return 48;
-    if (screenWidth > 900) return 42;
-    return 36;
-  }
-
-  double _getUnderlineWidth(double screenWidth) {
-    if (screenWidth > 1200) return 100;
-    if (screenWidth > 900) return 80;
-    return 60;
   }
 
   Widget _buildProjectsSection(BuildContext context, double screenWidth,
@@ -199,7 +80,7 @@ class _MyProjectsWebState extends State<MyProjectsWeb> {
     final isLightMode = Theme.of(context).brightness == Brightness.light;
 
     return SizedBox(
-      height: _getCardHeight(screenWidth),
+      height: ResponsiveHelper.getCardHeight(screenWidth),
       child: Stack(
         children: [
           PageView.builder(
@@ -221,7 +102,8 @@ class _MyProjectsWebState extends State<MyProjectsWeb> {
                       return Expanded(
                         child: Padding(
                           padding: EdgeInsets.symmetric(
-                            horizontal: _getAxisSpacing(screenWidth),
+                            horizontal:
+                                ResponsiveHelper.getAxisSpacing(screenWidth),
                           ),
                           child: _buildPortfolioCard(
                               context, projectIndex, screenWidth),
@@ -245,27 +127,36 @@ class _MyProjectsWebState extends State<MyProjectsWeb> {
                   );
             },
           ),
+          // أزرار التنقل للويب
           if (portfolioItems.length > crossAxisCount) ...[
             if (_currentPage > 0)
               Positioned(
                 left: 0,
                 top: 0,
                 bottom: 0,
-                child: _HoverAnimatedButton(
-                  child: IconButton(
-                    icon: Icon(
-                      Icons.arrow_left,
-                      size: 40,
+                child: HoverAnimatedButton(
+                  child: Container(
+                    decoration: BoxDecoration(
                       color: isLightMode
-                          ? LightThemeColors.primaryCyan
-                          : Colors.cyanAccent,
+                          ? LightThemeColors.bgCard.withOpacity(0.9)
+                          : Colors.black.withOpacity(0.5),
+                      borderRadius: BorderRadius.circular(50),
                     ),
-                    onPressed: () {
-                      _pageController.previousPage(
-                        duration: const Duration(milliseconds: 500),
-                        curve: Curves.easeInOut,
-                      );
-                    },
+                    child: IconButton(
+                      icon: Icon(
+                        Icons.arrow_back_ios,
+                        size: 30,
+                        color: isLightMode
+                            ? LightThemeColors.primaryCyan
+                            : Colors.cyanAccent,
+                      ),
+                      onPressed: () {
+                        _pageController.previousPage(
+                          duration: const Duration(milliseconds: 500),
+                          curve: Curves.easeInOut,
+                        );
+                      },
+                    ),
                   ),
                 ),
               ),
@@ -275,21 +166,29 @@ class _MyProjectsWebState extends State<MyProjectsWeb> {
                 right: 0,
                 top: 0,
                 bottom: 0,
-                child: _HoverAnimatedButton(
-                  child: IconButton(
-                    icon: Icon(
-                      Icons.arrow_right,
-                      size: 40,
+                child: HoverAnimatedButton(
+                  child: Container(
+                    decoration: BoxDecoration(
                       color: isLightMode
-                          ? LightThemeColors.primaryCyan
-                          : Colors.cyanAccent,
+                          ? LightThemeColors.bgCard.withOpacity(0.9)
+                          : Colors.black.withOpacity(0.5),
+                      borderRadius: BorderRadius.circular(50),
                     ),
-                    onPressed: () {
-                      _pageController.nextPage(
-                        duration: const Duration(milliseconds: 500),
-                        curve: Curves.easeInOut,
-                      );
-                    },
+                    child: IconButton(
+                      icon: Icon(
+                        Icons.arrow_forward_ios,
+                        size: 30,
+                        color: isLightMode
+                            ? LightThemeColors.primaryCyan
+                            : Colors.cyanAccent,
+                      ),
+                      onPressed: () {
+                        _pageController.nextPage(
+                          duration: const Duration(milliseconds: 500),
+                          curve: Curves.easeInOut,
+                        );
+                      },
+                    ),
                   ),
                 ),
               ),
@@ -304,149 +203,164 @@ class _MyProjectsWebState extends State<MyProjectsWeb> {
     final item = portfolioItems[index];
     final isLightMode = Theme.of(context).brightness == Brightness.light;
 
-    return _HoverAnimatedPortfolioCard(
+    return HoverAnimatedPortfolioCard(
       index: index,
       child: Container(
         constraints: BoxConstraints(
-          minHeight: _getCardHeight(screenWidth) * 0.8,
-          maxHeight: _getCardHeight(screenWidth),
+          minHeight: ResponsiveHelper.getCardHeight(screenWidth) * 0.8,
+          maxHeight: ResponsiveHelper.getCardHeight(screenWidth),
           minWidth: 260,
-          maxWidth: 350,
+          maxWidth: 400,
         ),
         decoration: BoxDecoration(
           color: isLightMode
               ? LightThemeColors.bgCard
               : const Color(0xFF2C3E50).withOpacity(0.8),
-          borderRadius: BorderRadius.circular(16),
+          borderRadius: BorderRadius.circular(20),
           border: Border.all(
             color: isLightMode
                 ? LightThemeColors.borderLight
                 : Colors.cyanAccent.withOpacity(0.2),
-            width: 1,
+            width: 2,
           ),
           image: DecorationImage(
             image: AssetImage(item['image'] as String),
             fit: BoxFit.cover,
             colorFilter: ColorFilter.mode(
               isLightMode
-                  ? Colors.black.withOpacity(0.4)
-                  : Colors.black.withOpacity(0.5),
+                  ? Colors.black.withOpacity(0.3)
+                  : Colors.black.withOpacity(0.4),
               BlendMode.darken,
             ),
           ),
-          boxShadow: isLightMode
-              ? [
-                  BoxShadow(
-                    color: LightThemeColors.shadowLight,
-                    blurRadius: 8,
-                    offset: Offset(0, 2),
-                  ),
-                ]
-              : null,
+          boxShadow: [
+            BoxShadow(
+              color: isLightMode
+                  ? LightThemeColors.shadowLight
+                  : Colors.cyanAccent.withOpacity(0.1),
+              blurRadius: 15,
+              offset: const Offset(0, 5),
+            ),
+          ],
         ),
         child: Material(
           color: Colors.transparent,
           child: InkWell(
-            borderRadius: BorderRadius.circular(16),
+            borderRadius: BorderRadius.circular(20),
             onTap: () {
               Navigator.pushNamed(context, item['route'] as String);
             },
             child: Stack(
               children: [
+                // تدرج الخلفية
                 Positioned.fill(
                   child: Container(
                     decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(16),
+                      borderRadius: BorderRadius.circular(20),
                       gradient: LinearGradient(
                         begin: Alignment.topCenter,
                         end: Alignment.bottomCenter,
                         colors: isLightMode
                             ? [
                                 Colors.transparent,
-                                LightThemeColors.bgCard.withOpacity(0.9),
+                                LightThemeColors.bgCard.withOpacity(0.95),
                               ]
                             : [
                                 Colors.transparent,
-                                const Color(0xFF2C3E50).withOpacity(0.9),
+                                const Color(0xFF2C3E50).withOpacity(0.95),
                               ],
                       ),
                     ),
                   ),
                 ),
+                // المحتوى
                 Positioned.fill(
                   child: Padding(
-                    padding: EdgeInsets.all(_getSkillPadding(screenWidth)),
+                    padding: EdgeInsets.all(
+                        ResponsiveHelper.getSkillPadding(screenWidth) * 1.5),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
+                        // الأيقونة
                         Container(
-                          width: _getImageSize(screenWidth),
-                          height: _getImageSize(screenWidth),
+                          width:
+                              ResponsiveHelper.getImageSize(screenWidth) * 1.2,
+                          height:
+                              ResponsiveHelper.getImageSize(screenWidth) * 1.2,
                           decoration: BoxDecoration(
                             shape: BoxShape.circle,
                             border: Border.all(
                               color: isLightMode
-                                  ? LightThemeColors.borderMedium
-                                  : Colors.white,
-                              width: 2,
+                                  ? LightThemeColors.primaryCyan
+                                  : Colors.cyanAccent,
+                              width: 3,
                             ),
                             color: isLightMode
                                 ? LightThemeColors.bgPrimary
                                 : Colors.white.withOpacity(0.1),
                           ),
                           child: Icon(
-                            _getIconForIndex(index),
-                            size: _getImageSize(screenWidth) * 0.6,
+                            ResponsiveHelper.getIconForIndex(index),
+                            size: ResponsiveHelper.getImageSize(screenWidth) *
+                                0.7,
                             color: isLightMode
                                 ? LightThemeColors.primaryCyan
                                 : Colors.cyanAccent,
                           ),
                         ),
-                        const SizedBox(height: 20),
+                        const SizedBox(height: 24),
+                        // عنوان المشروع
                         Text(
                           item['title'] as String,
                           style: TextStyle(
-                            fontSize: _getSkillFontSize(screenWidth) + 4,
-                            fontWeight: FontWeight.w700,
+                            fontSize:
+                                ResponsiveHelper.getSkillFontSize(screenWidth) +
+                                    6,
+                            fontWeight: FontWeight.w800,
                             color: isLightMode
                                 ? LightThemeColors.textPrimary
                                 : Colors.white,
                           ),
                           textAlign: TextAlign.center,
                         ),
-                        const SizedBox(height: 12),
+                        const SizedBox(height: 16),
+                        // فئة المشروع
                         Container(
                           padding: const EdgeInsets.symmetric(
-                            horizontal: 12,
-                            vertical: 6,
+                            horizontal: 16,
+                            vertical: 8,
                           ),
                           decoration: BoxDecoration(
                             color: isLightMode
-                                ? LightThemeColors.bgSecondary
+                                ? LightThemeColors.primaryCyan.withOpacity(0.1)
                                 : Colors.cyanAccent.withOpacity(0.1),
-                            borderRadius: BorderRadius.circular(12),
+                            borderRadius: BorderRadius.circular(20),
                             border: Border.all(
                               color: isLightMode
-                                  ? LightThemeColors.borderLight
+                                  ? LightThemeColors.primaryCyan
+                                      .withOpacity(0.3)
                                   : Colors.cyanAccent.withOpacity(0.3),
-                              width: 1,
+                              width: 1.5,
                             ),
                           ),
                           child: Text(
                             item['category'] as String,
                             style: TextStyle(
-                              fontSize: _getSkillFontSize(screenWidth) - 2,
+                              fontSize: ResponsiveHelper.getSkillFontSize(
+                                  screenWidth),
+                              fontWeight: FontWeight.w600,
                               color: isLightMode
-                                  ? LightThemeColors.textSecondary
-                                  : Colors.cyanAccent.withOpacity(0.8),
+                                  ? LightThemeColors.primaryCyan
+                                  : Colors.cyanAccent,
                             ),
                             textAlign: TextAlign.center,
                           ),
                         ),
-                        const SizedBox(height: 20),
-                        Container(
+                        const SizedBox(height: 24),
+                        // زر عرض المشروع
+                        SizedBox(
                           width: double.infinity,
-                          child: _HoverAnimatedButton(
+                          child: HoverAnimatedButton(
                             child: ElevatedButton(
                               onPressed: () {
                                 Navigator.pushNamed(
@@ -456,22 +370,34 @@ class _MyProjectsWebState extends State<MyProjectsWeb> {
                                 backgroundColor: isLightMode
                                     ? LightThemeColors.primaryCyan
                                     : Colors.cyanAccent,
-                                foregroundColor: isLightMode
-                                    ? LightThemeColors.textOnPrimary
-                                    : Colors.white,
+                                foregroundColor: Colors.white,
                                 padding: EdgeInsets.symmetric(
-                                  horizontal: _getSkillPadding(screenWidth) * 2,
-                                  vertical: _getSkillPadding(screenWidth),
+                                  horizontal: ResponsiveHelper.getSkillPadding(
+                                          screenWidth) *
+                                      2,
+                                  vertical: ResponsiveHelper.getSkillPadding(
+                                          screenWidth) *
+                                      1.2,
                                 ),
                                 shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(12),
+                                  borderRadius: BorderRadius.circular(15),
                                 ),
+                                elevation: 5,
                                 textStyle: TextStyle(
-                                  fontSize: _getSkillFontSize(screenWidth),
+                                  fontSize: ResponsiveHelper.getSkillFontSize(
+                                          screenWidth) +
+                                      2,
                                   fontWeight: FontWeight.w700,
                                 ),
                               ),
-                              child: const Text('View Project'),
+                              child: const Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text('View Project'),
+                                  SizedBox(width: 8),
+                                  Icon(Icons.arrow_forward, size: 16),
+                                ],
+                              ),
                             ),
                           ),
                         ),
@@ -487,47 +413,12 @@ class _MyProjectsWebState extends State<MyProjectsWeb> {
     );
   }
 
-  Widget _buildPageIndicators(double screenWidth, bool isLightMode) {
-    final crossAxisCount = screenWidth > 1200
-        ? 3
-        : screenWidth > 900
-            ? 2
-            : 1;
-
-    return Padding(
-      padding: EdgeInsets.only(top: _getSectionSpacing(screenWidth)),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: List.generate(
-          (portfolioItems.length / crossAxisCount).ceil(),
-          (index) => Container(
-            margin: const EdgeInsets.symmetric(horizontal: 5),
-            width: _currentPage == index ? 12 : 8,
-            height: _currentPage == index ? 12 : 8,
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              color: _currentPage == index
-                  ? (isLightMode
-                      ? LightThemeColors.primaryCyan
-                      : Colors.cyanAccent)
-                  : (isLightMode ? LightThemeColors.textMuted : Colors.grey),
-            ),
-          ),
-        ),
-      ),
-    ).animate().fadeIn(duration: const Duration(milliseconds: 400)).slideY(
-          begin: 0.3,
-          end: 0.0,
-          curve: Curves.easeOut,
-          duration: const Duration(milliseconds: 600),
-        );
-  }
-
   Widget _buildSeeMoreButton(
       BuildContext context, double screenWidth, bool isLightMode) {
     return Padding(
-      padding: EdgeInsets.only(top: _getSectionSpacing(screenWidth)),
-      child: _HoverAnimatedButton(
+      padding:
+          EdgeInsets.only(top: ResponsiveHelper.getSectionSpacing(screenWidth)),
+      child: HoverAnimatedButton(
         child: ElevatedButton(
           onPressed: () {
             launchCustomUrl(context,
@@ -536,26 +427,26 @@ class _MyProjectsWebState extends State<MyProjectsWeb> {
           style: ElevatedButton.styleFrom(
             backgroundColor:
                 isLightMode ? LightThemeColors.primaryCyan : Colors.cyanAccent,
-            foregroundColor:
-                isLightMode ? LightThemeColors.textOnPrimary : Colors.white,
+            foregroundColor: Colors.white,
             padding: EdgeInsets.symmetric(
-              horizontal: _getSkillPadding(screenWidth) * 2,
-              vertical: _getSkillPadding(screenWidth),
+              horizontal: ResponsiveHelper.getSkillPadding(screenWidth) * 3,
+              vertical: ResponsiveHelper.getSkillPadding(screenWidth) * 1.2,
             ),
             shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(12),
+              borderRadius: BorderRadius.circular(15),
             ),
+            elevation: 8,
             textStyle: TextStyle(
-              fontSize: _getSkillFontSize(screenWidth),
+              fontSize: ResponsiveHelper.getSkillFontSize(screenWidth) + 2,
               fontWeight: FontWeight.w700,
             ),
           ),
           child: const Row(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Text('See More'),
-              SizedBox(width: 10),
-              Icon(Icons.arrow_forward, size: 18),
+              Text('See More Projects'),
+              SizedBox(width: 12),
+              Icon(Icons.open_in_new, size: 20),
             ],
           ),
         ),
@@ -566,117 +457,5 @@ class _MyProjectsWebState extends State<MyProjectsWeb> {
           curve: Curves.easeOut,
           duration: const Duration(milliseconds: 600),
         );
-  }
-
-  double _getCardHeight(double screenWidth) {
-    if (screenWidth > 1200) return 450;
-    if (screenWidth > 900) return 400;
-    return 350;
-  }
-
-  double _getAxisSpacing(double screenWidth) {
-    if (screenWidth > 1200) return 20;
-    if (screenWidth > 900) return 15;
-    return 10;
-  }
-
-  double _getImageSize(double screenWidth) {
-    if (screenWidth > 1200) return 60;
-    if (screenWidth > 900) return 50;
-    return 45;
-  }
-
-  double _getSkillFontSize(double screenWidth) {
-    if (screenWidth > 1200) return 16;
-    if (screenWidth > 900) return 14;
-    return 12;
-  }
-
-  double _getSkillPadding(double screenWidth) {
-    if (screenWidth > 1200) return 16;
-    if (screenWidth > 900) return 12;
-    return 10;
-  }
-
-  IconData _getIconForIndex(int index) {
-    switch (index) {
-      case 0:
-        return Icons.menu_book;
-      case 1:
-        return Icons.local_hospital;
-      case 2:
-        return Icons.shopping_cart;
-      case 3:
-        return Icons.dashboard;
-      case 4:
-        return Icons.newspaper;
-      case 5:
-        return Icons.cloud;
-      default:
-        return Icons.code;
-    }
-  }
-}
-
-class _HoverAnimatedPortfolioCard extends StatefulWidget {
-  final Widget child;
-  final int index;
-
-  const _HoverAnimatedPortfolioCard({
-    required this.child,
-    required this.index,
-  });
-
-  @override
-  State<_HoverAnimatedPortfolioCard> createState() =>
-      _HoverAnimatedPortfolioCardState();
-}
-
-class _HoverAnimatedPortfolioCardState
-    extends State<_HoverAnimatedPortfolioCard> {
-  bool _hovering = false;
-
-  @override
-  Widget build(BuildContext context) {
-    return MouseRegion(
-      onEnter: (_) => setState(() => _hovering = true),
-      onExit: (_) => setState(() => _hovering = false),
-      child: AnimatedScale(
-        scale: _hovering ? 1.05 : 1.0,
-        duration: const Duration(milliseconds: 300),
-        curve: Curves.easeInOut,
-        child: widget.child
-            .animate(delay: Duration(milliseconds: 100 * widget.index))
-            .fadeIn(duration: const Duration(milliseconds: 400))
-            .slideX(begin: 0.3, end: 0.0, curve: Curves.easeOut),
-      ),
-    );
-  }
-}
-
-class _HoverAnimatedButton extends StatefulWidget {
-  final Widget child;
-
-  const _HoverAnimatedButton({required this.child});
-
-  @override
-  State<_HoverAnimatedButton> createState() => _HoverAnimatedButtonState();
-}
-
-class _HoverAnimatedButtonState extends State<_HoverAnimatedButton> {
-  bool _hovering = false;
-
-  @override
-  Widget build(BuildContext context) {
-    return MouseRegion(
-      onEnter: (_) => setState(() => _hovering = true),
-      onExit: (_) => setState(() => _hovering = false),
-      child: AnimatedScale(
-        scale: _hovering ? 1.05 : 1.0,
-        duration: const Duration(milliseconds: 300),
-        curve: Curves.easeInOut,
-        child: widget.child,
-      ),
-    );
   }
 }

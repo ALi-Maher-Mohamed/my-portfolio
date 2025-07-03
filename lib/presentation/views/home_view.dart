@@ -1,5 +1,7 @@
 import 'package:Ali_Maher/presentation/widgets/mobile/about_me_mobile.dart';
 import 'package:Ali_Maher/presentation/widgets/mobile/main_mobile.dart';
+import 'package:Ali_Maher/presentation/widgets/mobile/my_project_mobile.dart';
+import 'package:Ali_Maher/presentation/widgets/mobile/my_services_mobile.dart';
 import 'package:flutter/material.dart';
 import 'package:Ali_Maher/core/constant/theme.dart';
 import 'package:Ali_Maher/core/constant/size.dart';
@@ -147,9 +149,13 @@ class _HomeViewState extends State<HomeView> {
                       ? LightThemeColors.bgPrimary
                       : CustomColors.scaffold2,
                 ),
-                child: MyServicesWeb(
-                  onScrollToIndex: scrollToIndex,
-                ),
+                child: constraints.maxWidth >= kMinDisktpWidth
+                    ? MyServicesWeb(
+                        onScrollToIndex: scrollToIndex,
+                      )
+                    : MyServicesMobile(
+                        onScrollToIndex: scrollToIndex,
+                      ),
               ),
             ),
             AutoScrollTag(
@@ -157,14 +163,15 @@ class _HomeViewState extends State<HomeView> {
               controller: _scrollController,
               index: 4,
               child: Container(
-                width: double.infinity,
-                decoration: BoxDecoration(
-                  color: isLightMode
-                      ? LightThemeColors.bgPrimary
-                      : CustomColors.scaffold2,
-                ),
-                child: MyProjectsWeb(),
-              ),
+                  width: double.infinity,
+                  decoration: BoxDecoration(
+                    color: isLightMode
+                        ? LightThemeColors.bgPrimary
+                        : CustomColors.scaffold2,
+                  ),
+                  child: MediaQuery.of(context).size.width > 600
+                      ? MyProjectsWeb()
+                      : MyProjectsMobile()),
             ),
             AutoScrollTag(
               key: ValueKey(5),

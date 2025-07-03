@@ -1,4 +1,5 @@
 import 'package:Ali_Maher/core/constant/theme.dart';
+import 'package:Ali_Maher/presentation/widgets/my_services_shared.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 
@@ -13,39 +14,6 @@ class MyServicesWeb extends StatefulWidget {
 class _MyServicesWebState extends State<MyServicesWeb> {
   int _currentPage = 0;
   final PageController _pageController = PageController(viewportFraction: 1.0);
-
-  final List<Map<String, String>> services = [
-    {
-      'title': 'Software Engineering',
-      'description':
-          'As a software engineering student and developer, I apply clean code principles, version control (Git), and agile methodologies in my projects. I understand both frontend and backend logic, and I work effectively with REST APIs, local storage, and scalable app structures.',
-    },
-    {
-      'title': 'Mobile App Development',
-      'description':
-          'I develop modern and efficient cross-platform mobile applications using Flutter and Dart. With over 10 apps built, ranging from creative personal ideas to real-world projects, I focus on clean architecture, state management (Cubit/BLoC), Firebase integration, and responsive UI/UX.',
-    },
-    {
-      'title': 'Technical Instructor & Mentor',
-      'description':
-          'With real experience teaching at iSchool, GDSC, and GDG communities, I deliver engaging and practical sessions on programming fundamentals, Flutter development, and software concepts. I’ve trained students online and offline, helping beginners turn ideas into real projects.',
-    },
-    {
-      'title': 'Sales & Digital Marketing',
-      'description':
-          'With over 5 years of sales experience, I understand how to connect with customers and communicate value clearly. I also have hands-on experience with digital marketing strategies and content creation for tech and educational campaigns.',
-    },
-    {
-      'title': 'UI/UX Consulting',
-      'description':
-          'I help individuals and teams design better user experiences by analyzing UI flow, usability, accessibility, and consistency. I give actionable feedback based on UX principles, especially for mobile apps and web platforms.',
-    },
-    {
-      'title': 'Mentorship for Beginners',
-      'description':
-          'I provide mentorship for beginners in programming, helping them set learning paths, solve bugs, understand core concepts, and build confidence through small, progressive tasks.',
-    },
-  ];
 
   @override
   void dispose() {
@@ -64,8 +32,8 @@ class _MyServicesWebState extends State<MyServicesWeb> {
       color: isLightMode ? LightThemeColors.bgPrimary : CustomColors.scaffold2,
       width: double.infinity,
       padding: EdgeInsets.symmetric(
-        horizontal: _buildHorizontalPadding(screenWidth),
-        vertical: _getVerticalPadding(screenWidth),
+        horizontal: getHorizontalPadding(screenWidth),
+        vertical: getVerticalPadding(screenWidth),
       ),
       child: ConstrainedBox(
         constraints: const BoxConstraints(maxWidth: 1400),
@@ -73,7 +41,7 @@ class _MyServicesWebState extends State<MyServicesWeb> {
           mainAxisSize: MainAxisSize.min,
           children: [
             _buildSectionHeader(screenWidth, isLightMode),
-            SizedBox(height: _getSectionSpacing(screenWidth)),
+            SizedBox(height: getSectionSpacing(screenWidth)),
             _buildServicesSection(
                 context, screenWidth, isLargeScreen, isMediumScreen),
             if (services.length >
@@ -89,28 +57,7 @@ class _MyServicesWebState extends State<MyServicesWeb> {
     );
   }
 
-  double _buildHorizontalPadding(double screenWidth) {
-    if (screenWidth > 1400) return 80;
-    if (screenWidth > 1200) return 60;
-    if (screenWidth > 900) return 40;
-    return 20;
-  }
-
-  double _getVerticalPadding(double screenWidth) {
-    if (screenWidth > 1200) return 80;
-    if (screenWidth > 900) return 60;
-    return 40;
-  }
-
-  double _getSectionSpacing(double screenWidth) {
-    if (screenWidth > 1200) return 40;
-    if (screenWidth > 900) return 30;
-    return 30;
-  }
-
   Widget _buildSectionHeader(double screenWidth, bool isLightMode) {
-    final fontSize = _getTitleFontSize(screenWidth);
-
     return Column(
       children: [
         RichText(
@@ -122,7 +69,7 @@ class _MyServicesWebState extends State<MyServicesWeb> {
                 style: TextStyle(
                   color:
                       isLightMode ? LightThemeColors.textPrimary : Colors.white,
-                  fontSize: fontSize,
+                  fontSize: getTitleFontSize(screenWidth),
                   fontWeight: FontWeight.w800,
                   letterSpacing: 1.2,
                 ),
@@ -133,7 +80,7 @@ class _MyServicesWebState extends State<MyServicesWeb> {
                   color: isLightMode
                       ? LightThemeColors.primaryCyan
                       : Colors.cyanAccent,
-                  fontSize: fontSize,
+                  fontSize: getTitleFontSize(screenWidth),
                   fontWeight: FontWeight.w800,
                   letterSpacing: 1.2,
                 ),
@@ -143,7 +90,7 @@ class _MyServicesWebState extends State<MyServicesWeb> {
         ),
         const SizedBox(height: 16),
         Container(
-          width: _getUnderlineWidth(screenWidth),
+          width: getUnderlineWidth(screenWidth),
           height: 4,
           decoration: BoxDecoration(
             gradient: LinearGradient(
@@ -169,19 +116,6 @@ class _MyServicesWebState extends State<MyServicesWeb> {
         );
   }
 
-  double _getTitleFontSize(double screenWidth) {
-    if (screenWidth > 1400) return 56;
-    if (screenWidth > 1200) return 48;
-    if (screenWidth > 900) return 42;
-    return 36;
-  }
-
-  double _getUnderlineWidth(double screenWidth) {
-    if (screenWidth > 1200) return 100;
-    if (screenWidth > 900) return 80;
-    return 60;
-  }
-
   Widget _buildServicesSection(BuildContext context, double screenWidth,
       bool isLargeScreen, bool isMediumScreen) {
     final crossAxisCount = isLargeScreen
@@ -192,7 +126,7 @@ class _MyServicesWebState extends State<MyServicesWeb> {
     final isLightMode = Theme.of(context).brightness == Brightness.light;
 
     return SizedBox(
-      height: _getCardHeight(screenWidth),
+      height: getCardHeight(screenWidth),
       child: Stack(
         children: [
           PageView.builder(
@@ -214,7 +148,7 @@ class _MyServicesWebState extends State<MyServicesWeb> {
                       return Expanded(
                         child: Padding(
                           padding: EdgeInsets.symmetric(
-                            horizontal: _getAxisSpacing(screenWidth),
+                            horizontal: getAxisSpacing(screenWidth),
                           ),
                           child: _buildServiceCard(
                               context, serviceIndex, screenWidth),
@@ -300,8 +234,8 @@ class _MyServicesWebState extends State<MyServicesWeb> {
       index: index,
       child: Container(
         constraints: BoxConstraints(
-          minHeight: _getCardHeight(screenWidth) * 0.8,
-          maxHeight: _getCardHeight(screenWidth),
+          minHeight: getCardHeight(screenWidth) * 0.8,
+          maxHeight: getCardHeight(screenWidth),
           minWidth: 260,
           maxWidth: 350,
         ),
@@ -332,14 +266,14 @@ class _MyServicesWebState extends State<MyServicesWeb> {
             borderRadius: BorderRadius.circular(16),
             onTap: () {},
             child: Padding(
-              padding: EdgeInsets.all(_getSkillPadding(screenWidth)),
+              padding: EdgeInsets.all(getSkillPadding(screenWidth)),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
                     service['title'] as String,
                     style: TextStyle(
-                      fontSize: _getSkillFontSize(screenWidth) + 4,
+                      fontSize: getSkillFontSize(screenWidth) + 4,
                       fontWeight: FontWeight.w700,
                       color: isLightMode
                           ? LightThemeColors.textPrimary
@@ -351,7 +285,7 @@ class _MyServicesWebState extends State<MyServicesWeb> {
                   Text(
                     service['description'] as String,
                     style: TextStyle(
-                      fontSize: _getSkillFontSize(screenWidth) - 2,
+                      fontSize: getSkillFontSize(screenWidth) - 2,
                       color: isLightMode
                           ? LightThemeColors.textSecondary
                           : Colors.white.withOpacity(0.8),
@@ -375,14 +309,14 @@ class _MyServicesWebState extends State<MyServicesWeb> {
                               ? LightThemeColors.textOnPrimary
                               : Colors.white,
                           padding: EdgeInsets.symmetric(
-                            horizontal: _getSkillPadding(screenWidth) * 2,
-                            vertical: _getSkillPadding(screenWidth),
+                            horizontal: getSkillPadding(screenWidth) * 2,
+                            vertical: getSkillPadding(screenWidth),
                           ),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(12),
                           ),
                           textStyle: TextStyle(
-                            fontSize: _getSkillFontSize(screenWidth),
+                            fontSize: getSkillFontSize(screenWidth),
                             fontWeight: FontWeight.w700,
                           ),
                         ),
@@ -407,7 +341,7 @@ class _MyServicesWebState extends State<MyServicesWeb> {
             : 1;
 
     return Padding(
-      padding: EdgeInsets.only(top: _getSectionSpacing(screenWidth)),
+      padding: EdgeInsets.only(top: getSectionSpacing(screenWidth)),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: List.generate(
@@ -433,30 +367,6 @@ class _MyServicesWebState extends State<MyServicesWeb> {
           curve: Curves.easeOut,
           duration: const Duration(milliseconds: 600),
         );
-  }
-
-  double _getCardHeight(double screenWidth) {
-    if (screenWidth > 1200) return 450;
-    if (screenWidth > 900) return 400;
-    return 350;
-  }
-
-  double _getAxisSpacing(double screenWidth) {
-    if (screenWidth > 1200) return 20;
-    if (screenWidth > 900) return 15;
-    return 10;
-  }
-
-  double _getSkillFontSize(double screenWidth) {
-    if (screenWidth > 1200) return 16;
-    if (screenWidth > 900) return 14;
-    return 12;
-  }
-
-  double _getSkillPadding(double screenWidth) {
-    if (screenWidth > 1200) return 16;
-    if (screenWidth > 900) return 12;
-    return 10;
   }
 }
 
