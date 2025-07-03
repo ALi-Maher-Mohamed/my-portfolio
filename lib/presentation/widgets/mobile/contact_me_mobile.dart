@@ -1,5 +1,5 @@
 import 'package:Ali_Maher/core/constant/theme.dart';
-import 'package:Ali_Maher/presentation/widgets/contact_me_shared.dart';
+import 'package:Ali_Maher/presentation/widgets/shared_contact_me.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -94,118 +94,121 @@ class _ContactMeMobileState extends State<ContactMeMobile>
           children: [
             Expanded(
               child: SafeArea(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    FadeTransition(
-                      opacity: _fadeAnimation,
-                      child: Container(
-                        margin: const EdgeInsets.only(bottom: 24),
-                        child: RichText(
-                          textAlign: TextAlign.center,
-                          text: TextSpan(
-                            children: [
-                              TextSpan(
-                                text: 'Contact ',
-                                style: TextStyle(
-                                  fontSize: 28,
-                                  fontWeight: FontWeight.bold,
-                                  color: isLightMode
-                                      ? LightThemeColors.textPrimary
-                                      : Colors.white,
-                                ),
-                              ),
-                              TextSpan(
-                                text: 'Me',
-                                style: TextStyle(
-                                  fontSize: 28,
-                                  fontWeight: FontWeight.bold,
-                                  foreground: Paint()
-                                    ..shader = LinearGradient(
-                                      colors: isLightMode
-                                          ? [
-                                              LightThemeColors.primaryCyan,
-                                              LightThemeColors.primaryCyan
-                                            ]
-                                          : [
-                                              Colors.cyanAccent,
-                                              Colors.cyanAccent
-                                            ],
-                                    ).createShader(
-                                        const Rect.fromLTWH(0, 0, 100, 40)),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                    SlideTransition(
-                      position: _slideAnimation,
-                      child: Column(
-                        children: [
-                          Container(
-                            padding: const EdgeInsets.all(12),
-                            decoration: BoxDecoration(
-                              color: isLightMode
-                                  ? LightThemeColors.primaryCyan
-                                  : const Color(0xFF00D4FF),
-                              borderRadius: BorderRadius.circular(8),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: (isLightMode
-                                          ? LightThemeColors.primaryCyan
-                                          : const Color(0xFF00D4FF))
-                                      .withOpacity(0.3),
-                                  blurRadius: 10,
-                                  offset: const Offset(0, 3),
-                                ),
-                              ],
-                            ),
-                            child: Row(
-                              mainAxisSize: MainAxisSize.min,
+                child: Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      FadeTransition(
+                        opacity: _fadeAnimation,
+                        child: Container(
+                          margin: const EdgeInsets.only(bottom: 24),
+                          child: RichText(
+                            textAlign: TextAlign.center,
+                            text: TextSpan(
                               children: [
-                                Icon(
-                                  Icons.code,
-                                  color: isLightMode
-                                      ? LightThemeColors.textOnPrimary
-                                      : Colors.white,
-                                  size: 20,
-                                ),
-                                const SizedBox(width: 6),
-                                Text(
-                                  'AM',
+                                TextSpan(
+                                  text: 'Contact ',
                                   style: TextStyle(
-                                    color: isLightMode
-                                        ? LightThemeColors.textOnPrimary
-                                        : Colors.white,
+                                    fontSize: 28,
                                     fontWeight: FontWeight.bold,
-                                    fontSize: 16,
+                                    color: isLightMode
+                                        ? LightThemeColors.textPrimary
+                                        : Colors.white,
+                                  ),
+                                ),
+                                TextSpan(
+                                  text: 'Me',
+                                  style: TextStyle(
+                                    fontSize: 28,
+                                    fontWeight: FontWeight.bold,
+                                    foreground: Paint()
+                                      ..shader = LinearGradient(
+                                        colors: isLightMode
+                                            ? [
+                                                LightThemeColors.primaryCyan,
+                                                LightThemeColors.primaryCyan
+                                              ]
+                                            : [
+                                                Colors.cyanAccent,
+                                                Colors.cyanAccent
+                                              ],
+                                      ).createShader(
+                                          const Rect.fromLTWH(0, 0, 100, 40)),
                                   ),
                                 ),
                               ],
                             ),
                           ),
-                          const SizedBox(height: 16),
-                          Text(
-                            'I am a passionate Flutter developer with hands-on experience in building high-quality mobile apps. I’ve developed more than 10 complete applications using clean architecture, state management, Firebase, and REST APIs. Whether it’s a business, medical, or e-commerce app, I deliver modern and responsive UI with top performance. Your satisfaction and app usability are always my priority.',
-                            style: TextStyle(
-                              color: isLightMode
-                                  ? LightThemeColors.textSecondary
-                                  : Colors.white70,
-                              fontSize: 14,
-                              height: 1.5,
-                            ),
-                            textAlign: TextAlign.center,
-                          ),
-                        ],
+                        ),
                       ),
-                    ),
-                    const SizedBox(height: 24),
-                    _buildSocialIcons(isLightMode),
-                    const SizedBox(height: 24),
-                    _buildContactForm(isLightMode),
-                  ],
+                      SlideTransition(
+                        position: _slideAnimation,
+                        child: Column(
+                          children: [
+                            Container(
+                              padding: const EdgeInsets.all(12),
+                              decoration: BoxDecoration(
+                                color: isLightMode
+                                    ? LightThemeColors.primaryCyan
+                                    : const Color(0xFF00D4FF),
+                                borderRadius: BorderRadius.circular(8),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: (isLightMode
+                                            ? LightThemeColors.primaryCyan
+                                            : const Color(0xFF00D4FF))
+                                        .withOpacity(0.3),
+                                    blurRadius: 10,
+                                    offset: const Offset(0, 3),
+                                  ),
+                                ],
+                              ),
+                              child: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Icon(
+                                    Icons.code,
+                                    color: isLightMode
+                                        ? LightThemeColors.textOnPrimary
+                                        : Colors.white,
+                                    size: 20,
+                                  ),
+                                  const SizedBox(width: 6),
+                                  Text(
+                                    'AM',
+                                    style: TextStyle(
+                                      color: isLightMode
+                                          ? LightThemeColors.textOnPrimary
+                                          : Colors.white,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 16,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            const SizedBox(height: 16),
+                            Text(
+                              'I am a passionate Flutter developer with hands-on experience in building high-quality mobile apps. I’ve developed more than 10 complete applications using clean architecture, state management, Firebase, and REST APIs. Whether it’s a business, medical, or e-commerce app, I deliver modern and responsive UI with top performance. Your satisfaction and app usability are always my priority.',
+                              style: TextStyle(
+                                color: isLightMode
+                                    ? LightThemeColors.textSecondary
+                                    : Colors.white70,
+                                fontSize: 14,
+                                height: 1.5,
+                              ),
+                              textAlign: TextAlign.center,
+                            ),
+                          ],
+                        ),
+                      ),
+                      const SizedBox(height: 24),
+                      _buildSocialIcons(isLightMode),
+                      const SizedBox(height: 24),
+                      _buildContactForm(isLightMode),
+                    ],
+                  ),
                 ),
               ),
             ),

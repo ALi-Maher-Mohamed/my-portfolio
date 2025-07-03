@@ -1,4 +1,5 @@
 import 'package:Ali_Maher/core/constant/theme.dart';
+import 'package:Ali_Maher/presentation/widgets/shared_skills_section.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 
@@ -16,15 +17,15 @@ class SkillsSectionWeb extends StatelessWidget {
       color: isLightMode ? LightThemeColors.bgPrimary : CustomColors.scaffold2,
       width: double.infinity,
       padding: EdgeInsets.symmetric(
-        horizontal: _buildHorizontalPadding(screenWidth),
-        vertical: _getVerticalPadding(screenWidth),
+        horizontal: getHorizontalPadding(screenWidth),
+        vertical: getVerticalPadding(screenWidth),
       ),
       child: ConstrainedBox(
-        constraints: BoxConstraints(maxWidth: 1400),
+        constraints: const BoxConstraints(maxWidth: 1400),
         child: Column(
           children: [
             _buildSectionHeader(screenWidth, isLightMode),
-            SizedBox(height: _getSectionSpacing(screenWidth)),
+            SizedBox(height: getSectionSpacing(screenWidth)),
             _buildMainContent(
                 context, screenWidth, isLargeScreen, isMediumScreen),
           ],
@@ -33,28 +34,7 @@ class SkillsSectionWeb extends StatelessWidget {
     );
   }
 
-  double _buildHorizontalPadding(double screenWidth) {
-    if (screenWidth > 1400) return 80;
-    if (screenWidth > 1200) return 60;
-    if (screenWidth > 900) return 40;
-    return 20;
-  }
-
-  double _getVerticalPadding(double screenWidth) {
-    if (screenWidth > 1200) return 80;
-    if (screenWidth > 900) return 60;
-    return 40;
-  }
-
-  double _getSectionSpacing(double screenWidth) {
-    if (screenWidth > 1200) return 40;
-    if (screenWidth > 900) return 30;
-    return 30;
-  }
-
   Widget _buildSectionHeader(double screenWidth, bool isLightMode) {
-    final fontSize = _getTitleFontSize(screenWidth);
-
     return Column(
       children: [
         RichText(
@@ -66,7 +46,7 @@ class SkillsSectionWeb extends StatelessWidget {
                 style: TextStyle(
                   color:
                       isLightMode ? LightThemeColors.textPrimary : Colors.white,
-                  fontSize: fontSize,
+                  fontSize: getTitleFontSize(screenWidth),
                   fontWeight: FontWeight.w800,
                   letterSpacing: 1.2,
                 ),
@@ -77,7 +57,7 @@ class SkillsSectionWeb extends StatelessWidget {
                   color: isLightMode
                       ? LightThemeColors.primaryCyan
                       : Colors.cyanAccent,
-                  fontSize: fontSize,
+                  fontSize: getTitleFontSize(screenWidth),
                   fontWeight: FontWeight.w800,
                   letterSpacing: 1.2,
                 ),
@@ -85,9 +65,9 @@ class SkillsSectionWeb extends StatelessWidget {
             ],
           ),
         ),
-        SizedBox(height: 16),
+        const SizedBox(height: 16),
         Container(
-          width: _getUnderlineWidth(screenWidth),
+          width: getUnderlineWidth(screenWidth),
           height: 4,
           decoration: BoxDecoration(
             gradient: LinearGradient(
@@ -105,37 +85,16 @@ class SkillsSectionWeb extends StatelessWidget {
           ),
         ),
       ],
-    );
-  }
-
-  double _getTitleFontSize(double screenWidth) {
-    if (screenWidth > 1400) return 56;
-    if (screenWidth > 1200) return 48;
-    if (screenWidth > 900) return 42;
-    return 36;
-  }
-
-  double _getUnderlineWidth(double screenWidth) {
-    if (screenWidth > 1200) return 100;
-    if (screenWidth > 900) return 80;
-    return 60;
+    ).animate().fadeIn(duration: const Duration(milliseconds: 400)).slideY(
+          begin: -0.3,
+          end: 0.0,
+          curve: Curves.easeOut,
+          duration: const Duration(milliseconds: 600),
+        );
   }
 
   Widget _buildMainContent(BuildContext context, double screenWidth,
       bool isLargeScreen, bool isMediumScreen) {
-    final skillsData = [
-      ['assets/icons/flutter.png', 'Flutter', 85.0],
-      ['assets/icons/dart.png', 'Dart', 90.0],
-      ['assets/icons/firebase.png', 'Firebase', 70.0],
-      ['assets/icons/icons8-git-48.png', 'Git', 85.0],
-      ['assets/icons/figma.png', 'Figma', 90.0],
-      ['assets/icons/python.png', 'Python', 90.0],
-      ['assets/icons/c-.png', 'C++', 80.0],
-      ['assets/icons/php.png', 'PHP', 60.0],
-      ['assets/icons/hierarchy_structure.png', 'Data Structure', 80.0],
-      ['assets/icons/programming.png', 'OOP', 80.0],
-    ];
-
     return SingleChildScrollView(
       child: isLargeScreen
           ? Row(
@@ -157,7 +116,7 @@ class SkillsSectionWeb extends StatelessWidget {
                     ),
                   ),
                 ),
-                SizedBox(width: _getContentSpacing(screenWidth)),
+                SizedBox(width: getContentSpacing(screenWidth)),
                 Expanded(
                   child: Column(
                     children: List.generate(
@@ -197,13 +156,6 @@ class SkillsSectionWeb extends StatelessWidget {
     );
   }
 
-  double _getContentSpacing(double screenWidth) {
-    if (screenWidth > 1400) return 120;
-    if (screenWidth > 1200) return 100;
-    if (screenWidth > 900) return 80;
-    return 60;
-  }
-
   Widget _buildSkill({
     required String imagePath,
     required String skillName,
@@ -212,21 +164,21 @@ class SkillsSectionWeb extends StatelessWidget {
     required int index,
     required double screenWidth,
   }) {
-    final skillWidth = _getSkillWidth(screenWidth);
-    final imageSize = _getImageSize(screenWidth);
-    final fontSize = _getSkillFontSize(screenWidth);
+    final skillWidth = getSkillWidth(screenWidth);
+    final imageSize = getImageSize(screenWidth);
+    final fontSize = getSkillFontSize(screenWidth);
     final isLightMode = Theme.of(context).brightness == Brightness.light;
 
     return _HoverAnimatedSkill(
       index: index,
       child: Container(
         width: skillWidth,
-        padding: EdgeInsets.symmetric(vertical: _getSkillPadding(screenWidth)),
-        margin: EdgeInsets.symmetric(vertical: 8),
+        padding: EdgeInsets.symmetric(vertical: getSkillPadding(screenWidth)),
+        margin: const EdgeInsets.symmetric(vertical: 8),
         decoration: BoxDecoration(
           color: isLightMode
               ? LightThemeColors.bgCard
-              : Color(0xFF2C3E50).withOpacity(0.8),
+              : const Color(0xFF2C3E50).withOpacity(0.8),
           borderRadius: BorderRadius.circular(16),
           border: Border.all(
             color: isLightMode
@@ -239,7 +191,7 @@ class SkillsSectionWeb extends StatelessWidget {
                   BoxShadow(
                     color: LightThemeColors.shadowLight,
                     blurRadius: 8,
-                    offset: Offset(0, 2),
+                    offset: const Offset(0, 2),
                   ),
                 ]
               : null,
@@ -247,7 +199,7 @@ class SkillsSectionWeb extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            SizedBox(width: _getSkillPadding(screenWidth)),
+            SizedBox(width: getSkillPadding(screenWidth)),
             Container(
               width: imageSize,
               height: imageSize,
@@ -267,7 +219,7 @@ class SkillsSectionWeb extends StatelessWidget {
                 ),
               ),
             ),
-            SizedBox(width: _getSkillPadding(screenWidth)),
+            SizedBox(width: getSkillPadding(screenWidth)),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -282,7 +234,7 @@ class SkillsSectionWeb extends StatelessWidget {
                       fontSize: fontSize,
                     ),
                   ),
-                  SizedBox(height: 6),
+                  const SizedBox(height: 6),
                   Stack(
                     children: [
                       Container(
@@ -311,7 +263,7 @@ class SkillsSectionWeb extends StatelessWidget {
                 ],
               ),
             ),
-            SizedBox(width: _getSkillPadding(screenWidth)),
+            SizedBox(width: getSkillPadding(screenWidth)),
             Text(
               '${level.toInt()}%',
               style: TextStyle(
@@ -320,36 +272,11 @@ class SkillsSectionWeb extends StatelessWidget {
                 fontSize: fontSize,
               ),
             ),
-            SizedBox(width: _getSkillPadding(screenWidth)),
+            SizedBox(width: getSkillPadding(screenWidth)),
           ],
         ),
       ),
     );
-  }
-
-  double _getSkillWidth(double screenWidth) {
-    if (screenWidth > 1400) return 500;
-    if (screenWidth > 1200) return 450;
-    if (screenWidth > 900) return 400;
-    return double.infinity;
-  }
-
-  double _getImageSize(double screenWidth) {
-    if (screenWidth > 1200) return 50;
-    if (screenWidth > 900) return 45;
-    return 40;
-  }
-
-  double _getSkillFontSize(double screenWidth) {
-    if (screenWidth > 1200) return 16;
-    if (screenWidth > 900) return 14;
-    return 12;
-  }
-
-  double _getSkillPadding(double screenWidth) {
-    if (screenWidth > 1200) return 16;
-    if (screenWidth > 900) return 12;
-    return 10;
   }
 }
 

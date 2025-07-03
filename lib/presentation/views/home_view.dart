@@ -9,11 +9,11 @@ import 'package:Ali_Maher/core/constant/size.dart';
 import 'package:Ali_Maher/presentation/widgets/web/about_me_web.dart';
 import 'package:Ali_Maher/presentation/widgets/web/contact_me_web.dart';
 import 'package:Ali_Maher/presentation/widgets/mobile/mobile_drawer.dart';
-import 'package:Ali_Maher/presentation/widgets/mobile/mobile_header.dart';
+import 'package:Ali_Maher/presentation/widgets/mobile/header_mobile.dart';
 import 'package:Ali_Maher/presentation/widgets/web/my_service_web.dart';
 import 'package:Ali_Maher/presentation/widgets/web/my_skills_web.dart';
 import 'package:Ali_Maher/presentation/widgets/web/my_projects_web.dart';
-import 'package:Ali_Maher/presentation/widgets/web/web_header.dart';
+import 'package:Ali_Maher/presentation/widgets/web/header_web.dart';
 import 'package:scroll_to_index/scroll_to_index.dart';
 import '../widgets/web/main_web.dart';
 

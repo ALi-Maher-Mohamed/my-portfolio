@@ -1,7 +1,7 @@
 import 'package:Ali_Maher/core/constant/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:Ali_Maher/presentation/widgets/web/animated_brief_web.dart';
-import 'package:Ali_Maher/presentation/widgets/hexagon_image.dart';
+import 'package:Ali_Maher/presentation/widgets/shared_hexagon_image.dart';
 
 class MainWeb extends StatelessWidget {
   const MainWeb({

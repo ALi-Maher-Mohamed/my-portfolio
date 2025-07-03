@@ -1,6 +1,6 @@
 import 'package:Ali_Maher/core/constant/theme.dart';
 import 'package:flutter/material.dart';
-import 'package:Ali_Maher/presentation/widgets/hexagon_image.dart';
+import 'package:Ali_Maher/presentation/widgets/shared_hexagon_image.dart';
 
 class MainMobile extends StatelessWidget {
   const MainMobile({

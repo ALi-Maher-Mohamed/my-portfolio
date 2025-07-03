@@ -1,6 +1,6 @@
 import 'package:Ali_Maher/core/constant/theme.dart';
 import 'package:Ali_Maher/core/constant/launch_url.dart';
-import 'package:Ali_Maher/presentation/widgets/my_projects_shared.dart';
+import 'package:Ali_Maher/presentation/widgets/shared_my_projects.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 
