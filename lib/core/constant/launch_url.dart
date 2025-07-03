@@ -3,12 +3,15 @@ import 'package:url_launcher/url_launcher.dart';
 
 Future<void> launchCustomUrl(context, {String? url}) async {
   if (url != null) {
-    Uri uri = Uri.parse(url);
-    if (await canLaunchUrl(uri)) {
-      await launchUrl(uri);
-    } else {
+    try {
+      Uri uri = Uri.parse(url);
+      if (await canLaunchUrl(uri)) {
+        await launchUrl(uri, mode: LaunchMode.externalApplication);
+      }
+    } catch (e) {
+      print(e);
       ScaffoldMessenger.of(context)
-          .showSnackBar(SnackBar(content: Text('Cannot launch this $url')));
+          .showSnackBar(SnackBar(content: Text('Error: $e')));
     }
   }
 }

@@ -247,7 +247,7 @@ class _MainMobileState extends State<MainMobile>
                     return _buildAnimatedIcon(
                       iconData['icon'] as IconData,
                       index * 100,
-                      url: iconData['url'] as String,
+                      url: iconData['url'],
                       isLightMode: isLightMode,
                     );
                   }).toList(),
@@ -316,8 +316,8 @@ class _MainMobileState extends State<MainMobile>
               child: InkWell(
                 borderRadius: BorderRadius.circular(20),
                 onTap: () {
-                  HapticFeedback.lightImpact();
                   launchCustomUrl(context, url: url);
+                  HapticFeedback.lightImpact();
                 },
                 child: Icon(
                   icon,

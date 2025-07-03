@@ -248,7 +248,7 @@ class _MyProjectsWebState extends State<MyProjectsWeb> {
           child: InkWell(
             borderRadius: BorderRadius.circular(20),
             onTap: () {
-              Navigator.pushNamed(context, item['route'] as String);
+              launchCustomUrl(context, url: item['route']);
             },
             child: Stack(
               children: [
