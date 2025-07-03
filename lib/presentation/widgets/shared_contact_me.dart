@@ -206,6 +206,7 @@ class ContactMeShared {
         emailController.clear();
         messageController.clear();
       } catch (e) {
+        print(e);
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content:

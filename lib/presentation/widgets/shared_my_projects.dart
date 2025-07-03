@@ -4,27 +4,33 @@ import 'package:Ali_Maher/core/constant/theme.dart';
 
 final List<Map<String, String>> portfolioItems = [
   {
-    'title': 'Reading App',
-    'image': 'assets/images/Rectangle0.png',
-    'category': 'Flutter / MVVM',
-    'route': '/project-details/0',
-  },
-  {
     'title': 'MediCare Platform',
     'image': 'assets/images/Rectangle.png',
     'category': 'Medical / Web & Mobile',
     'route': '/project-details/1',
   },
   {
-    'title': 'E-Commerce Store',
+    'title': 'Reading App',
+    'image': 'assets/images/Rectangle0.png',
+    'category': 'Flutter / MVVM',
+    'route': '/project-details/0',
+  },
+  {
+    'title': 'Tic-Tac-Toe Game',
     'image': 'assets/images/Rectangle5.png',
-    'category': 'Shopping / Flutter',
+    'category': 'Game / Flutter',
     'route': '/project-details/2',
   },
   {
-    'title': 'Responsive Dashboard',
+    'title': 'BMI Calculator',
+    'image': 'assets/images/Rectangle5.png',
+    'category': 'Health / Flutter',
+    'route': '/project-details/2',
+  },
+  {
+    'title': 'Notes App',
     'image': 'assets/images/Rectangle6.png',
-    'category': 'UI / Responsive Design',
+    'category': 'Notes / Flutter',
     'route': '/project-details/3',
   },
   {

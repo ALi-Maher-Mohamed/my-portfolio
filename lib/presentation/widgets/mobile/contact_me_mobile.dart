@@ -1,7 +1,9 @@
 import 'package:Ali_Maher/core/constant/theme.dart';
 import 'package:Ali_Maher/presentation/widgets/shared_contact_me.dart';
+import 'package:Ali_Maher/presentation/widgets/shared_my_services.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 
 class ContactMeMobile extends StatefulWidget {
   const ContactMeMobile({super.key});
@@ -70,10 +72,11 @@ class _ContactMeMobileState extends State<ContactMeMobile>
   @override
   Widget build(BuildContext context) {
     final isLightMode = Theme.of(context).brightness == Brightness.light;
+    final double screenWidth = MediaQuery.of(context).size.width;
 
     return Scaffold(
       backgroundColor:
-          isLightMode ? LightThemeColors.bgPrimary : const Color(0xFF2D3748),
+          isLightMode ? LightThemeColors.bgPrimary : CustomColors.scaffold2,
       body: Container(
         decoration: BoxDecoration(
           gradient: LinearGradient(
@@ -85,8 +88,8 @@ class _ContactMeMobileState extends State<ContactMeMobile>
                     LightThemeColors.bgSecondary,
                   ]
                 : [
-                    const Color(0xFF2D3748),
-                    const Color(0xFF1A1F2E),
+                    const Color(0xFF2C3E50).withOpacity(0.8),
+                    CustomColors.scaffold2,
                   ],
           ),
         ),
@@ -97,51 +100,10 @@ class _ContactMeMobileState extends State<ContactMeMobile>
                 child: Padding(
                   padding: const EdgeInsets.all(16.0),
                   child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      FadeTransition(
-                        opacity: _fadeAnimation,
-                        child: Container(
-                          margin: const EdgeInsets.only(bottom: 24),
-                          child: RichText(
-                            textAlign: TextAlign.center,
-                            text: TextSpan(
-                              children: [
-                                TextSpan(
-                                  text: 'Contact ',
-                                  style: TextStyle(
-                                    fontSize: 28,
-                                    fontWeight: FontWeight.bold,
-                                    color: isLightMode
-                                        ? LightThemeColors.textPrimary
-                                        : Colors.white,
-                                  ),
-                                ),
-                                TextSpan(
-                                  text: 'Me',
-                                  style: TextStyle(
-                                    fontSize: 28,
-                                    fontWeight: FontWeight.bold,
-                                    foreground: Paint()
-                                      ..shader = LinearGradient(
-                                        colors: isLightMode
-                                            ? [
-                                                LightThemeColors.primaryCyan,
-                                                LightThemeColors.primaryCyan
-                                              ]
-                                            : [
-                                                Colors.cyanAccent,
-                                                Colors.cyanAccent
-                                              ],
-                                      ).createShader(
-                                          const Rect.fromLTWH(0, 0, 100, 40)),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
+                      _buildSectionHeader(screenWidth, isLightMode),
                       SlideTransition(
                         position: _slideAnimation,
                         child: Column(
@@ -151,13 +113,13 @@ class _ContactMeMobileState extends State<ContactMeMobile>
                               decoration: BoxDecoration(
                                 color: isLightMode
                                     ? LightThemeColors.primaryCyan
-                                    : const Color(0xFF00D4FF),
+                                    : Colors.cyan,
                                 borderRadius: BorderRadius.circular(8),
                                 boxShadow: [
                                   BoxShadow(
                                     color: (isLightMode
                                             ? LightThemeColors.primaryCyan
-                                            : const Color(0xFF00D4FF))
+                                            : Colors.cyan)
                                         .withOpacity(0.3),
                                     blurRadius: 10,
                                     offset: const Offset(0, 3),
@@ -190,7 +152,7 @@ class _ContactMeMobileState extends State<ContactMeMobile>
                             ),
                             const SizedBox(height: 16),
                             Text(
-                              'I am a passionate Flutter developer with hands-on experience in building high-quality mobile apps. I’ve developed more than 10 complete applications using clean architecture, state management, Firebase, and REST APIs. Whether it’s a business, medical, or e-commerce app, I deliver modern and responsive UI with top performance. Your satisfaction and app usability are always my priority.',
+                              'I am a passionate Flutter developer with hands-on experience in building high-quality mobile apps. I’ve developed more than 10 complete applications using clean architecture, state management, Firebase, and REST APIs. Whether it’s a business, medical, or e-commerce app.',
                               style: TextStyle(
                                 color: isLightMode
                                     ? LightThemeColors.textSecondary
@@ -243,14 +205,23 @@ class _ContactMeMobileState extends State<ContactMeMobile>
                   decoration: BoxDecoration(
                     color: isLightMode
                         ? LightThemeColors.bgCard
-                        : const Color(0xFF4A5568),
+                        : const Color(0xFF2C3E50).withOpacity(0.8),
                     borderRadius: BorderRadius.circular(24),
                     border: Border.all(
                       color: isLightMode
                           ? LightThemeColors.borderLight
-                          : Colors.white24,
+                          : Colors.cyan.withOpacity(0.2),
                       width: 1,
                     ),
+                    boxShadow: [
+                      BoxShadow(
+                        color: isLightMode
+                            ? LightThemeColors.shadowLight
+                            : Colors.cyan.withOpacity(0.1),
+                        blurRadius: 12,
+                        offset: const Offset(0, 4),
+                      ),
+                    ],
                   ),
                   child: Material(
                     color: Colors.transparent,
@@ -290,6 +261,7 @@ class _ContactMeMobileState extends State<ContactMeMobile>
       child: Form(
         key: _formKey,
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             ContactMeShared.buildAnimatedTextField(
               controller: _firstNameController,
@@ -360,24 +332,29 @@ class _ContactMeMobileState extends State<ContactMeMobile>
                         LightThemeColors.primaryCyan,
                         LightThemeColors.primaryCyan.withOpacity(0.7)
                       ]
-                    : [const Color(0xFF00D4FF), const Color(0xFF00A8CC)],
+                    : [Colors.cyan, Colors.cyan.withOpacity(0.7)],
               ),
-              borderRadius: BorderRadius.circular(24),
+              borderRadius: BorderRadius.circular(15),
               boxShadow: [
                 BoxShadow(
-                  color: (isLightMode
-                          ? LightThemeColors.primaryCyan
-                          : const Color(0xFF00D4FF))
-                      .withOpacity(0.3),
+                  color:
+                      (isLightMode ? LightThemeColors.primaryCyan : Colors.cyan)
+                          .withOpacity(0.3),
                   blurRadius: 10,
                   offset: const Offset(0, 3),
                 ),
               ],
+              border: Border.all(
+                color: isLightMode
+                    ? LightThemeColors.primaryCyan.withOpacity(0.3)
+                    : Colors.cyan.withOpacity(0.3),
+                width: 1.5,
+              ),
             ),
             child: Material(
               color: Colors.transparent,
               child: InkWell(
-                borderRadius: BorderRadius.circular(24),
+                borderRadius: BorderRadius.circular(15),
                 onTap: () {
                   HapticFeedback.mediumImpact();
                   ContactMeShared.handleSubmit(
@@ -416,12 +393,13 @@ class _ContactMeMobileState extends State<ContactMeMobile>
       width: double.infinity,
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: isLightMode
-            ? LightThemeColors.bgSecondary
-            : const Color(0xFF1A1F2E),
+        color:
+            isLightMode ? LightThemeColors.bgSecondary : CustomColors.scaffold2,
         border: Border(
           top: BorderSide(
-            color: isLightMode ? LightThemeColors.borderLight : Colors.white12,
+            color: isLightMode
+                ? LightThemeColors.borderLight
+                : Colors.cyan.withOpacity(0.2),
             width: 1,
           ),
         ),
@@ -439,4 +417,61 @@ class _ContactMeMobileState extends State<ContactMeMobile>
       ),
     );
   }
+}
+
+Widget _buildSectionHeader(double screenWidth, bool isLightMode) {
+  return Column(
+    children: [
+      RichText(
+        textAlign: TextAlign.center,
+        text: TextSpan(
+          children: [
+            TextSpan(
+              text: "Contact ",
+              style: TextStyle(
+                color:
+                    isLightMode ? LightThemeColors.textPrimary : Colors.white,
+                fontSize: getTitleFontSize(screenWidth) * 0.8,
+                fontWeight: FontWeight.w800,
+                letterSpacing: 1.2,
+              ),
+            ),
+            TextSpan(
+              text: "Me",
+              style: TextStyle(
+                color: isLightMode ? LightThemeColors.primaryCyan : Colors.cyan,
+                fontSize: getTitleFontSize(screenWidth) * 0.8,
+                fontWeight: FontWeight.w800,
+                letterSpacing: 1.2,
+              ),
+            ),
+          ],
+        ),
+      ),
+      const SizedBox(height: 12),
+      Container(
+        width: getUnderlineWidth(screenWidth) * 0.8,
+        height: 3,
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            colors: isLightMode
+                ? [
+                    LightThemeColors.primaryCyan,
+                    LightThemeColors.primaryCyan.withOpacity(0.3),
+                  ]
+                : [
+                    Colors.cyan,
+                    Colors.cyan.withOpacity(0.3),
+                  ],
+          ),
+          borderRadius: BorderRadius.circular(2),
+        ),
+      ),
+    ],
+  ).animate().fadeIn(duration: const Duration(milliseconds: 400)).slideY(
+        begin: -0.3,
+        end: 0.0,
+        curve: Curves.easeOut,
+        duration: const Duration(milliseconds: 600),
+      );
 }

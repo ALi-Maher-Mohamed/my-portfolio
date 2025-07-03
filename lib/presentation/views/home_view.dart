@@ -111,13 +111,13 @@ class _HomeViewState extends State<HomeView> {
                         ),
                       ] else ...[
                         MobileHeader(
-                          onLogoTap: () {},
                           onMenuTap: () {
                             scaffoldKey.currentState?.openEndDrawer();
                           },
                         ),
                         MainMobile(
-                          screenHeight: screenHeight,
+                          onScrollToIndex: scrollToIndex,
+                          screenHeight: screenHeight / 1.2,
                           screenWidth: screenWidth,
                         ),
                       ],
@@ -179,7 +179,7 @@ class _HomeViewState extends State<HomeView> {
               controller: _scrollController,
               index: 5,
               child: Container(
-                height: screenHeight + 100,
+                height: screenHeight,
                 width: double.infinity,
                 decoration: BoxDecoration(
                   color: isLightMode
