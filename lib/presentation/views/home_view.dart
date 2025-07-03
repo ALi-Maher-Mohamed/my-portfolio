@@ -179,7 +179,7 @@ class _HomeViewState extends State<HomeView> {
               controller: _scrollController,
               index: 5,
               child: Container(
-                height: screenHeight,
+                height: screenHeight + 132,
                 width: double.infinity,
                 decoration: BoxDecoration(
                   color: isLightMode

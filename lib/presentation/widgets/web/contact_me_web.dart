@@ -129,10 +129,7 @@ class _ContactMeWebState extends State<ContactMeWeb>
                                                 LightThemeColors.primaryCyan,
                                                 LightThemeColors.primaryCyan
                                               ]
-                                            : [
-                                                Colors.cyanAccent,
-                                                Colors.cyanAccent
-                                              ],
+                                            : [Colors.cyan, Colors.cyan],
                                       ).createShader(
                                           const Rect.fromLTWH(0, 0, 100, 40)),
                                   ),
@@ -159,7 +156,7 @@ class _ContactMeWebState extends State<ContactMeWeb>
                                       decoration: BoxDecoration(
                                         color: isLightMode
                                             ? LightThemeColors.primaryCyan
-                                            : const Color(0xFF00D4FF),
+                                            : Colors.cyan,
                                         borderRadius: BorderRadius.circular(10),
                                         boxShadow: [
                                           BoxShadow(
@@ -393,7 +390,7 @@ class _ContactMeWebState extends State<ContactMeWeb>
                         LightThemeColors.primaryCyan,
                         LightThemeColors.primaryCyan.withOpacity(0.7)
                       ]
-                    : [const Color(0xFF00D4FF), const Color(0xFF00A8CC)],
+                    : [Colors.cyan, const Color(0xFF00A8CC)],
               ),
               borderRadius: BorderRadius.circular(25),
               boxShadow: [

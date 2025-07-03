@@ -18,7 +18,6 @@ class _ContactMeMobileState extends State<ContactMeMobile>
   late AnimationController _slideController;
   late AnimationController _formController;
   late AnimationController _socialController;
-
   late Animation<double> _fadeAnimation;
   late Animation<Offset> _slideAnimation;
   late Animation<double> _socialAnimation;
@@ -100,10 +99,11 @@ class _ContactMeMobileState extends State<ContactMeMobile>
                 child: Padding(
                   padding: const EdgeInsets.all(16.0),
                   child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       _buildSectionHeader(screenWidth, isLightMode),
+                      SizedBox(height: 40),
                       SlideTransition(
                         position: _slideAnimation,
                         child: Column(

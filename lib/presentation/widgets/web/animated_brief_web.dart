@@ -165,21 +165,19 @@ class _AnimatedPortfolioBriefState extends State<AnimatedPortfolioBrief>
 
   Color _getAccentColor() {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    return isDark ? Colors.cyanAccent : LightThemeColors.primaryCyan;
+    return isDark ? Colors.cyan : LightThemeColors.primaryCyan;
   }
 
   Color _getCardColor() {
     final isDark = Theme.of(context).brightness == Brightness.dark;
     return isDark
-        ? Colors.cyanAccent.withOpacity(0.1)
+        ? Colors.cyan.withOpacity(0.1)
         : LightThemeColors.accentCyan.withOpacity(0.1);
   }
 
   Color _getBorderColor() {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    return isDark
-        ? Colors.cyanAccent.withOpacity(0.2)
-        : LightThemeColors.borderLight;
+    return isDark ? Colors.cyan.withOpacity(0.2) : LightThemeColors.borderLight;
   }
 
   @override
@@ -203,7 +201,7 @@ class _AnimatedPortfolioBriefState extends State<AnimatedPortfolioBrief>
             child: ShaderMask(
               shaderCallback: (bounds) => LinearGradient(
                 colors: isDark
-                    ? [Colors.cyanAccent, Colors.white, Colors.cyanAccent]
+                    ? [Colors.cyan, Colors.white, Colors.cyan]
                     : [
                         LightThemeColors.primaryCyan,
                         LightThemeColors.textPrimary,
@@ -429,7 +427,7 @@ class _AnimatedPortfolioBriefState extends State<AnimatedPortfolioBrief>
               gradient: LinearGradient(
                 colors: [
                   isDark
-                      ? Colors.cyanAccent.withOpacity(0.2)
+                      ? Colors.cyan.withOpacity(0.2)
                       : LightThemeColors.primaryCyan.withOpacity(0.2),
                   Colors.transparent,
                 ],
@@ -477,8 +475,8 @@ class _AnimatedPortfolioBriefState extends State<AnimatedPortfolioBrief>
                 backgroundColor: isPrimary
                     ? (isDark
                         ? (_isHovered
-                            ? Colors.cyanAccent.withOpacity(0.8)
-                            : Colors.cyanAccent)
+                            ? Colors.cyan.withOpacity(0.8)
+                            : Colors.cyan)
                         : (_isHovered
                             ? LightThemeColors.buttonHover
                             : LightThemeColors.buttonPrimary))
