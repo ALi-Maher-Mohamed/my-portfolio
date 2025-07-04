@@ -30,7 +30,6 @@ class _MainMobileState extends State<MainMobile>
   late AnimationController _iconController;
 
   late Animation<double> _fadeAnimation;
-  late Animation<Offset> _slideAnimation;
   late Animation<double> _bounceAnimation;
   late Animation<double> _iconAnimation;
 
@@ -53,7 +52,6 @@ class _MainMobileState extends State<MainMobile>
     _iconController = MainShared.createIconController(this);
 
     _fadeAnimation = MainShared.createFadeAnimation(_fadeController);
-    _slideAnimation = MainShared.createSlideAnimation(_slideController);
     _bounceAnimation = MainShared.createBounceAnimation(_bounceController);
     _iconAnimation = MainShared.createIconAnimation(_iconController);
   }

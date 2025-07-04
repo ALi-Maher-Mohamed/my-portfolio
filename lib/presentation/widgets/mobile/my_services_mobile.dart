@@ -1,5 +1,7 @@
 import 'package:Ali_Maher/core/constant/theme.dart';
 import 'package:Ali_Maher/presentation/widgets/shared_my_services.dart';
+import 'package:Ali_Maher/presentation/widgets/shared_my_services.dart'
+    as ResponsiveHelper;
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 
@@ -239,17 +241,19 @@ class _MyServicesMobileState extends State<MyServicesMobile> {
 
   Widget _buildPageIndicators(double screenWidth, bool isLightMode) {
     return Padding(
-      padding: EdgeInsets.only(top: getSectionSpacing(screenWidth)),
+      padding:
+          EdgeInsets.only(top: ResponsiveHelper.getSectionSpacing(screenWidth)),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: List.generate(
           services.length,
-          (index) => Container(
-            margin: const EdgeInsets.symmetric(horizontal: 5),
-            width: _currentPage == index ? 12 : 8,
-            height: _currentPage == index ? 12 : 8,
+          (index) => AnimatedContainer(
+            duration: const Duration(milliseconds: 300),
+            margin: const EdgeInsets.symmetric(horizontal: 4),
+            width: _currentPage == index ? 24 : 8,
+            height: 8,
             decoration: BoxDecoration(
-              shape: BoxShape.circle,
+              borderRadius: BorderRadius.circular(4),
               color: _currentPage == index
                   ? (isLightMode ? LightThemeColors.primaryCyan : Colors.cyan)
                   : (isLightMode ? LightThemeColors.textMuted : Colors.grey),
