@@ -36,7 +36,7 @@ class CustomTextButton extends StatelessWidget {
           fontSize: MediaQuery.of(context).size.width / 80, // حجم أفضل
           color: isLightMode
               ? LightThemeColors.primaryCyan // الأزرق الجديد بدلاً من السماوي
-              : Colors.cyanAccent,
+              : Colors.cyan,
           letterSpacing: 0.3, // تباعد أحرف أفضل
         ),
       ),

@@ -99,7 +99,7 @@ class _ContactMeMobileState extends State<ContactMeMobile>
                 child: Padding(
                   padding: const EdgeInsets.all(16.0),
                   child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       _buildSectionHeader(screenWidth, isLightMode),

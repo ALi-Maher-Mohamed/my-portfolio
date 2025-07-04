@@ -74,9 +74,8 @@ class AboutMeSectionWeb extends StatelessWidget {
               TextSpan(
                 text: "Me",
                 style: TextStyle(
-                  color: isLightMode
-                      ? LightThemeColors.primaryCyan
-                      : Colors.cyanAccent,
+                  color:
+                      isLightMode ? LightThemeColors.primaryCyan : Colors.cyan,
                   fontSize: fontSize,
                   fontWeight: FontWeight.w800,
                   letterSpacing: 1.2,
@@ -97,8 +96,8 @@ class AboutMeSectionWeb extends StatelessWidget {
                       LightThemeColors.primaryCyan.withOpacity(0.3),
                     ]
                   : [
-                      Colors.cyanAccent,
-                      Colors.cyanAccent.withOpacity(0.3),
+                      Colors.cyan,
+                      Colors.cyan.withOpacity(0.3),
                     ],
             ),
             borderRadius: BorderRadius.circular(2),
@@ -177,8 +176,8 @@ class AboutMeSectionWeb extends StatelessWidget {
                         LightThemeColors.primaryCyanLight,
                       ]
                     : [
-                        Colors.cyanAccent,
-                        Colors.cyanAccent.withOpacity(0.8),
+                        Colors.cyan,
+                        Colors.cyan.withOpacity(0.8),
                       ],
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
@@ -188,7 +187,7 @@ class AboutMeSectionWeb extends StatelessWidget {
                 BoxShadow(
                   color: isLightMode
                       ? LightThemeColors.shadowLight
-                      : Colors.cyanAccent.withOpacity(0.3),
+                      : Colors.cyan.withOpacity(0.3),
                   blurRadius: 30,
                   offset: Offset(0, 15),
                 ),
@@ -371,7 +370,7 @@ class AboutMeSectionWeb extends StatelessWidget {
                 style: BorderStyle.solid,
                 color: isLightMode
                     ? LightThemeColors.borderLight
-                    : Colors.cyanAccent.withOpacity(0.4),
+                    : Colors.cyan.withOpacity(0.4),
                 width: 3,
               ),
             ),
@@ -385,12 +384,12 @@ class AboutMeSectionWeb extends StatelessWidget {
                   style: BorderStyle.solid,
                   color: isLightMode
                       ? LightThemeColors.borderLight
-                      : Colors.cyanAccent.withOpacity(0.4),
+                      : Colors.cyan.withOpacity(0.4),
                   width: 1,
                 ),
                 color: isLightMode
                     ? LightThemeColors.primaryCyan.withOpacity(0.2)
-                    : Colors.cyanAccent.withOpacity(0.2),
+                    : Colors.cyan.withOpacity(0.2),
                 borderRadius: BorderRadius.circular(40),
               ),
               labelColor:
@@ -760,7 +759,7 @@ class AboutMeSectionWeb extends StatelessWidget {
         border: Border.all(
           color: isLightMode
               ? LightThemeColors.borderLight
-              : Colors.cyanAccent.withOpacity(0.2),
+              : Colors.cyan.withOpacity(0.2),
           width: 1.5,
         ),
         boxShadow: [
@@ -781,20 +780,18 @@ class AboutMeSectionWeb extends StatelessWidget {
             decoration: BoxDecoration(
               color: isLightMode
                   ? LightThemeColors.bgSecondary
-                  : Colors.cyanAccent.withOpacity(0.15),
+                  : Colors.cyan.withOpacity(0.15),
               borderRadius: BorderRadius.circular(12),
               border: Border.all(
                 color: isLightMode
                     ? LightThemeColors.borderLight
-                    : Colors.cyanAccent.withOpacity(0.3),
+                    : Colors.cyan.withOpacity(0.3),
                 width: 1,
               ),
             ),
             child: Icon(
               icon,
-              color: isLightMode
-                  ? LightThemeColors.primaryCyan
-                  : Colors.cyanAccent,
+              color: isLightMode ? LightThemeColors.primaryCyan : Colors.cyan,
               size: iconSize * 0.5,
             ),
           ),
@@ -808,7 +805,7 @@ class AboutMeSectionWeb extends StatelessWidget {
                   style: TextStyle(
                     color: isLightMode
                         ? LightThemeColors.primaryCyan
-                        : Colors.cyanAccent,
+                        : Colors.cyan,
                     fontWeight: FontWeight.w700,
                     fontSize: titleFontSize,
                   ),
@@ -926,7 +923,7 @@ class AboutMeSectionWeb extends StatelessWidget {
         border: Border.all(
           color: isLightMode
               ? LightThemeColors.borderLight
-              : Colors.cyanAccent.withOpacity(0.2),
+              : Colors.cyan.withOpacity(0.2),
           width: 1,
         ),
         boxShadow: isLightMode
@@ -945,9 +942,7 @@ class AboutMeSectionWeb extends StatelessWidget {
           Text(
             title,
             style: TextStyle(
-              color: isLightMode
-                  ? LightThemeColors.primaryCyan
-                  : Colors.cyanAccent,
+              color: isLightMode ? LightThemeColors.primaryCyan : Colors.cyan,
               fontWeight: FontWeight.w700,
               fontSize: titleSize,
             ),
@@ -964,12 +959,12 @@ class AboutMeSectionWeb extends StatelessWidget {
                       decoration: BoxDecoration(
                         color: isLightMode
                             ? LightThemeColors.bgSecondary
-                            : Colors.cyanAccent.withOpacity(0.1),
+                            : Colors.cyan.withOpacity(0.1),
                         borderRadius: BorderRadius.circular(20),
                         border: Border.all(
                           color: isLightMode
                               ? LightThemeColors.borderLight
-                              : Colors.cyanAccent.withOpacity(0.3),
+                              : Colors.cyan.withOpacity(0.3),
                           width: 1,
                         ),
                       ),

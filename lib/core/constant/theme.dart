@@ -4,7 +4,7 @@ class CustomColors {
   static const Color scaffold1 = Color(0xFF1F242D);
   static const Color mainTextColor = Colors.amber;
   static const Color scaffold2 = Color(0xFF1F242D);
-  static const Color secondaryTextColor = Colors.cyanAccent;
+  static const Color secondaryTextColor = Colors.cyan;
 }
 
 class AppLightTheme {

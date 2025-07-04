@@ -135,28 +135,20 @@ class _MyProjectsWebState extends State<MyProjectsWeb> {
                 top: 0,
                 bottom: 0,
                 child: HoverAnimatedButton(
-                  child: Container(
-                    decoration: BoxDecoration(
+                  child: IconButton(
+                    icon: Icon(
+                      Icons.arrow_left,
+                      size: 40,
                       color: isLightMode
-                          ? LightThemeColors.bgCard.withOpacity(0.9)
-                          : Colors.black.withOpacity(0.5),
-                      borderRadius: BorderRadius.circular(50),
+                          ? LightThemeColors.primaryCyan
+                          : Colors.cyan,
                     ),
-                    child: IconButton(
-                      icon: Icon(
-                        Icons.arrow_back_ios,
-                        size: 30,
-                        color: isLightMode
-                            ? LightThemeColors.primaryCyan
-                            : Colors.cyanAccent,
-                      ),
-                      onPressed: () {
-                        _pageController.previousPage(
-                          duration: const Duration(milliseconds: 500),
-                          curve: Curves.easeInOut,
-                        );
-                      },
-                    ),
+                    onPressed: () {
+                      _pageController.previousPage(
+                        duration: const Duration(milliseconds: 500),
+                        curve: Curves.easeInOut,
+                      );
+                    },
                   ),
                 ),
               ),
@@ -167,28 +159,20 @@ class _MyProjectsWebState extends State<MyProjectsWeb> {
                 top: 0,
                 bottom: 0,
                 child: HoverAnimatedButton(
-                  child: Container(
-                    decoration: BoxDecoration(
+                  child: IconButton(
+                    icon: Icon(
+                      Icons.arrow_right,
+                      size: 40,
                       color: isLightMode
-                          ? LightThemeColors.bgCard.withOpacity(0.9)
-                          : Colors.black.withOpacity(0.5),
-                      borderRadius: BorderRadius.circular(50),
+                          ? LightThemeColors.primaryCyan
+                          : Colors.cyan,
                     ),
-                    child: IconButton(
-                      icon: Icon(
-                        Icons.arrow_forward_ios,
-                        size: 30,
-                        color: isLightMode
-                            ? LightThemeColors.primaryCyan
-                            : Colors.cyanAccent,
-                      ),
-                      onPressed: () {
-                        _pageController.nextPage(
-                          duration: const Duration(milliseconds: 500),
-                          curve: Curves.easeInOut,
-                        );
-                      },
-                    ),
+                    onPressed: () {
+                      _pageController.nextPage(
+                        duration: const Duration(milliseconds: 500),
+                        curve: Curves.easeInOut,
+                      );
+                    },
                   ),
                 ),
               ),
@@ -220,7 +204,7 @@ class _MyProjectsWebState extends State<MyProjectsWeb> {
           border: Border.all(
             color: isLightMode
                 ? LightThemeColors.borderLight
-                : Colors.cyanAccent.withOpacity(0.2),
+                : Colors.cyan.withOpacity(0.2),
             width: 2,
           ),
           image: DecorationImage(
@@ -237,7 +221,7 @@ class _MyProjectsWebState extends State<MyProjectsWeb> {
             BoxShadow(
               color: isLightMode
                   ? LightThemeColors.shadowLight
-                  : Colors.cyanAccent.withOpacity(0.1),
+                  : Colors.cyan.withOpacity(0.1),
               blurRadius: 15,
               offset: const Offset(0, 5),
             ),
@@ -292,7 +276,7 @@ class _MyProjectsWebState extends State<MyProjectsWeb> {
                             border: Border.all(
                               color: isLightMode
                                   ? LightThemeColors.primaryCyan
-                                  : Colors.cyanAccent,
+                                  : Colors.cyan,
                               width: 3,
                             ),
                             color: isLightMode
@@ -305,7 +289,7 @@ class _MyProjectsWebState extends State<MyProjectsWeb> {
                                 0.7,
                             color: isLightMode
                                 ? LightThemeColors.primaryCyan
-                                : Colors.cyanAccent,
+                                : Colors.cyan,
                           ),
                         ),
                         const SizedBox(height: 24),
@@ -333,13 +317,13 @@ class _MyProjectsWebState extends State<MyProjectsWeb> {
                           decoration: BoxDecoration(
                             color: isLightMode
                                 ? LightThemeColors.primaryCyan.withOpacity(0.1)
-                                : Colors.cyanAccent.withOpacity(0.1),
+                                : Colors.cyan.withOpacity(0.1),
                             borderRadius: BorderRadius.circular(20),
                             border: Border.all(
                               color: isLightMode
                                   ? LightThemeColors.primaryCyan
                                       .withOpacity(0.3)
-                                  : Colors.cyanAccent.withOpacity(0.3),
+                                  : Colors.cyan.withOpacity(0.3),
                               width: 1.5,
                             ),
                           ),
@@ -351,7 +335,7 @@ class _MyProjectsWebState extends State<MyProjectsWeb> {
                               fontWeight: FontWeight.w600,
                               color: isLightMode
                                   ? LightThemeColors.primaryCyan
-                                  : Colors.cyanAccent,
+                                  : Colors.cyan,
                             ),
                             textAlign: TextAlign.center,
                           ),
@@ -369,7 +353,7 @@ class _MyProjectsWebState extends State<MyProjectsWeb> {
                               style: ElevatedButton.styleFrom(
                                 backgroundColor: isLightMode
                                     ? LightThemeColors.primaryCyan
-                                    : Colors.cyanAccent,
+                                    : Colors.cyan,
                                 foregroundColor: Colors.white,
                                 padding: EdgeInsets.symmetric(
                                   horizontal: ResponsiveHelper.getSkillPadding(
@@ -426,7 +410,7 @@ class _MyProjectsWebState extends State<MyProjectsWeb> {
           },
           style: ElevatedButton.styleFrom(
             backgroundColor:
-                isLightMode ? LightThemeColors.primaryCyan : Colors.cyanAccent,
+                isLightMode ? LightThemeColors.primaryCyan : Colors.cyan,
             foregroundColor: Colors.white,
             padding: EdgeInsets.symmetric(
               horizontal: ResponsiveHelper.getSkillPadding(screenWidth) * 3,

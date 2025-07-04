@@ -8,22 +8,22 @@ class MainShared {
       {
         'icon': FontAwesomeIcons.facebook,
         'url': 'https://www.facebook.com/ali.maher.403247',
-        'color': isLightMode ? LightThemeColors.primaryCyan : Colors.cyanAccent,
+        'color': isLightMode ? LightThemeColors.primaryCyan : Colors.cyan,
       },
       {
         'icon': FontAwesomeIcons.linkedin,
         'url': 'https://www.linkedin.com/in/ali-maher-maher',
-        'color': isLightMode ? LightThemeColors.primaryCyan : Colors.cyanAccent,
+        'color': isLightMode ? LightThemeColors.primaryCyan : Colors.cyan,
       },
       {
         'icon': FontAwesomeIcons.envelope,
         'url': 'mailto:ali.maher0013@gmail.com?subject=Hello',
-        'color': isLightMode ? LightThemeColors.primaryCyan : Colors.cyanAccent,
+        'color': isLightMode ? LightThemeColors.primaryCyan : Colors.cyan,
       },
       {
         'icon': FontAwesomeIcons.github,
         'url': 'https://github.com/ALi-Maher-Mohamed',
-        'color': isLightMode ? LightThemeColors.primaryCyan : Colors.cyanAccent,
+        'color': isLightMode ? LightThemeColors.primaryCyan : Colors.cyan,
       },
     ];
   }
@@ -97,18 +97,18 @@ class MainShared {
   }
 
   static Color getAccentColor(bool isLightMode) {
-    return isLightMode ? LightThemeColors.primaryCyan : Colors.cyanAccent;
+    return isLightMode ? LightThemeColors.primaryCyan : Colors.cyan;
   }
 
   static Color getCardColor(bool isLightMode) {
     return isLightMode
         ? LightThemeColors.accentCyan.withOpacity(0.1)
-        : Colors.cyanAccent.withOpacity(0.1);
+        : Colors.cyan.withOpacity(0.1);
   }
 
   static Color getBorderColor(bool isLightMode) {
     return isLightMode
         ? LightThemeColors.borderLight
-        : Colors.cyanAccent.withOpacity(0.2);
+        : Colors.cyan.withOpacity(0.2);
   }
 }

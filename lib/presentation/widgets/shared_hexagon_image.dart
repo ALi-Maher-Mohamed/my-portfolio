@@ -100,7 +100,7 @@ class _HexagonAnimatedImageState extends State<HexagonAnimatedImage>
                                   LightThemeColors.primaryCyan,
                                   LightThemeColors.bgSecondary,
                                 ]
-                              : [Colors.cyanAccent, Colors.blueAccent],
+                              : [Colors.cyan, Colors.blueAccent],
                           begin: Alignment.topLeft,
                           end: Alignment.bottomRight,
                         ),
@@ -118,7 +118,7 @@ class _HexagonAnimatedImageState extends State<HexagonAnimatedImage>
                         BoxShadow(
                           color: isLightMode
                               ? LightThemeColors.primaryCyan.withOpacity(0.3)
-                              : Colors.cyanAccent.withOpacity(0.3),
+                              : Colors.cyan.withOpacity(0.3),
                           blurRadius: 50,
                           spreadRadius: 20,
                         ),

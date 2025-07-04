@@ -66,9 +66,8 @@ class _MyServicesMobileState extends State<MyServicesMobile> {
               TextSpan(
                 text: "Services",
                 style: TextStyle(
-                  color: isLightMode
-                      ? LightThemeColors.primaryCyan
-                      : Colors.cyanAccent,
+                  color:
+                      isLightMode ? LightThemeColors.primaryCyan : Colors.cyan,
                   fontSize: getTitleFontSize(screenWidth),
                   fontWeight: FontWeight.w800,
                   letterSpacing: 1.2,
@@ -89,8 +88,8 @@ class _MyServicesMobileState extends State<MyServicesMobile> {
                       LightThemeColors.primaryCyan.withOpacity(0.3),
                     ]
                   : [
-                      Colors.cyanAccent,
-                      Colors.cyanAccent.withOpacity(0.3),
+                      Colors.cyan,
+                      Colors.cyan.withOpacity(0.3),
                     ],
             ),
             borderRadius: BorderRadius.circular(2),
@@ -153,7 +152,7 @@ class _MyServicesMobileState extends State<MyServicesMobile> {
         border: Border.all(
           color: isLightMode
               ? LightThemeColors.borderLight
-              : Colors.cyanAccent.withOpacity(0.2),
+              : Colors.cyan.withOpacity(0.2),
           width: 1,
         ),
         boxShadow: isLightMode
@@ -209,7 +208,7 @@ class _MyServicesMobileState extends State<MyServicesMobile> {
                     style: ElevatedButton.styleFrom(
                       backgroundColor: isLightMode
                           ? LightThemeColors.primaryCyan
-                          : Colors.cyanAccent,
+                          : Colors.cyan,
                       foregroundColor: isLightMode
                           ? LightThemeColors.textOnPrimary
                           : Colors.white,
@@ -252,9 +251,7 @@ class _MyServicesMobileState extends State<MyServicesMobile> {
             decoration: BoxDecoration(
               shape: BoxShape.circle,
               color: _currentPage == index
-                  ? (isLightMode
-                      ? LightThemeColors.primaryCyan
-                      : Colors.cyanAccent)
+                  ? (isLightMode ? LightThemeColors.primaryCyan : Colors.cyan)
                   : (isLightMode ? LightThemeColors.textMuted : Colors.grey),
             ),
           ),

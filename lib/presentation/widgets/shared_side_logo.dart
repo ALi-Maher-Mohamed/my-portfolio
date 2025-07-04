@@ -20,7 +20,7 @@ class SideLogo extends StatelessWidget {
           decoration: TextDecoration.underline,
           fontSize: 30,
           fontWeight: FontWeight.bold,
-          color: isLightMode ? LightThemeColors.primaryCyan : Colors.cyanAccent,
+          color: isLightMode ? LightThemeColors.primaryCyan : Colors.cyan,
         ),
       ),
     );

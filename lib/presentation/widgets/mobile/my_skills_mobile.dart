@@ -48,9 +48,8 @@ class SkillsSectionMobile extends StatelessWidget {
               TextSpan(
                 text: "Skills",
                 style: TextStyle(
-                  color: isLightMode
-                      ? LightThemeColors.primaryCyan
-                      : Colors.cyanAccent,
+                  color:
+                      isLightMode ? LightThemeColors.primaryCyan : Colors.cyan,
                   fontSize: getTitleFontSize(screenWidth) * 0.8,
                   fontWeight: FontWeight.w800,
                   letterSpacing: 1.2,
@@ -71,8 +70,8 @@ class SkillsSectionMobile extends StatelessWidget {
                       LightThemeColors.primaryCyan.withOpacity(0.3),
                     ]
                   : [
-                      Colors.cyanAccent,
-                      Colors.cyanAccent.withOpacity(0.3),
+                      Colors.cyan,
+                      Colors.cyan.withOpacity(0.3),
                     ],
             ),
             borderRadius: BorderRadius.circular(2),
@@ -127,7 +126,7 @@ class SkillsSectionMobile extends StatelessWidget {
         border: Border.all(
           color: isLightMode
               ? LightThemeColors.borderLight
-              : Colors.cyanAccent.withOpacity(0.2),
+              : Colors.cyan.withOpacity(0.2),
           width: 1,
         ),
         boxShadow: isLightMode
@@ -196,7 +195,7 @@ class SkillsSectionMobile extends StatelessWidget {
                         decoration: BoxDecoration(
                           color: isLightMode
                               ? LightThemeColors.primaryCyan
-                              : Colors.cyanAccent,
+                              : Colors.cyan,
                           borderRadius: BorderRadius.circular(4),
                         ),
                       ),

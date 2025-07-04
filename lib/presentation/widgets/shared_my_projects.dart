@@ -165,9 +165,8 @@ class SectionHeader extends StatelessWidget {
               TextSpan(
                 text: "Projects",
                 style: TextStyle(
-                  color: isLightMode
-                      ? LightThemeColors.primaryCyan
-                      : Colors.cyanAccent,
+                  color:
+                      isLightMode ? LightThemeColors.primaryCyan : Colors.cyan,
                   fontSize: fontSize,
                   fontWeight: FontWeight.w800,
                   letterSpacing: 1.2,
@@ -188,8 +187,8 @@ class SectionHeader extends StatelessWidget {
                       LightThemeColors.primaryCyan.withOpacity(0.3),
                     ]
                   : [
-                      Colors.cyanAccent,
-                      Colors.cyanAccent.withOpacity(0.3),
+                      Colors.cyan,
+                      Colors.cyan.withOpacity(0.3),
                     ],
             ),
             borderRadius: BorderRadius.circular(2),
@@ -236,9 +235,7 @@ class PageIndicators extends StatelessWidget {
             decoration: BoxDecoration(
               shape: BoxShape.circle,
               color: currentPage == index
-                  ? (isLightMode
-                      ? LightThemeColors.primaryCyan
-                      : Colors.cyanAccent)
+                  ? (isLightMode ? LightThemeColors.primaryCyan : Colors.cyan)
                   : (isLightMode ? LightThemeColors.textMuted : Colors.grey),
             ),
           ),

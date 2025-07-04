@@ -143,7 +143,7 @@ class _MainMobileState extends State<MainMobile>
                             LightThemeColors.textPrimary,
                             LightThemeColors.primaryCyan
                           ]
-                        : [Colors.cyanAccent, Colors.white, Colors.cyanAccent],
+                        : [Colors.cyan, Colors.white, Colors.cyan],
                     stops: const [0.0, 0.5, 1.0],
                   ).createShader(bounds),
                   child: Text(

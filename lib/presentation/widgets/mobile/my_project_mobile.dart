@@ -91,7 +91,7 @@ class _MyProjectsMobileState extends State<MyProjectsMobile> {
           border: Border.all(
             color: isLightMode
                 ? LightThemeColors.borderLight
-                : Colors.cyanAccent.withOpacity(0.2),
+                : Colors.cyan.withOpacity(0.2),
             width: 2,
           ),
           image: DecorationImage(
@@ -108,7 +108,7 @@ class _MyProjectsMobileState extends State<MyProjectsMobile> {
             BoxShadow(
               color: isLightMode
                   ? LightThemeColors.shadowLight
-                  : Colors.cyanAccent.withOpacity(0.1),
+                  : Colors.cyan.withOpacity(0.1),
               blurRadius: 12,
               offset: const Offset(0, 4),
             ),
@@ -163,7 +163,7 @@ class _MyProjectsMobileState extends State<MyProjectsMobile> {
                             border: Border.all(
                               color: isLightMode
                                   ? LightThemeColors.primaryCyan
-                                  : Colors.cyanAccent,
+                                  : Colors.cyan,
                               width: 3,
                             ),
                             color: isLightMode
@@ -176,7 +176,7 @@ class _MyProjectsMobileState extends State<MyProjectsMobile> {
                                 0.8,
                             color: isLightMode
                                 ? LightThemeColors.primaryCyan
-                                : Colors.cyanAccent,
+                                : Colors.cyan,
                           ),
                         ),
                         const SizedBox(height: 20),
@@ -204,13 +204,13 @@ class _MyProjectsMobileState extends State<MyProjectsMobile> {
                           decoration: BoxDecoration(
                             color: isLightMode
                                 ? LightThemeColors.primaryCyan.withOpacity(0.1)
-                                : Colors.cyanAccent.withOpacity(0.1),
+                                : Colors.cyan.withOpacity(0.1),
                             borderRadius: BorderRadius.circular(20),
                             border: Border.all(
                               color: isLightMode
                                   ? LightThemeColors.primaryCyan
                                       .withOpacity(0.3)
-                                  : Colors.cyanAccent.withOpacity(0.3),
+                                  : Colors.cyan.withOpacity(0.3),
                               width: 1.5,
                             ),
                           ),
@@ -223,7 +223,7 @@ class _MyProjectsMobileState extends State<MyProjectsMobile> {
                               fontWeight: FontWeight.w600,
                               color: isLightMode
                                   ? LightThemeColors.primaryCyan
-                                  : Colors.cyanAccent,
+                                  : Colors.cyan,
                             ),
                             textAlign: TextAlign.center,
                           ),
@@ -240,7 +240,7 @@ class _MyProjectsMobileState extends State<MyProjectsMobile> {
                             style: ElevatedButton.styleFrom(
                               backgroundColor: isLightMode
                                   ? LightThemeColors.primaryCyan
-                                  : Colors.cyanAccent,
+                                  : Colors.cyan,
                               foregroundColor: Colors.white,
                               padding: EdgeInsets.symmetric(
                                 horizontal: ResponsiveHelper.getSkillPadding(
@@ -302,9 +302,7 @@ class _MyProjectsMobileState extends State<MyProjectsMobile> {
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(4),
               color: _currentPage == index
-                  ? (isLightMode
-                      ? LightThemeColors.primaryCyan
-                      : Colors.cyanAccent)
+                  ? (isLightMode ? LightThemeColors.primaryCyan : Colors.cyan)
                   : (isLightMode ? LightThemeColors.textMuted : Colors.grey),
             ),
           ),
@@ -332,7 +330,7 @@ class _MyProjectsMobileState extends State<MyProjectsMobile> {
           },
           style: ElevatedButton.styleFrom(
             backgroundColor:
-                isLightMode ? LightThemeColors.primaryCyan : Colors.cyanAccent,
+                isLightMode ? LightThemeColors.primaryCyan : Colors.cyan,
             foregroundColor: Colors.white,
             padding: EdgeInsets.symmetric(
               horizontal: ResponsiveHelper.getSkillPadding(screenWidth) * 2,

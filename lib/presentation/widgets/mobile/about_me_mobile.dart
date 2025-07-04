@@ -65,9 +65,8 @@ class AboutMeMobile extends StatelessWidget {
               TextSpan(
                 text: "Me",
                 style: TextStyle(
-                  color: isLightMode
-                      ? LightThemeColors.primaryCyan
-                      : Colors.cyanAccent,
+                  color:
+                      isLightMode ? LightThemeColors.primaryCyan : Colors.cyan,
                   fontSize: fontSize,
                   fontWeight: FontWeight.w700,
                   letterSpacing: 1.1,
@@ -88,8 +87,8 @@ class AboutMeMobile extends StatelessWidget {
                       LightThemeColors.primaryCyan.withOpacity(0.3),
                     ]
                   : [
-                      Colors.cyanAccent,
-                      Colors.cyanAccent.withOpacity(0.3),
+                      Colors.cyan,
+                      Colors.cyan.withOpacity(0.3),
                     ],
             ),
             borderRadius: BorderRadius.circular(2),
@@ -127,7 +126,7 @@ class AboutMeMobile extends StatelessWidget {
               border: Border.all(
                 color: isLightMode
                     ? LightThemeColors.borderLight
-                    : Colors.cyanAccent.withOpacity(0.3),
+                    : Colors.cyan.withOpacity(0.3),
                 width: 2,
               ),
             ),
@@ -138,7 +137,7 @@ class AboutMeMobile extends StatelessWidget {
               indicator: BoxDecoration(
                 color: isLightMode
                     ? LightThemeColors.primaryCyan.withOpacity(0.2)
-                    : Colors.cyanAccent.withOpacity(0.2),
+                    : Colors.cyan.withOpacity(0.2),
                 borderRadius: BorderRadius.circular(16),
               ),
               labelColor:
@@ -418,7 +417,7 @@ class AboutMeMobile extends StatelessWidget {
         border: Border.all(
           color: isLightMode
               ? LightThemeColors.borderLight
-              : Colors.cyanAccent.withOpacity(0.2),
+              : Colors.cyan.withOpacity(0.2),
           width: 1,
         ),
         boxShadow: [
@@ -439,20 +438,18 @@ class AboutMeMobile extends StatelessWidget {
             decoration: BoxDecoration(
               color: isLightMode
                   ? LightThemeColors.bgSecondary
-                  : Colors.cyanAccent.withOpacity(0.1),
+                  : Colors.cyan.withOpacity(0.1),
               borderRadius: BorderRadius.circular(8),
               border: Border.all(
                 color: isLightMode
                     ? LightThemeColors.borderLight
-                    : Colors.cyanAccent.withOpacity(0.2),
+                    : Colors.cyan.withOpacity(0.2),
                 width: 1,
               ),
             ),
             child: Icon(
               icon,
-              color: isLightMode
-                  ? LightThemeColors.primaryCyan
-                  : Colors.cyanAccent,
+              color: isLightMode ? LightThemeColors.primaryCyan : Colors.cyan,
               size: iconSize * 0.5,
             ),
           ),
@@ -466,7 +463,7 @@ class AboutMeMobile extends StatelessWidget {
                   style: TextStyle(
                     color: isLightMode
                         ? LightThemeColors.primaryCyan
-                        : Colors.cyanAccent,
+                        : Colors.cyan,
                     fontWeight: FontWeight.w600,
                     fontSize: titleFontSize,
                   ),
@@ -580,7 +577,7 @@ class AboutMeMobile extends StatelessWidget {
         border: Border.all(
           color: isLightMode
               ? LightThemeColors.borderLight
-              : Colors.cyanAccent.withOpacity(0.2),
+              : Colors.cyan.withOpacity(0.2),
           width: 1,
         ),
         boxShadow: [
@@ -599,9 +596,7 @@ class AboutMeMobile extends StatelessWidget {
           Text(
             title,
             style: TextStyle(
-              color: isLightMode
-                  ? LightThemeColors.primaryCyan
-                  : Colors.cyanAccent,
+              color: isLightMode ? LightThemeColors.primaryCyan : Colors.cyan,
               fontWeight: FontWeight.w600,
               fontSize: titleSize,
             ),
@@ -618,12 +613,12 @@ class AboutMeMobile extends StatelessWidget {
                       decoration: BoxDecoration(
                         color: isLightMode
                             ? LightThemeColors.bgSecondary
-                            : Colors.cyanAccent.withOpacity(0.1),
+                            : Colors.cyan.withOpacity(0.1),
                         borderRadius: BorderRadius.circular(16),
                         border: Border.all(
                           color: isLightMode
                               ? LightThemeColors.borderLight
-                              : Colors.cyanAccent.withOpacity(0.2),
+                              : Colors.cyan.withOpacity(0.2),
                           width: 1,
                         ),
                       ),
