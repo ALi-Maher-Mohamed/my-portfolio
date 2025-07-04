@@ -72,6 +72,7 @@ class _HomeViewState extends State<HomeView> {
                 onThemeToggle: widget.onThemeChanged,
               ),
         body: ListView(
+          shrinkWrap: true,
           controller: _scrollController,
           children: [
             AutoScrollTag(
@@ -117,7 +118,7 @@ class _HomeViewState extends State<HomeView> {
                         ),
                         MainMobile(
                           onScrollToIndex: scrollToIndex,
-                          screenHeight: screenHeight / 1.2,
+                          screenHeight: screenHeight,
                           screenWidth: screenWidth,
                         ),
                       ],
@@ -179,7 +180,7 @@ class _HomeViewState extends State<HomeView> {
               controller: _scrollController,
               index: 5,
               child: Container(
-                height: screenHeight + 132,
+                // height: screenHeight,
                 width: double.infinity,
                 decoration: BoxDecoration(
                   color: isLightMode

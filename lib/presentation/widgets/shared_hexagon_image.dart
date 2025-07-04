@@ -49,6 +49,54 @@ class _HexagonAnimatedImageState extends State<HexagonAnimatedImage>
   @override
   Widget build(BuildContext context) {
     final isLightMode = Theme.of(context).brightness == Brightness.light;
+    final screenWidth = MediaQuery.of(context).size.width;
+
+    // تحديد الحجم بناءً على نوع الجهاز
+    // للموبايل: أقل من 600px
+    // للتابلت: من 600px إلى 1200px
+    // للويب: أكبر من 1200px
+    final bool isMobile = screenWidth < 600;
+    final bool isTablet = screenWidth >= 600 && screenWidth < 1200;
+
+    // تحديد أحجام مختلفة حسب الجهاز
+    final double containerSize = isMobile
+        ? 200
+        : isTablet
+            ? 250
+            : 300;
+    final double shadowHeight = isMobile
+        ? 180
+        : isTablet
+            ? 225
+            : 270;
+    final double shadowWidth = isMobile
+        ? 150
+        : isTablet
+            ? 185
+            : 220;
+    final double glowHeight = isMobile
+        ? 180
+        : isTablet
+            ? 225
+            : 270;
+    final double glowWidth = isMobile
+        ? 160
+        : isTablet
+            ? 200
+            : 240;
+    final double imageHeight = isMobile
+        ? 350
+        : isTablet
+            ? 425
+            : 500;
+    final double imageWidth = isMobile
+        ? 280
+        : isTablet
+            ? 340
+            : 400;
+    final double floatingRange = isMobile ? 6.0 : 10.0;
+    final double blurRadius = isMobile ? 35 : 50;
+    final double spreadRadius = isMobile ? 12 : 20;
 
     return AnimatedBuilder(
       animation: _controller,
@@ -56,7 +104,8 @@ class _HexagonAnimatedImageState extends State<HexagonAnimatedImage>
         return Opacity(
           opacity: _fadeAnimation.value,
           child: Transform.translate(
-            offset: Offset(0, _floatingAnimation.value),
+            offset:
+                Offset(0, _floatingAnimation.value * (floatingRange / 10.0)),
             child: Transform.scale(
               scale: _scaleAnimation.value,
               child: Stack(
@@ -66,8 +115,8 @@ class _HexagonAnimatedImageState extends State<HexagonAnimatedImage>
                   Positioned(
                     bottom: 0,
                     child: Container(
-                      height: 270,
-                      width: 220,
+                      height: shadowHeight,
+                      width: shadowWidth,
                       decoration: BoxDecoration(
                         color: isLightMode
                             ? LightThemeColors.bgSecondary.withOpacity(0.05)
@@ -91,8 +140,8 @@ class _HexagonAnimatedImageState extends State<HexagonAnimatedImage>
                   ClipPath(
                     clipper: HexagonClipper(),
                     child: Container(
-                      height: 300,
-                      width: 300,
+                      height: containerSize,
+                      width: containerSize,
                       decoration: BoxDecoration(
                         gradient: LinearGradient(
                           colors: isLightMode
@@ -110,8 +159,8 @@ class _HexagonAnimatedImageState extends State<HexagonAnimatedImage>
 
                   // Glow effect behind
                   Container(
-                    height: 270,
-                    width: 240,
+                    height: glowHeight,
+                    width: glowWidth,
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
                       boxShadow: [
@@ -119,8 +168,8 @@ class _HexagonAnimatedImageState extends State<HexagonAnimatedImage>
                           color: isLightMode
                               ? LightThemeColors.primaryCyan.withOpacity(0.3)
                               : Colors.cyan.withOpacity(0.3),
-                          blurRadius: 50,
-                          spreadRadius: 20,
+                          blurRadius: blurRadius,
+                          spreadRadius: spreadRadius,
                         ),
                       ],
                     ),
@@ -131,8 +180,8 @@ class _HexagonAnimatedImageState extends State<HexagonAnimatedImage>
                     clipper: HexagonClipper(),
                     child: Image.asset(
                       'assets/MyPhoto/my_photo1.png',
-                      height: 500,
-                      width: 400,
+                      height: imageHeight,
+                      width: imageWidth,
                       fit: BoxFit.cover,
                     ),
                   ),

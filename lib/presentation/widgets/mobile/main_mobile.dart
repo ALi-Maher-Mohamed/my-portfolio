@@ -119,153 +119,149 @@ class _MainMobileState extends State<MainMobile>
           _startAnimations();
         }
       },
-      child: Expanded(
-        child: Container(
-          height: widget.screenHeight,
-          constraints: const BoxConstraints(minHeight: 350),
-          padding: EdgeInsets.symmetric(
-              horizontal: widget.screenWidth * 0.05, vertical: 20),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              const HexagonAnimatedImage(),
-              // const SizedBox(height: 24),
-              FadeTransition(
-                opacity: _fadeAnimation,
-                child: ShaderMask(
-                  shaderCallback: (bounds) => LinearGradient(
-                    colors: isLightMode
-                        ? [
-                            LightThemeColors.primaryCyan,
-                            LightThemeColors.textPrimary,
-                            LightThemeColors.primaryCyan
-                          ]
-                        : [Colors.cyan, Colors.white, Colors.cyan],
-                    stops: const [0.0, 0.5, 1.0],
-                  ).createShader(bounds),
-                  child: Text(
-                    "ALI MAHER",
-                    style: TextStyle(
-                      fontSize: 32,
-                      fontWeight: FontWeight.bold,
-                      color: MainShared.getTextColor(isLightMode, true),
-                      letterSpacing: 2,
-                      shadows: [
-                        Shadow(
-                          blurRadius: 8,
-                          color: MainShared.getAccentColor(isLightMode)
-                              .withOpacity(0.4),
-                          offset: const Offset(0, 0),
-                        ),
-                      ],
-                    ),
-                    textAlign: TextAlign.center,
-                  ),
-                ),
-              ),
-              // const SizedBox(height: 12),
-              SlideTransition(
-                position: Tween<Offset>(
-                  begin: const Offset(0.0, 0.5),
-                  end: Offset.zero,
-                ).animate(CurvedAnimation(
-                  parent: _slideController,
-                  curve: Curves.easeOut,
-                )),
-                child: RichText(
-                  textAlign: TextAlign.center,
-                  text: TextSpan(
-                    children: [
-                      TextSpan(
-                        text: "And I'm a ",
-                        style: TextStyle(
-                          fontSize: 20,
-                          color: MainShared.getTextColor(isLightMode, true),
-                        ),
+      child: Container(
+        // height: widget.screenHeight - 100,
+        constraints: const BoxConstraints(minHeight: 350),
+        padding: EdgeInsets.symmetric(
+            horizontal: widget.screenWidth * 0.05, vertical: 20),
+        child: Column(
+          // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            const HexagonAnimatedImage(),
+            // const SizedBox(height: 24),
+            FadeTransition(
+              opacity: _fadeAnimation,
+              child: ShaderMask(
+                shaderCallback: (bounds) => LinearGradient(
+                  colors: isLightMode
+                      ? [
+                          LightThemeColors.primaryCyan,
+                          LightThemeColors.textPrimary,
+                          LightThemeColors.primaryCyan
+                        ]
+                      : [Colors.cyan, Colors.white, Colors.cyan],
+                  stops: const [0.0, 0.5, 1.0],
+                ).createShader(bounds),
+                child: Text(
+                  "ALI MAHER",
+                  style: TextStyle(
+                    fontSize: 32,
+                    fontWeight: FontWeight.bold,
+                    color: MainShared.getTextColor(isLightMode, true),
+                    letterSpacing: 2,
+                    shadows: [
+                      Shadow(
+                        blurRadius: 8,
+                        color: MainShared.getAccentColor(isLightMode)
+                            .withOpacity(0.4),
+                        offset: const Offset(0, 0),
                       ),
-                      TextSpan(
-                        text: _displayedText,
-                        style: TextStyle(
-                          fontSize: 20,
-                          color: MainShared.getAccentColor(isLightMode),
-                          fontWeight: FontWeight.bold,
-                          shadows: [
-                            Shadow(
-                              blurRadius: 4,
-                              color: MainShared.getAccentColor(isLightMode)
-                                  .withOpacity(0.3),
-                              offset: const Offset(0, 0),
-                            ),
-                          ],
-                        ),
-                      ),
-                      if (_currentIndex < _fullText.length)
-                        WidgetSpan(
-                          child: AnimatedBuilder(
-                            animation: _typewriterController,
-                            builder: (context, child) {
-                              return Opacity(
-                                opacity:
-                                    (DateTime.now().millisecondsSinceEpoch %
-                                                1000 <
-                                            500)
-                                        ? 1.0
-                                        : 0.0,
-                                child: Text(
-                                  "|",
-                                  style: TextStyle(
-                                    fontSize: 20,
-                                    color:
-                                        MainShared.getAccentColor(isLightMode),
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                              );
-                            },
-                          ),
-                        ),
                     ],
                   ),
+                  textAlign: TextAlign.center,
                 ),
               ),
-              // const SizedBox(height: 16),
-              ScaleTransition(
-                scale: _iconAnimation,
-                child: Wrap(
-                  alignment: WrapAlignment.center,
-                  spacing: 10,
-                  runSpacing: 10,
-                  children: MainShared.getSocialIcons(isLightMode)
-                      .asMap()
-                      .entries
-                      .map((entry) {
-                    final index = entry.key;
-                    final iconData = entry.value;
-                    return _buildAnimatedIcon(
-                      iconData['icon'] as IconData,
-                      index * 100,
-                      url: iconData['url'],
-                      isLightMode: isLightMode,
-                    );
-                  }).toList(),
+            ),
+            // const SizedBox(height: 12),
+            SlideTransition(
+              position: Tween<Offset>(
+                begin: const Offset(0.0, 0.5),
+                end: Offset.zero,
+              ).animate(CurvedAnimation(
+                parent: _slideController,
+                curve: Curves.easeOut,
+              )),
+              child: RichText(
+                textAlign: TextAlign.center,
+                text: TextSpan(
+                  children: [
+                    TextSpan(
+                      text: "And I'm a ",
+                      style: TextStyle(
+                        fontSize: 20,
+                        color: MainShared.getTextColor(isLightMode, true),
+                      ),
+                    ),
+                    TextSpan(
+                      text: _displayedText,
+                      style: TextStyle(
+                        fontSize: 20,
+                        color: MainShared.getAccentColor(isLightMode),
+                        fontWeight: FontWeight.bold,
+                        shadows: [
+                          Shadow(
+                            blurRadius: 4,
+                            color: MainShared.getAccentColor(isLightMode)
+                                .withOpacity(0.3),
+                            offset: const Offset(0, 0),
+                          ),
+                        ],
+                      ),
+                    ),
+                    if (_currentIndex < _fullText.length)
+                      WidgetSpan(
+                        child: AnimatedBuilder(
+                          animation: _typewriterController,
+                          builder: (context, child) {
+                            return Opacity(
+                              opacity: (DateTime.now().millisecondsSinceEpoch %
+                                          1000 <
+                                      500)
+                                  ? 1.0
+                                  : 0.0,
+                              child: Text(
+                                "|",
+                                style: TextStyle(
+                                  fontSize: 20,
+                                  color: MainShared.getAccentColor(isLightMode),
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            );
+                          },
+                        ),
+                      ),
+                  ],
                 ),
               ),
-              // const SizedBox(height: 20),
-              ScaleTransition(
-                scale: _bounceAnimation,
-                child: _buildAnimatedButton(
-                  "Get In Touch",
-                  true,
-                  () {
-                    HapticFeedback.lightImpact();
-                    widget.onScrollToIndex(5);
-                  },
-                  isLightMode,
-                ),
+            ),
+            // const SizedBox(height: 16),
+            ScaleTransition(
+              scale: _iconAnimation,
+              child: Wrap(
+                alignment: WrapAlignment.center,
+                spacing: 10,
+                runSpacing: 10,
+                children: MainShared.getSocialIcons(isLightMode)
+                    .asMap()
+                    .entries
+                    .map((entry) {
+                  final index = entry.key;
+                  final iconData = entry.value;
+                  return _buildAnimatedIcon(
+                    iconData['icon'] as IconData,
+                    index * 100,
+                    url: iconData['url'],
+                    isLightMode: isLightMode,
+                  );
+                }).toList(),
               ),
-            ],
-          ),
+            ),
+            // const SizedBox(height: 20),
+            ScaleTransition(
+              scale: _bounceAnimation,
+              child: _buildAnimatedButton(
+                "Get In Touch",
+                true,
+                () {
+                  HapticFeedback.lightImpact();
+                  widget.onScrollToIndex(5);
+                },
+                isLightMode,
+              ),
+            ),
+          ],
         ),
       ),
     );

@@ -33,6 +33,7 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_animate: ^4.5.2
+  device_preview:
   flutter_svg: ^2.0.17
   flutter_zoom_drawer: ^3.2.0
   font_awesome_flutter: ^10.8.0
