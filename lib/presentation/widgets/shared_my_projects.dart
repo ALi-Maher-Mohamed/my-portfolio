@@ -10,65 +10,6 @@ Future<List<Map<String, dynamic>>> fetchProjects() async {
   return List<Map<String, dynamic>>.from(response);
 }
 
-List<String> projectsImages = [
-  'assets/images/Rectangle.png',
-  'assets/images/Rectangle0.png',
-  'assets/images/Rectangle5.png',
-  'assets/images/Rectangle6.png',
-  'assets/images/Rectangle7.png',
-  'assets/images/Rectangle9.png',
-];
-// final List<Map<String, String>> projectsItems = [
-//   {
-//     'title': 'MediCare Platform',
-//     'image': 'assets/images/Rectangle.png',
-//     'category': 'Medical / Web & Mobile',
-//     'route': 'https://github.com/ALi-Maher-Mohamed/MediaCare',
-//   },
-//   {
-//     'title': 'Reading App',
-//     'image': 'assets/images/Rectangle0.png',
-//     'category': 'Flutter / MVVM',
-//     'route': 'https://github.com/ALi-Maher-Mohamed/Bookly-app',
-//   },
-//   {
-//     'title': 'Tic-Tac-Toe Game',
-//     'image': 'assets/images/Rectangle5.png',
-//     'category': 'Game / Flutter',
-//     'route': 'https://github.com/ALi-Maher-Mohamed/Tic-Tac-Game',
-//   },
-//   {
-//     'title': 'BMI Calculator',
-//     'image': 'assets/images/Rectangle5.png',
-//     'category': 'Health / Flutter',
-//     'route': 'https://github.com/ALi-Maher-Mohamed/BMI-App',
-//   },
-//   {
-//     'title': 'Notes App',
-//     'image': 'assets/images/Rectangle6.png',
-//     'category': 'Notes / Flutter',
-//     'route': 'https://github.com/ALi-Maher-Mohamed/notes_app',
-//   },
-//   {
-//     'title': 'News Reader App',
-//     'image': 'assets/images/Rectangle7.png',
-//     'category': 'News / Flutter',
-//     'route': 'https://github.com/ALi-Maher-Mohamed/News-App',
-//   },
-//   {
-//     'title': 'Weather Forecast App',
-//     'image': 'assets/images/Rectangle9.png',
-//     'category': 'Utility / API Integration',
-//     'route': 'https://github.com/ALi-Maher-Mohamed/Weather_App_with_cubit',
-//   },
-//   {
-//     'title': 'Tripoo App',
-//     'image': 'assets/images/Rectangle.png',
-//     'category': 'Travel / Supabase ',
-//     'route': 'https://github.com/elsaedy55/Tripoo-Mobile-App.git',
-//   },
-// ];
-
 // الدوال المشتركة
 class ResponsiveHelper {
   static double getHorizontalPadding(double screenWidth) {

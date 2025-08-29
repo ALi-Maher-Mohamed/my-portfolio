@@ -229,9 +229,9 @@ class _MyProjectsMobileState extends State<MyProjectsMobile> {
                 : Colors.cyan.withOpacity(0.2),
             width: 2,
           ),
-          image: item['image'] != null
+          image: item['image_url'] != null
               ? DecorationImage(
-                  image: NetworkImage(item['image']
+                  image: NetworkImage(item['image_url']
                       as String), // استخدام NetworkImage للصور من Supabase
                   fit: BoxFit.cover,
                   colorFilter: ColorFilter.mode(
