@@ -201,7 +201,7 @@ class _MyServicesMobileState extends State<MyServicesMobile> {
                   textAlign: TextAlign.center,
                 ),
                 const SizedBox(height: 30),
-                Container(
+                SizedBox(
                   width: double.infinity,
                   child: ElevatedButton(
                     onPressed: () {

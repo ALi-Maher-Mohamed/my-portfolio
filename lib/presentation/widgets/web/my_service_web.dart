@@ -293,7 +293,7 @@ class _MyServicesWebState extends State<MyServicesWeb> {
                     textAlign: TextAlign.center,
                   ),
                   const SizedBox(height: 30),
-                  Container(
+                  SizedBox(
                     width: double.infinity,
                     child: _HoverAnimatedButton(
                       child: ElevatedButton(

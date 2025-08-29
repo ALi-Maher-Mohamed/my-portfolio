@@ -18,11 +18,9 @@ class AppLightTheme {
         primary: LightThemeColors.primaryCyan,
         secondary: LightThemeColors.accentCyan,
         surface: LightThemeColors.bgCard,
-        background: LightThemeColors.bgPrimary,
         onPrimary: LightThemeColors.textOnPrimary,
         onSecondary: LightThemeColors.textPrimary,
         onSurface: LightThemeColors.textPrimary,
-        onBackground: LightThemeColors.textPrimary,
       ),
 
       // === Scaffold Theme ===

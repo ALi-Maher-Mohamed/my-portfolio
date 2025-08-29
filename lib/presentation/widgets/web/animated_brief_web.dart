@@ -460,13 +460,13 @@ class _AnimatedPortfolioBriefState extends State<AnimatedPortfolioBrief>
   Widget _buildAnimatedButton(
       String text, bool isPrimary, VoidCallback onPressed) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    bool _isHovered = false;
+    bool isHovered = false;
 
     return StatefulBuilder(
       builder: (context, setState) {
         return MouseRegion(
-          onEnter: (_) => setState(() => _isHovered = true),
-          onExit: (_) => setState(() => _isHovered = false),
+          onEnter: (_) => setState(() => isHovered = true),
+          onExit: (_) => setState(() => isHovered = false),
           child: AnimatedContainer(
             duration: const Duration(milliseconds: 200),
             child: ElevatedButton(
@@ -474,10 +474,10 @@ class _AnimatedPortfolioBriefState extends State<AnimatedPortfolioBrief>
               style: ElevatedButton.styleFrom(
                 backgroundColor: isPrimary
                     ? (isDark
-                        ? (_isHovered
+                        ? (isHovered
                             ? Colors.cyan.withOpacity(0.8)
                             : Colors.cyan)
-                        : (_isHovered
+                        : (isHovered
                             ? LightThemeColors.buttonHover
                             : LightThemeColors.buttonPrimary))
                     : Colors.transparent,
@@ -487,7 +487,7 @@ class _AnimatedPortfolioBriefState extends State<AnimatedPortfolioBrief>
                 side: isPrimary
                     ? null
                     : BorderSide(
-                        color: _isHovered
+                        color: isHovered
                             ? _getAccentColor().withOpacity(0.8)
                             : _getAccentColor(),
                         width: 2,
@@ -497,7 +497,7 @@ class _AnimatedPortfolioBriefState extends State<AnimatedPortfolioBrief>
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(30),
                 ),
-                elevation: isPrimary ? (_isHovered ? 12 : 8) : 0,
+                elevation: isPrimary ? (isHovered ? 12 : 8) : 0,
                 shadowColor: _getAccentColor().withOpacity(0.5),
               ),
               child: Text(
