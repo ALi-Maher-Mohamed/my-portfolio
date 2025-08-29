@@ -3,6 +3,7 @@ import 'package:Ali_Maher/core/constant/launch_url.dart';
 import 'package:Ali_Maher/presentation/widgets/shared_my_projects.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:supabase_flutter/supabase_flutter.dart'; // تأكد من إضافة هذا الـ import
 
 class MyProjectsWeb extends StatefulWidget {
   const MyProjectsWeb({super.key});
@@ -15,10 +16,43 @@ class _MyProjectsWebState extends State<MyProjectsWeb> {
   int _currentPage = 0;
   final PageController _pageController = PageController(viewportFraction: 1.0);
 
+  // متغيرات جديدة لحالة البيانات
+  List<Map<String, dynamic>> projects = [];
+  bool isLoading = true;
+  String? errorMessage;
+
+  @override
+  void initState() {
+    super.initState();
+    _fetchProjects();
+  }
+
   @override
   void dispose() {
     _pageController.dispose();
     super.dispose();
+  }
+
+  // فانشكن جلب البيانات من Supabase
+  Future<void> _fetchProjects() async {
+    try {
+      setState(() {
+        isLoading = true;
+        errorMessage = null;
+      });
+
+      final response = await Supabase.instance.client.from('projects').select();
+
+      setState(() {
+        projects = List<Map<String, dynamic>>.from(response);
+        isLoading = false;
+      });
+    } catch (error) {
+      setState(() {
+        errorMessage = 'خطأ في تحميل المشاريع: ${error.toString()}';
+        isLoading = false;
+      });
+    }
   }
 
   @override
@@ -45,25 +79,119 @@ class _MyProjectsWebState extends State<MyProjectsWeb> {
               isLightMode: isLightMode,
             ),
             SizedBox(height: ResponsiveHelper.getSectionSpacing(screenWidth)),
-            _buildProjectsSection(
-                context, screenWidth, isLargeScreen, isMediumScreen),
-            if (portfolioItems.length >
-                (isLargeScreen
-                    ? 3
-                    : isMediumScreen
-                        ? 2
-                        : 1))
-              PageIndicators(
-                screenWidth: screenWidth,
-                isLightMode: isLightMode,
-                currentPage: _currentPage,
-                crossAxisCount: isLargeScreen
-                    ? 3
-                    : isMediumScreen
-                        ? 2
-                        : 1,
+
+            // عرض حالة التحميل أو الخطأ أو المحتوى
+            if (isLoading)
+              _buildLoadingWidget(screenWidth)
+            else if (errorMessage != null)
+              _buildErrorWidget(screenWidth, isLightMode)
+            else if (projects.isEmpty)
+              _buildEmptyWidget(screenWidth, isLightMode)
+            else ...[
+              _buildProjectsSection(
+                  context, screenWidth, isLargeScreen, isMediumScreen),
+              if (projects.length >
+                  (isLargeScreen
+                      ? 3
+                      : isMediumScreen
+                          ? 2
+                          : 1))
+                PageIndicators(
+                  screenWidth: screenWidth,
+                  isLightMode: isLightMode,
+                  currentPage: _currentPage,
+                  crossAxisCount: isLargeScreen
+                      ? 3
+                      : isMediumScreen
+                          ? 2
+                          : 1,
+                ),
+              _buildSeeMoreButton(context, screenWidth, isLightMode),
+            ],
+          ],
+        ),
+      ),
+    );
+  }
+
+  // ويدجت التحميل
+  Widget _buildLoadingWidget(double screenWidth) {
+    return SizedBox(
+      height: ResponsiveHelper.getCardHeight(screenWidth),
+      child: const Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            CircularProgressIndicator(color: Colors.cyan),
+            SizedBox(height: 16),
+            Text(
+              'جاري تحميل المشاريع...',
+              style: TextStyle(fontSize: 16, color: Colors.grey),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  // ويدجت عرض الخطأ
+  Widget _buildErrorWidget(double screenWidth, bool isLightMode) {
+    return SizedBox(
+      height: ResponsiveHelper.getCardHeight(screenWidth),
+      child: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(
+              Icons.error_outline,
+              size: 48,
+              color: Colors.red,
+            ),
+            const SizedBox(height: 16),
+            Text(
+              errorMessage!,
+              style: TextStyle(
+                fontSize: 16,
+                color: isLightMode ? Colors.red : Colors.red[300],
               ),
-            _buildSeeMoreButton(context, screenWidth, isLightMode),
+              textAlign: TextAlign.center,
+            ),
+            const SizedBox(height: 16),
+            ElevatedButton(
+              onPressed: _fetchProjects,
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.cyan,
+                foregroundColor: Colors.white,
+              ),
+              child: const Text('إعادة المحاولة'),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  // ويدجت عندما لا توجد مشاريع
+  Widget _buildEmptyWidget(double screenWidth, bool isLightMode) {
+    return SizedBox(
+      height: ResponsiveHelper.getCardHeight(screenWidth),
+      child: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(
+              Icons.folder_open,
+              size: 48,
+              color: isLightMode ? Colors.grey[600] : Colors.grey[400],
+            ),
+            const SizedBox(height: 16),
+            Text(
+              'لا توجد مشاريع متاحة حالياً',
+              style: TextStyle(
+                fontSize: 16,
+                color: isLightMode ? Colors.grey[600] : Colors.grey[400],
+              ),
+            ),
           ],
         ),
       ),
@@ -85,7 +213,7 @@ class _MyProjectsWebState extends State<MyProjectsWeb> {
         children: [
           PageView.builder(
             controller: _pageController,
-            itemCount: (portfolioItems.length / crossAxisCount).ceil(),
+            itemCount: (projects.length / crossAxisCount).ceil(),
             onPageChanged: (index) {
               setState(() {
                 _currentPage = index;
@@ -98,7 +226,7 @@ class _MyProjectsWebState extends State<MyProjectsWeb> {
                   crossAxisCount,
                   (index) {
                     final projectIndex = pageIndex * crossAxisCount + index;
-                    if (projectIndex < portfolioItems.length) {
+                    if (projectIndex < projects.length) {
                       return Expanded(
                         child: Padding(
                           padding: EdgeInsets.symmetric(
@@ -128,7 +256,7 @@ class _MyProjectsWebState extends State<MyProjectsWeb> {
             },
           ),
           // أزرار التنقل للويب
-          if (portfolioItems.length > crossAxisCount) ...[
+          if (projects.length > crossAxisCount) ...[
             if (_currentPage > 0)
               Positioned(
                 left: 0,
@@ -152,8 +280,7 @@ class _MyProjectsWebState extends State<MyProjectsWeb> {
                   ),
                 ),
               ),
-            if (_currentPage <
-                (portfolioItems.length / crossAxisCount).ceil() - 1)
+            if (_currentPage < (projects.length / crossAxisCount).ceil() - 1)
               Positioned(
                 right: 0,
                 top: 0,
@@ -184,7 +311,7 @@ class _MyProjectsWebState extends State<MyProjectsWeb> {
 
   Widget _buildPortfolioCard(
       BuildContext context, int index, double screenWidth) {
-    final item = portfolioItems[index];
+    final item = projects[index]; // استخدام البيانات من Supabase
     final isLightMode = Theme.of(context).brightness == Brightness.light;
 
     return HoverAnimatedPortfolioCard(
@@ -207,16 +334,20 @@ class _MyProjectsWebState extends State<MyProjectsWeb> {
                 : Colors.cyan.withOpacity(0.2),
             width: 2,
           ),
-          image: DecorationImage(
-            image: AssetImage(item['image'] as String),
-            fit: BoxFit.cover,
-            colorFilter: ColorFilter.mode(
-              isLightMode
-                  ? Colors.black.withOpacity(0.3)
-                  : Colors.black.withOpacity(0.4),
-              BlendMode.darken,
-            ),
-          ),
+          image: item['image_url'] != null
+              ? DecorationImage(
+                  image: NetworkImage(
+                    item['image_url'] as String,
+                  ), // استخدام NetworkImage للصور من Supabase
+                  fit: BoxFit.cover,
+                  colorFilter: ColorFilter.mode(
+                    isLightMode
+                        ? Colors.black.withOpacity(0.3)
+                        : Colors.black.withOpacity(0.4),
+                    BlendMode.darken,
+                  ),
+                )
+              : null,
           boxShadow: [
             BoxShadow(
               color: isLightMode
@@ -232,7 +363,9 @@ class _MyProjectsWebState extends State<MyProjectsWeb> {
           child: InkWell(
             borderRadius: BorderRadius.circular(20),
             onTap: () {
-              launchCustomUrl(context, url: item['route']);
+              if (item['route'] != null) {
+                launchCustomUrl(context, url: item['route']);
+              }
             },
             child: Stack(
               children: [
@@ -284,7 +417,8 @@ class _MyProjectsWebState extends State<MyProjectsWeb> {
                                 : Colors.white.withOpacity(0.1),
                           ),
                           child: Icon(
-                            ResponsiveHelper.getIconForIndex(index),
+                            _getIconFromString(item['icon']) ??
+                                ResponsiveHelper.getIconForIndex(index),
                             size: ResponsiveHelper.getImageSize(screenWidth) *
                                 0.7,
                             color: isLightMode
@@ -295,7 +429,7 @@ class _MyProjectsWebState extends State<MyProjectsWeb> {
                         const SizedBox(height: 24),
                         // عنوان المشروع
                         Text(
-                          item['title'] as String,
+                          item['title']?.toString() ?? 'مشروع بدون عنوان',
                           style: TextStyle(
                             fontSize:
                                 ResponsiveHelper.getSkillFontSize(screenWidth) +
@@ -328,7 +462,7 @@ class _MyProjectsWebState extends State<MyProjectsWeb> {
                             ),
                           ),
                           child: Text(
-                            item['category'] as String,
+                            item['category']?.toString() ?? 'غير محدد',
                             style: TextStyle(
                               fontSize: ResponsiveHelper.getSkillFontSize(
                                   screenWidth),
@@ -347,8 +481,10 @@ class _MyProjectsWebState extends State<MyProjectsWeb> {
                           child: HoverAnimatedButton(
                             child: ElevatedButton(
                               onPressed: () {
-                                Navigator.pushNamed(
-                                    context, item['route'] as String);
+                                if (item['route'] != null) {
+                                  Navigator.pushNamed(
+                                      context, item['route'] as String);
+                                }
                               },
                               style: ElevatedButton.styleFrom(
                                 backgroundColor: isLightMode
@@ -395,6 +531,31 @@ class _MyProjectsWebState extends State<MyProjectsWeb> {
         ),
       ),
     );
+  }
+
+  // فانشكن لتحويل نص الأيقونة إلى IconData
+  IconData? _getIconFromString(String? iconString) {
+    if (iconString == null) return null;
+
+    switch (iconString.toLowerCase()) {
+      case 'web':
+      case 'website':
+        return Icons.web;
+      case 'mobile':
+      case 'phone':
+        return Icons.phone_android;
+      case 'desktop':
+      case 'computer':
+        return Icons.desktop_windows;
+      case 'code':
+        return Icons.code;
+      case 'design':
+        return Icons.design_services;
+      case 'api':
+        return Icons.api;
+      default:
+        return Icons.folder;
+    }
   }
 
   Widget _buildSeeMoreButton(

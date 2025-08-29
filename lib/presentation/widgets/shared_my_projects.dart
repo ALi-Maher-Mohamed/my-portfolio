@@ -1,51 +1,73 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:Ali_Maher/core/constant/theme.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
-final List<Map<String, String>> portfolioItems = [
-  {
-    'title': 'MediCare Platform',
-    'image': 'assets/images/Rectangle.png',
-    'category': 'Medical / Web & Mobile',
-    'route': 'https://github.com/ALi-Maher-Mohamed/MediaCare',
-  },
-  {
-    'title': 'Reading App',
-    'image': 'assets/images/Rectangle0.png',
-    'category': 'Flutter / MVVM',
-    'route': 'https://github.com/ALi-Maher-Mohamed/Bookly-app',
-  },
-  {
-    'title': 'Tic-Tac-Toe Game',
-    'image': 'assets/images/Rectangle5.png',
-    'category': 'Game / Flutter',
-    'route': 'https://github.com/ALi-Maher-Mohamed/Tic-Tac-Game',
-  },
-  {
-    'title': 'BMI Calculator',
-    'image': 'assets/images/Rectangle5.png',
-    'category': 'Health / Flutter',
-    'route': 'https://github.com/ALi-Maher-Mohamed/BMI-App',
-  },
-  {
-    'title': 'Notes App',
-    'image': 'assets/images/Rectangle6.png',
-    'category': 'Notes / Flutter',
-    'route': 'https://github.com/ALi-Maher-Mohamed/notes_app',
-  },
-  {
-    'title': 'News Reader App',
-    'image': 'assets/images/Rectangle7.png',
-    'category': 'News / Flutter',
-    'route': 'https://github.com/ALi-Maher-Mohamed/News-App',
-  },
-  {
-    'title': 'Weather Forecast App',
-    'image': 'assets/images/Rectangle9.png',
-    'category': 'Utility / API Integration',
-    'route': 'https://github.com/ALi-Maher-Mohamed/Weather_App_with_cubit',
-  },
+final supabase = Supabase.instance.client;
+
+Future<List<Map<String, dynamic>>> fetchProjects() async {
+  final response = await supabase.from('projects').select();
+  return List<Map<String, dynamic>>.from(response);
+}
+
+List<String> projectsImages = [
+  'assets/images/Rectangle.png',
+  'assets/images/Rectangle0.png',
+  'assets/images/Rectangle5.png',
+  'assets/images/Rectangle6.png',
+  'assets/images/Rectangle7.png',
+  'assets/images/Rectangle9.png',
 ];
+// final List<Map<String, String>> projectsItems = [
+//   {
+//     'title': 'MediCare Platform',
+//     'image': 'assets/images/Rectangle.png',
+//     'category': 'Medical / Web & Mobile',
+//     'route': 'https://github.com/ALi-Maher-Mohamed/MediaCare',
+//   },
+//   {
+//     'title': 'Reading App',
+//     'image': 'assets/images/Rectangle0.png',
+//     'category': 'Flutter / MVVM',
+//     'route': 'https://github.com/ALi-Maher-Mohamed/Bookly-app',
+//   },
+//   {
+//     'title': 'Tic-Tac-Toe Game',
+//     'image': 'assets/images/Rectangle5.png',
+//     'category': 'Game / Flutter',
+//     'route': 'https://github.com/ALi-Maher-Mohamed/Tic-Tac-Game',
+//   },
+//   {
+//     'title': 'BMI Calculator',
+//     'image': 'assets/images/Rectangle5.png',
+//     'category': 'Health / Flutter',
+//     'route': 'https://github.com/ALi-Maher-Mohamed/BMI-App',
+//   },
+//   {
+//     'title': 'Notes App',
+//     'image': 'assets/images/Rectangle6.png',
+//     'category': 'Notes / Flutter',
+//     'route': 'https://github.com/ALi-Maher-Mohamed/notes_app',
+//   },
+//   {
+//     'title': 'News Reader App',
+//     'image': 'assets/images/Rectangle7.png',
+//     'category': 'News / Flutter',
+//     'route': 'https://github.com/ALi-Maher-Mohamed/News-App',
+//   },
+//   {
+//     'title': 'Weather Forecast App',
+//     'image': 'assets/images/Rectangle9.png',
+//     'category': 'Utility / API Integration',
+//     'route': 'https://github.com/ALi-Maher-Mohamed/Weather_App_with_cubit',
+//   },
+//   {
+//     'title': 'Tripoo App',
+//     'image': 'assets/images/Rectangle.png',
+//     'category': 'Travel / Supabase ',
+//     'route': 'https://github.com/elsaedy55/Tripoo-Mobile-App.git',
+//   },
+// ];
 
 // الدوال المشتركة
 class ResponsiveHelper {
@@ -114,11 +136,11 @@ class ResponsiveHelper {
   static IconData getIconForIndex(int index) {
     switch (index) {
       case 0:
-        return Icons.menu_book;
-      case 1:
         return Icons.local_hospital;
+      case 1:
+        return Icons.menu_book;
       case 2:
-        return Icons.shopping_cart;
+        return Icons.games;
       case 3:
         return Icons.dashboard;
       case 4:
@@ -221,32 +243,52 @@ class PageIndicators extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding:
-          EdgeInsets.only(top: ResponsiveHelper.getSectionSpacing(screenWidth)),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: List.generate(
-          (portfolioItems.length / crossAxisCount).ceil(),
-          (index) => Container(
-            margin: const EdgeInsets.symmetric(horizontal: 5),
-            width: currentPage == index ? 12 : 8,
-            height: currentPage == index ? 12 : 8,
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              color: currentPage == index
-                  ? (isLightMode ? LightThemeColors.primaryCyan : Colors.cyan)
-                  : (isLightMode ? LightThemeColors.textMuted : Colors.grey),
+    return FutureBuilder<List<Map<String, dynamic>>>(
+      future: fetchProjects(), // الفانكشن اللي جلبنا بها البيانات من Supabase
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const Center(child: CircularProgressIndicator());
+        }
+
+        if (snapshot.hasError) {
+          return Center(child: Text('Error: ${snapshot.error}'));
+        }
+
+        final projects = snapshot.data ?? [];
+        final totalPages = (projects.length / crossAxisCount).ceil();
+
+        return Padding(
+          padding: EdgeInsets.only(
+              top: ResponsiveHelper.getSectionSpacing(screenWidth)),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: List.generate(
+              totalPages,
+              (index) => Container(
+                margin: const EdgeInsets.symmetric(horizontal: 5),
+                width: currentPage == index ? 12 : 8,
+                height: currentPage == index ? 12 : 8,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: currentPage == index
+                      ? (isLightMode
+                          ? LightThemeColors.primaryCyan
+                          : Colors.cyan)
+                      : (isLightMode
+                          ? LightThemeColors.textMuted
+                          : Colors.grey),
+                ),
+              ),
             ),
           ),
-        ),
-      ),
-    ).animate().fadeIn(duration: const Duration(milliseconds: 400)).slideY(
-          begin: 0.3,
-          end: 0.0,
-          curve: Curves.easeOut,
-          duration: const Duration(milliseconds: 600),
-        );
+        ).animate().fadeIn(duration: const Duration(milliseconds: 400)).slideY(
+              begin: 0.3,
+              end: 0.0,
+              curve: Curves.easeOut,
+              duration: const Duration(milliseconds: 600),
+            );
+      },
+    );
   }
 }
 
